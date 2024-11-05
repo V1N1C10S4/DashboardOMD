@@ -51,7 +51,7 @@ eda_pages = [eda]
 about_pages = [about, cr]
 
 #st.title("Data Analytics ")
-st.logo("images/horizontal_blue.png", icon_image="images/icon_blue.png")
+st.logo("images/OMD2.png", icon_image="images/OMD2.png")
 
 page_dict = {}
 
