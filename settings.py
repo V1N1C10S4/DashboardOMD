@@ -12,21 +12,45 @@ if "dark_mode" not in st.session_state:
 # CSS for customized theme
 def get_css(dark_mode):
     if dark_mode:
-        return """
+        return f"""
         <style>
-            body { background-color: #004D40; color: #F9A825; }
-            .stButton>button { background-color: #1F1F1F; color: #F9A825; border: 1px solid #F9A825; }
-            .stTextInput>div>input { background-color: #262626; color: #F9A825; }
-            .block-container { background-color: #004D40; }
+            body {{
+                background-color: #000000;  /* Fondo negro */
+                color: #FFFFFF;  /* Texto en blanco */
+            }}
+            .stButton>button {{
+                background-color: #1A73E8;  /* Botones en azul oscuro */
+                color: #FFFFFF;
+                border: 1px solid #A142F4;  /* Borde morado */
+            }}
+            .stTextInput>div>input {{
+                background-color: #1A73E8;  /* Fondo de inputs en azul oscuro */
+                color: #FFFFFF;
+            }}
+            .block-container {{
+                background-color: #000000;
+            }}
         </style>
         """
     else:
-        return """
+        return f"""
         <style>
-            body { background-color: #F0F2F6; color: #004D40; }
-            .stButton>button { background-color: #F9A825; color: #004D40; border: 1px solid #004D40; }
-            .stTextInput>div>input { background-color: #FFFFFF; color: #004D40; }
-            .block-container { background-color: #F0F2F6; }
+            body {{
+                background-color: #FFFFFF;  /* Fondo claro */
+                color: #1A73E8;  /* Texto en azul oscuro */
+            }}
+            .stButton>button {{
+                background-color: #A142F4;  /* Botones en púrpura */
+                color: #FFFFFF;
+                border: 1px solid #1A73E8;  /* Borde azul oscuro */
+            }}
+            .stTextInput>div>input {{
+                background-color: #FFFFFF;
+                color: #1A73E8;
+            }}
+            .block-container {{
+                background-color: #FFFFFF;
+            }}
         </style>
         """
 
