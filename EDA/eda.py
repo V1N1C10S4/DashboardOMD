@@ -5,6 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 import gdown
+import numpy as np
 
 st.header("Exploratory Data Analysis")
 
@@ -69,3 +70,23 @@ plt.xlabel('Number of Posts')
 plt.ylabel('Density')
 plt.title('Cumulative Density of Number of Posts per User')
 st.pyplot(plt)
+
+# Logarithmic distribution of Number of Posts
+st.write("## Logarithmic")
+
+posts_df['num_interaction'] = posts_df['num_interaction'].replace(0, 1)
+posts_df['log_num_posts'] = np.log(posts_df['num_posts'])
+posts_df['log_num_interaction'] = np.log(posts_df['num_interaction'])
+plt.figure(figsize=(10, 6))
+sns.kdeplot(posts_df, x='log_num_posts')
+plt.xlabel('Log Number of Posts')
+plt.ylabel('Density')
+plt.title('Density of Log Number of Posts per User')
+st.pyplot(plt)
+
+# Display description for visualization
+st.write("""
+#### Renmarks:
+- Between 0 and 1 values in the log number of posts in the x-axis, there is a range where the slope aproximates 0, and then continues to grow afterwards until the value of ~2 in the x-axis.
+- This abrupt change in slope might be an indicator of where to slice the data.
+""")
