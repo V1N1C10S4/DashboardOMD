@@ -54,8 +54,8 @@ st.write("""
 Analizar la distribución del número de posts en el recién creado `posts_df` para identificar criterios de segmentación de los principales usuarios.
 
 #### Observaciones:
-- La mayoría de los usuarios, probablemente usuarios ocasionales, tienen entre 0 y ~250 mensajes totales, del 1 de enero al 31 de julio.
-- En el eje de abscisas hay un grupo de entre 1.250 y 1.500 mensajes totales de un número reducido de usuarios que tienen entre 4 y 5 veces más mensajes que los usuarios ocasionales.
+- La mayoría de los usuarios, probablemente usuarios ocasionales, tienen entre 0 y ~250 publicaciones totales, del 1 de enero al 31 de julio.
+- En el eje de abscisas hay un grupo de entre 1.250 y 1.500 publicaciones totales de un número reducido de usuarios que tienen entre 4 y 5 veces más publicaciones que los usuarios ocasionales.
 """)
 
 # Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user
@@ -69,8 +69,8 @@ st.pyplot(plt)
 # Display description for visualization
 st.write("""
 #### Puntos importantes:
-- La pendiente más pronunciada se produce de 0 a ~750 mensajes totales, que probablemente correspondan a usuarios ocasionales.
-- Hay una pendiente menos pronunciada de ~750 a ~1700 mensajes totales, que probablemente corresponda a usuarios no ocasionales, y después una pendiente casi horizontal.
+- La pendiente más pronunciada se produce de 0 a ~750 publicaciones totales, que probablemente correspondan a usuarios ocasionales.
+- Hay una pendiente menos pronunciada de ~750 a ~1700 publicaciones totales, que probablemente corresponda a usuarios no ocasionales, y después una pendiente casi horizontal.
 """)
 
 # Visualization: Commulative Density of number of posts per user
@@ -97,6 +97,6 @@ st.pyplot(plt)
 # Display description for visualization
 st.write("""
 #### Observaciones:
-- Entre los valores 0 y 1 en el logaritmo del número de mensajes en el eje de abscisas, hay un intervalo en el que la pendiente se aproxima a 0, y después sigue creciendo hasta el valor de ~2 en el eje de abscisas.
+- Entre los valores 0 y 1 en el logaritmo del número de publicaciones en el eje de abscisas, hay un intervalo en el que la pendiente se aproxima a 0, y después sigue creciendo hasta el valor de ~2 en el eje de abscisas.
 - Este cambio abrupto en la pendiente podría ser un indicador de dónde cortar los datos.
 """)
