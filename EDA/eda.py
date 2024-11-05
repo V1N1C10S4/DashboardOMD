@@ -40,5 +40,3 @@ species = st.multiselect(
 # Filter data based on user selection
 filtered_data = penguins[penguins['species'].isin(species)]
 summary(filtered_data)
-
-
