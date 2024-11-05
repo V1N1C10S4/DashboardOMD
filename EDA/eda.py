@@ -82,7 +82,7 @@ plt.title('Cumulative Density of Number of Posts per User')
 st.pyplot(plt)
 
 # Logarithmic distribution of Number of Posts
-st.write("## Logarithmic")
+st.write("### Logarithmic:")
 
 posts_df['num_interaction'] = posts_df['num_interaction'].replace(0, 1)
 posts_df['log_num_posts'] = np.log(posts_df['num_posts'])
