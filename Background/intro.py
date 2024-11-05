@@ -11,8 +11,8 @@ st.image(image, caption="Elections", use_column_width=True)
 st.markdown(
     """
     <div style='text-align: center; padding-top: 20px;'>
-        <h2 style='color: #4a4a4a;'>Introduction</h2>
-        <p style='font-size: 1.1em; color: #6c757d;'>
+        <h2 style='color: #FAFAFA;'>Introduction</h2>
+        <p style='font-size: 1.1em; color: #FAFAFA;'>
             The Instituto Nacional Electoral (INE) oversees federal elections in Mexico. Its responsibilities include organizing election day logistics, producing and distributing electoral materials, counting votes, and certifying the election results.
         </p>
     </div>
