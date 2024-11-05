@@ -63,7 +63,7 @@ plt.figure(figsize=(10, 6))
 sns.kdeplot(posts_df, x='num_posts', weights='num_interaction')
 plt.xlabel('Número de publicaciones')
 plt.ylabel('Densidad')
-plt.title('Densidad del número de mensajes por usuario')
+plt.title('Densidad del número de publicaciones por usuario')
 st.pyplot(plt)
 
 # Display description for visualization
@@ -78,7 +78,7 @@ plt.figure(figsize=(10, 6))
 sns.kdeplot(posts_df, x='num_posts', weights='num_interaction', cumulative=True)
 plt.xlabel('Número de publicaciones')
 plt.ylabel('Densidad')
-plt.title('Densidad acumulada del número de mensajes por usuario')
+plt.title('Densidad acumulada del número de publicaciones por usuario')
 st.pyplot(plt)
 
 # Logarithmic distribution of Number of Posts
@@ -91,7 +91,7 @@ plt.figure(figsize=(10, 6))
 sns.kdeplot(posts_df, x='log_num_posts')
 plt.xlabel('Log Número de publicaciones')
 plt.ylabel('Densidad')
-plt.title('Densidad del registro Número de mensajes por usuario')
+plt.title('Densidad del Log del número de publicaciones por usuario')
 st.pyplot(plt)
 
 # Display description for visualization
