@@ -10,7 +10,7 @@ st.header("Exploratory Data Analysis")
 
 def download_data():
     url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
-    output = 'cleansed_infotracer.csv'  # Guardar en el directorio raíz
+    output = 'cleansed_infotracer.csv'
     if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
 
@@ -18,7 +18,7 @@ def download_data():
 download_data()
 
 # Load data
-data = pd.read_csv("cleansed_infotracer.csv")  # Cargar desde el directorio raíz
+data = pd.read_csv("cleansed_infotracer.csv")
 
 # Display the first 5 rows to understand the structure
 st.write("### First 5 Rows of Dataset")
@@ -28,13 +28,10 @@ st.write(data.head())
 st.write("### Distribution of Number of Posts")
 
 # Create a DataFrame `posts_df` with the count of unique posts (URLs) per user.
-# The pivot_table groups by `username`, counts occurrences of `url` for each user, and sorts in descending order.
 posts_df = data.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
-# Rename the `url` column to `num_posts`
 posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
 
 # Create a temporary DataFrame `temp` with the total interactions per user.
-# This pivot_table groups by `username` and sums up the `num_interaction` values, sorting in descending order.
 temp = data.pivot_table(index='username', values='num_interaction', aggfunc='sum').sort_values(by='num_interaction', ascending=False).reset_index()
 temp.rename(columns={'num_interaction': 'num_interaction'}, inplace=True)
 
@@ -50,13 +47,10 @@ Analyzing the distribution of the number of posts in the newly created `posts_df
 - There is a lump between 1250 and 1500 total posts in the x-axis of a reduced number of users that have around 4x-5x times more posts than the casual user.
 """)
 
-# Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user, weighted by interactions
+# Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user
 plt.figure(figsize=(10, 6))
-sns.kdeplot(posts_df['num_posts'], weights=posts_df['num_interaction'])
+sns.kdeplot(posts_df['num_posts'])
 plt.xlabel('Number of Posts')
 plt.ylabel('Density')
 plt.title('Density of Number of Posts per User')
 st.pyplot(plt)
-
-# Other exploratory sections here, like Species selection, if still relevant
-# Additional analysis and visualizations can be added here.
