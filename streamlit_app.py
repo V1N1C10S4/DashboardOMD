@@ -41,7 +41,7 @@ ml = st.Page(
 eda = st.Page(
     "EDA/eda.py",
     title="EDA",
-    icon=":material/mag:",
+    icon=":material/person_add:",
 )
 
 about = st.Page(
