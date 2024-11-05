@@ -21,9 +21,14 @@ download_data()
 # Load data
 data = pd.read_csv("cleansed_infotracer.csv")
 
-# Display the first 5 rows to understand the structure
-st.write("### First 5 Rows of Dataset")
-st.write(data.head())
+# Description of the dataset
+st.write("""### The Dataset:
+         The infotracer data set comprises a sample of posts related to the Mexican presidential elections from January 1st 2024 throughout July 31st 2024, across X (formerly Twitter).""")
+
+# Description of the hypotesis
+st.write("""### Hypotesis:
+         Given Andrés Manuel López Obrador's (AMLO, former Mexican president) typical strategy of sharing misleading information to gather followers and divert public attention from controversies involving himself and his party, it is anticipated that a relatively small number of users will contribute a substantial share of social media activity, as they are assumed to be on the payroll of Morena's party. This activity often supports his party’s candidate, Claudia Sheinbaum, by discrediting opponents and promoting the Morena candidate. Conversely, a similar counter-strategy is expected from the main opposition party, supporting its candidate Xóchitl Gálvez, though likely with less intensity.
+         This exploratory data analysis (EDA) serves as a preliminary stage for more in-depth analysis (e.g., topic modeling, sentiment analysis). It aims to identify the most active users (e.g., by posts, interactions) on social media, segmented by platform and candidate. This identification of top users will guide the data slicing process, creating smaller, targeted subsets for further analysis.""")
 
 # Distribution of Number of Posts
 st.write("### Distribution of Number of Posts")
