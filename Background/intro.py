@@ -10,7 +10,7 @@ st.image(image, caption="Elecciones", use_column_width=True)
 # Display formatted text below the image
 st.markdown(
     """
-    <div style='text-align: center; padding-top: 20px;'>
+    <div style='text-align: left; padding-top: 20px;'>
         <h2 style='color: #FAFAFA;'>Introducción</h2>
         <p style='font-size: 1.1em; color: #FAFAFA;'>
             En la escena política de México, la campaña para las elecciones presidenciales de 2024 está llena de estrategias que buscan influir en la percepción pública. Andrés Manuel López Obrador (AMLO), ex presidente de México, ha sido conocido por emplear tácticas que desvían la atención de las controversias y consolidan el apoyo a su partido, Morena. Esto ha dado pie a la hipótesis de que una cantidad limitada de usuarios en redes sociales desempeñará un rol desproporcionado en la actividad mediática, posiblemente porque algunos de ellos reciben incentivos para apoyar a la candidata de Morena, Claudia Sheinbaum. Esta narrativa de apoyo suele manifestarse desacreditando a sus oponentes y promoviendo a Sheinbaum. Al mismo tiempo, la oposición representada por Xóchitl Gálvez, se espera que lance su propia estrategia en redes, aunque con menos intensidad.
