@@ -68,7 +68,7 @@ st.pyplot(plt)
 
 # Display description for visualization
 st.write("""
-#### Puntos importantes:
+#### Observaciones:
 - La pendiente más pronunciada se produce de 0 a ~750 publicaciones totales, que probablemente correspondan a usuarios ocasionales.
 - Hay una pendiente menos pronunciada de ~750 a ~1700 publicaciones totales, que probablemente corresponda a usuarios no ocasionales, y después una pendiente casi horizontal.
 """)
