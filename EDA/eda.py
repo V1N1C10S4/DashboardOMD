@@ -3,16 +3,22 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
+import gdown
 
 st.header("Exploratory Data Analysis")
 
-# Step 1: Load the dataset
-@st.cache
-def load_data():
-    return pd.read_csv("data/cleansed_infotracer.csv")  # Ruta ajustada
+def download_data():
+    url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
+    output = 'data/cleansed_infotracer.csv'
+    if not os.path.exists(output):
+        gdown.download(url, output, quiet=False)
+
+# Llama a la función antes de cargar los datos
+download_data()
 
 # Load data
-data = load_data()
+data = pd.read_csv("data/cleansed_infotracer.csv")
 
 # Display the first 5 rows to understand the structure
 st.write("### First 5 Rows of Dataset")

@@ -4,3 +4,4 @@
 *.sql
 *.sqlite
 *.csv
+data/cleansed_infotracer.csv
