@@ -7,7 +7,7 @@ import os
 import gdown
 import numpy as np
 
-st.header("Exploratory Data Analysis")
+st.header("Análisis Exploratorio de datos")
 
 def download_data():
     url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
@@ -23,20 +23,20 @@ data = pd.read_csv("cleansed_infotracer.csv")
 
 # Description of the dataset
 st.write("""
-#### The dataset:
-The infotracer data set comprises a sample of posts related to the Mexican presidential elections from January 1st 2024 throughout July 31st 2024, across X (formerly Twitter).
+#### El conjunto de datos:
+El conjunto de datos infotracer comprende una muestra de publicaciones relacionadas con las elecciones presidenciales mexicanas desde el 1 de enero de 2024 hasta el 31 de julio de 2024, a través de X (antes Twitter).
 """)
 
 # Description of the hypotesis
 st.write("""
 #### Hipotesis:
-Given Andrés Manuel López Obrador's (AMLO, former Mexican president) typical strategy of sharing misleading information to gather followers and divert public attention from controversies involving himself and his party, it is anticipated that a relatively small number of users will contribute a substantial share of social media activity, as they are assumed to be on the payroll of Morena's party. This activity often supports his party’s candidate, Claudia Sheinbaum, by discrediting opponents and promoting the Morena candidate. Conversely, a similar counter-strategy is expected from the main opposition party, supporting its candidate Xóchitl Gálvez, though likely with less intensity.
+Dada la estrategia típica de Andrés Manuel López Obrador (AMLO, ex presidente de México) de compartir información engañosa para reunir seguidores y desviar la atención pública de las controversias que lo involucran a él y a su partido, se anticipa que un número relativamente pequeño de usuarios contribuya con una parte sustancial de la actividad en redes sociales, pues se supone que están en la nómina del partido de Morena. Esta actividad suele apoyar a la candidata de su partido, Claudia Sheinbaum, desacreditando a los opositores y promoviendo a la candidata de Morena. A la inversa, se espera una contraestrategia similar por parte del principal partido de oposición, apoyando a su candidata Xóchitl Gálvez, aunque probablemente con menor intensidad.
          
-This exploratory data analysis (EDA) serves as a preliminary stage for more in-depth analysis (e.g., topic modeling, sentiment analysis). It aims to identify the most active users (e.g., by posts, interactions) on social media, segmented by platform and candidate. This identification of top users will guide the data slicing process, creating smaller, targeted subsets for further analysis.
+Este análisis exploratorio de datos (AED) sirve como etapa preliminar para un análisis más profundo (por ejemplo, modelado de temas, análisis de sentimientos). Su objetivo es identificar a los usuarios más activos (por ejemplo, por publicaciones, interacciones) en las redes sociales, segmentados por plataforma y candidato. Esta identificación de los principales usuarios guiará el proceso de segmentación de los datos, creando subconjuntos más pequeños y específicos para su posterior análisis.
 """)
 
 # Distribution of Number of Posts
-st.write("### Distribution of Number of Posts")
+st.write("### Distribución del número de publicaciones")
 
 # Create a DataFrame `posts_df` with the count of unique posts (URLs) per user.
 posts_df = data.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
@@ -51,11 +51,11 @@ posts_df = pd.merge(posts_df, temp, on='username', how='left')
 
 # Display description for visualization
 st.write("""
-Analyzing the distribution of the number of posts in the newly created `posts_df` to identify criteria for segmenting the top users.
+Analizar la distribución del número de posts en el recién creado `posts_df` para identificar criterios de segmentación de los principales usuarios.
 
-#### Observations:
-- Most users, likely casual users, have between 0 and ~250 total posts, from January 1st to July 31st.
-- There is a lump between 1250 and 1500 total posts in the x-axis of a reduced number of users that have around 4x-5x times more posts than the casual user.
+#### Observaciones:
+- La mayoría de los usuarios, probablemente usuarios ocasionales, tienen entre 0 y ~250 mensajes totales, del 1 de enero al 31 de julio.
+- En el eje de abscisas hay un grupo de entre 1.250 y 1.500 mensajes totales de un número reducido de usuarios que tienen entre 4 y 5 veces más mensajes que los usuarios ocasionales.
 """)
 
 # Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user
@@ -68,35 +68,35 @@ st.pyplot(plt)
 
 # Display description for visualization
 st.write("""
-#### Renmarks:
-- The steepest slope happens from 0 to ~750 total posts, that most likely correspond to casual users.
-- There is a less steep slope from ~750 to ~1700 total posts, most likely corresonding to non-casual users, and afterwards an almost horizontal slope.
+#### Puntos importantes:
+- La pendiente más pronunciada se produce de 0 a ~750 mensajes totales, que probablemente correspondan a usuarios ocasionales.
+- Hay una pendiente menos pronunciada de ~750 a ~1700 mensajes totales, que probablemente corresponda a usuarios no ocasionales, y después una pendiente casi horizontal.
 """)
 
 # Visualization: Commulative Density of number of posts per user
 plt.figure(figsize=(10, 6))
 sns.kdeplot(posts_df, x='num_posts', weights='num_interaction', cumulative=True)
-plt.xlabel('Number of Posts')
-plt.ylabel('Density')
-plt.title('Cumulative Density of Number of Posts per User')
+plt.xlabel('Número de publicaciones')
+plt.ylabel('Densidad')
+plt.title('Densidad acumulada del número de mensajes por usuario')
 st.pyplot(plt)
 
 # Logarithmic distribution of Number of Posts
-st.write("### Logarithmic:")
+st.write("### Logarítmico:")
 
 posts_df['num_interaction'] = posts_df['num_interaction'].replace(0, 1)
 posts_df['log_num_posts'] = np.log(posts_df['num_posts'])
 posts_df['log_num_interaction'] = np.log(posts_df['num_interaction'])
 plt.figure(figsize=(10, 6))
 sns.kdeplot(posts_df, x='log_num_posts')
-plt.xlabel('Log Number of Posts')
-plt.ylabel('Density')
-plt.title('Density of Log Number of Posts per User')
+plt.xlabel('Log Número de publicaciones')
+plt.ylabel('Densidad')
+plt.title('Densidad del registro Número de mensajes por usuario')
 st.pyplot(plt)
 
 # Display description for visualization
 st.write("""
-#### Renmarks:
-- Between 0 and 1 values in the log number of posts in the x-axis, there is a range where the slope aproximates 0, and then continues to grow afterwards until the value of ~2 in the x-axis.
-- This abrupt change in slope might be an indicator of where to slice the data.
+#### Observaciones:
+- Entre los valores 0 y 1 en el logaritmo del número de mensajes en el eje de abscisas, hay un intervalo en el que la pendiente se aproxima a 0, y después sigue creciendo hasta el valor de ~2 en el eje de abscisas.
+- Este cambio abrupto en la pendiente podría ser un indicador de dónde cortar los datos.
 """)
