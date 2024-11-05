@@ -49,7 +49,7 @@ Analyzing the distribution of the number of posts in the newly created `posts_df
 
 # Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user
 plt.figure(figsize=(10, 6))
-sns.kdeplot(posts_df['num_posts'])
+sns.kdeplot(posts_df, x='num_posts', weights='num_interaction')
 plt.xlabel('Number of Posts')
 plt.ylabel('Density')
 plt.title('Density of Number of Posts per User')
