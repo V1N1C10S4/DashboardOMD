@@ -54,3 +54,17 @@ plt.xlabel('Number of Posts')
 plt.ylabel('Density')
 plt.title('Density of Number of Posts per User')
 st.pyplot(plt)
+
+# Display description for visualization
+st.write("""
+#### Renmarks:
+- The steepest slope happens from 0 to ~750 total posts, that most likely correspond to casual users.
+- There is a less steep slope from ~750 to ~1700 total posts, most likely corresonding to non-casual users, and afterwards an almost horizontal slope.
+""")
+# Visualization: Commulative Density of number of posts per user
+
+plt.figure(figsize=(10, 6))
+sns.kdeplot(posts_df, x='num_posts', weights='num_interaction', cumulative=True)
+plt.xlabel('Number of Posts')
+plt.ylabel('Density')
+plt.title('Cumulative Density of Number of Posts per User')
