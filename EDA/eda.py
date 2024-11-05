@@ -9,7 +9,7 @@ st.header("Exploratory Data Analysis")
 # Step 1: Load the dataset
 @st.cache
 def load_data():
-    return pd.read_csv("data/cleansed_infotracer.csv")  # Ruta ajustada
+    return pd.read_csv("C:\Users\santo\OneDrive\Escritorio\DashboardOMD\DashboardOMD\data\cleansed_infotracer.csv")  # Ruta ajustada
 
 # Load data
 data = load_data()
