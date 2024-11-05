@@ -10,7 +10,7 @@ st.header("Exploratory Data Analysis")
 
 def download_data():
     url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
-    output = 'data/cleansed_infotracer.csv'
+    output = 'cleansed_infotracer.csv'  # Guardar en el directorio raíz
     if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
 
@@ -18,7 +18,7 @@ def download_data():
 download_data()
 
 # Load data
-data = pd.read_csv("data/cleansed_infotracer.csv")
+data = pd.read_csv("cleansed_infotracer.csv")  # Cargar desde el directorio raíz
 
 # Display the first 5 rows to understand the structure
 st.write("### First 5 Rows of Dataset")
