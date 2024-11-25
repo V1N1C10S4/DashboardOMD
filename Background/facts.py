@@ -54,7 +54,7 @@ with col2:
         </p>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             <strong>Influence Factor:</strong> 
-            Métricas clave que describe la contribución del usuario al número total de publicaciones, su contribución al total de interacciones y su tasa de compromiso (calculada la relación entre interacciones y publicaciones).
+            Métrica clave que describe la contribución del usuario al número total de publicaciones, su contribución al total de interacciones y su tasa de compromiso (calcula la relación entre interacciones y publicaciones).
         </p>
         <br><br>
 
