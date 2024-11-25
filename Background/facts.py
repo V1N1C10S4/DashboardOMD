@@ -56,7 +56,7 @@ with col2:
             <strong>Influence Factor:</strong> 
             Métricas clave que describe la contribución del usuario al número total de publicaciones, su contribución al total de interacciones y su tasa de compromiso (calculada la relación entre interacciones y publicaciones).
         </p>
-
+        <br><br>
 
         <h3 style='color: white;'>2. Descripción de candidatos y coaliciones</h3>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
@@ -68,7 +68,7 @@ with col2:
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             <strong>Jorge Álvarez Máynez (Movimiento Ciudadano):</strong> Representante del partido progresista, busca atraer votantes jóvenes y promover agendas de innovación y derechos civiles.
         </p>
-
+        <br><br>
 
         <h3 style='color: white;'>3. Contexto político y social</h3>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
