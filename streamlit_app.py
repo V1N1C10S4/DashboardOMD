@@ -23,7 +23,7 @@ introduccion = st.Page(
 datos_importantes = st.Page(
     "Background/facts.py",
     title="Datos importantes",
-    icon=":material/clipboard-text-outline:",
+    icon=":material/format-list-bulleted:",
 )
 
 eda = st.Page(
