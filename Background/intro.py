@@ -2,8 +2,8 @@ import streamlit as st
 from PIL import Image
 
 # Load images
-image_flag = Image.open("images/bandera_mexico.jpg")  # Imagen de la bandera mexicana
-image_combined = Image.open("images/candidatos_votaciones.png")  # Imagen combinada de candidatos y boletas
+image_flag = Image.open("images/mapa_mexico.jpg")  # Imagen de la bandera mexicana
+image_combined = Image.open("images/candidatos.png")  # Imagen combinada de candidatos y boletas
 
 # Main title and text
 st.markdown(
