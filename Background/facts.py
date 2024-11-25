@@ -4,7 +4,7 @@ from PIL import Image
 # Título principal fuera de las columnas
 st.markdown(
     """
-    <div style='text-align: left; padding-top: 20px;'>
+    <div style='text-align: center; padding-top: 20px;'>
         <h2 style='color: white;'>Datos importantes</h2>
     </div>
     """, unsafe_allow_html=True
@@ -14,7 +14,7 @@ st.markdown(
 st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
 
 # Configurar dos columnas con espacio entre ellas
-col1, _, col2 = st.columns([1, 0.1, 2])  # Añadir un espacio vacío entre las columnas
+col1, _, col2 = st.columns([1, 0.2, 2])  # Añadir un espacio vacío entre las columnas
 
 # Columna 1: Insertar tres imágenes con pies de imagen y espaciado vertical
 with col1:
@@ -76,7 +76,7 @@ with col2:
             Históricamente, la participación electoral ha oscilado entre el 55% y el 63%, pero las campañas digitales han demostrado ser una herramienta poderosa para movilizar votantes, especialmente entre jóvenes de 18 a 29 años.
         </p>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
-            Es por esto que las elecciones presidenciales de 2024 son un parteaguas en la historia democrática de México, con un escenario digital como protagonista central, tanto para los candidatos como para los votantes. Estas elecciones no solo decidirán quién liderará al país, sino también cómo evolucionará la democracia en la era de la información.
+            Es por esto que las elecciones presidenciales de 2024 son un parteaguas en la historia democrática de México, con un escenario digital como protagonista central, tanto para los candidatos como para los votantes. Estas elecciones no solo decidieron quién liderará al país, sino también cómo evolucionará la democracia en la era de la información.
         </p>
         """,
         unsafe_allow_html=True
