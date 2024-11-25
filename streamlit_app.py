@@ -17,7 +17,7 @@ st.markdown(
 introduccion = st.Page(
     "Background/intro.py",
     title="Introducción",
-    icon=":material/information-outline:",
+    icon=":material/home:",
 )
 
 datos_importantes = st.Page(
