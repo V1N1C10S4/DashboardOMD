@@ -36,4 +36,4 @@ df = pd.DataFrame({
 })
 
 fig = px.scatter(df, x="x", y="y", color="z", title="Gráfico de prueba con Plotly")
-fig.show() 
+fig.show()
