@@ -8,8 +8,8 @@ image_combined = Image.open("images/candidatos.png")  # Imagen combinada de cand
 # Configuración de tamaños de imágenes (manual)
 map_width = 500  # Ancho en píxeles para la imagen del mapa
 map_height = 300  # Alto en píxeles (si deseas redimensionar proporcionalmente, este valor no es necesario)
-combined_width = 600  # Ancho en píxeles para la imagen combinada
-combined_height = 800  # Alto en píxeles (opcional)
+combined_width = 650  # Ancho en píxeles para la imagen combinada
+combined_height = 850  # Alto en píxeles (opcional)
 
 # Título de la sección (independiente de las columnas)
 st.markdown(
