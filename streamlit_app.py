@@ -17,7 +17,7 @@ st.markdown(
 introduccion = st.Page(
     "Background/intro.py",
     title="Introducción",
-    icon="📘",
+    icon="🏠",
 )
 
 datos_importantes = st.Page(
@@ -67,9 +67,9 @@ st.logo("images/OMD2.png", icon_image="images/OMD2.png")
 
 # Diccionario de navegación en español
 page_dict = {
-    "Introducción": introduccion_pages,
+    "Panorama General del Proyecto": introduccion_pages,
     "Análisis de datos": analisis_datos_pages,
-    "Conclusiones": conclusiones_pages,
+    "Hallazgos y Perspectivas Finales": conclusiones_pages,
     "Quiénes somos": quienes_somos_pages,
 }
 
