@@ -50,7 +50,7 @@ with col2:
             <strong>Claudia Sheinbaum (MORENA):</strong> Ex jefa de gobierno de la Ciudad de México, representa a la coalición de izquierda MORENA-PT-PVEM. Se enfoca en programas sociales y desarrollo sostenible.
         </p>
         <p style='font-size: 1.1em; color: white;'>
-            <strong>Xóchitl Gálvez (PAN-PRI-PRD):</strong> Ingeniera y empresaria, candidata de la coalición opositora de derecha-centro. Conocida por su discurso combativo y enfoque en infraestructura.
+            <strong>Xóchitl Gálvez (PAN-PRI-PRD):</strong> Ingeniera y empresaria, candidata de la coalición opositora de derecha-centro uerza y Corazón por México. Conocida por su discurso combativo y enfoque en infraestructura.
         </p>
         <p style='font-size: 1.1em; color: white;'>
             <strong>Jorge Álvarez Máynez (Movimiento Ciudadano):</strong> Representante del partido progresista, busca atraer votantes jóvenes y promover agendas de innovación y derechos civiles.
