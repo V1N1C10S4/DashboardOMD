@@ -5,6 +5,12 @@ from PIL import Image
 image_map = Image.open("images/mapa_mexico.png")  # Imagen del mapa de México
 image_combined = Image.open("images/candidatos.png")  # Imagen combinada de candidatos y boletas
 
+# Configuración de tamaños de imágenes (manual)
+map_width = 500  # Ancho en píxeles para la imagen del mapa
+map_height = 300  # Alto en píxeles (si deseas redimensionar proporcionalmente, este valor no es necesario)
+combined_width = 400  # Ancho en píxeles para la imagen combinada
+combined_height = 600  # Alto en píxeles (opcional)
+
 # Título de la sección (independiente de las columnas)
 st.markdown(
     """
@@ -13,13 +19,6 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
-
-# Control de tamaño de imágenes
-st.sidebar.markdown("### Ajuste de tamaño de imágenes")
-map_width = st.sidebar.slider("Ancho de la imagen del mapa (%)", min_value=10, max_value=100, value=50)
-map_height = st.sidebar.slider("Alto de la imagen del mapa (%)", min_value=10, max_value=100, value=50)
-combined_width = st.sidebar.slider("Ancho de la imagen combinada (%)", min_value=10, max_value=100, value=50)
-combined_height = st.sidebar.slider("Alto de la imagen combinada (%)", min_value=10, max_value=100, value=50)
 
 # Diseño en columnas
 col1, col2 = st.columns([1.5, 2])  # Ajustar proporciones para reducir el ancho de la columna izquierda
@@ -44,9 +43,9 @@ with col1:
         </div>
         """, unsafe_allow_html=True
     )
-    # Imagen del mapa dentro de la columna izquierda con tamaño dinámico
-    st.image(image_map, caption="Resultados electorales", width=int(map_width * 70), use_column_width=False)
+    # Imagen del mapa dentro de la columna izquierda con tamaño configurado manualmente
+    st.image(image_map, caption="Resultados electorales", width=map_width)
 
 with col2:
-    # Imagen combinada en la columna derecha con tamaño dinámico
-    st.image(image_combined, caption="Candidatos y boletas electorales", width=int(combined_width * 100), use_column_width=False)
+    # Imagen combinada en la columna derecha con tamaño configurado manualmente
+    st.image(image_combined, caption="Candidatos y boletas electorales", width=combined_width)
