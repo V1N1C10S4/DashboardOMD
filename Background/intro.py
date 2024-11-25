@@ -24,7 +24,7 @@ st.markdown(
 st.markdown("<div style='margin-top: 30px;'></div>", unsafe_allow_html=True)
 
 # Diseño en columnas con espacio adicional entre ellas
-col1, _, col2 = st.columns([1.5, 0.3, 1.8])  # Añadimos un espacio vacío entre las dos columnas
+col1, _, col2 = st.columns([1.5, 0.2, 1.7])  # Añadimos un espacio vacío entre las dos columnas
 
 with col1:
     # Introducción con salto de línea entre párrafos
