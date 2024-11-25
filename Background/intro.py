@@ -26,10 +26,9 @@ with col1:
         </div>
         """, unsafe_allow_html=True
     )
+    # Imagen del mapa dentro de la misma columna que la información
+    st.image(image_map, caption="Resultados electorales", use_column_width=True)
 
 with col2:
-    # Imagen al costado
+    # Imagen al costado derecho
     st.image(image_combined, caption="Candidatos y boletas electorales", use_column_width=True)
-
-# Mapa de México (debajo del texto e imagen combinada)
-st.image(image_map, caption="Resultados electorales", use_column_width=True)
