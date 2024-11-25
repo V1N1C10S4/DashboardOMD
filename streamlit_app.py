@@ -57,7 +57,7 @@ sobre_nosotros = st.Page(
 )
 
 derechos_autor = st.Page(
-    "Background\example.py",
+    "Background\copyright.py",
     title="Derechos de autor",
     icon=":material/person_add:",
 )
