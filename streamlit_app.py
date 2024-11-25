@@ -23,37 +23,37 @@ introduccion = st.Page(
 datos_importantes = st.Page(
     "Background/facts.py",
     title="Datos importantes",
-    icon=":material/poll:",
+    icon=":material/note-text:",
 )
 
 eda = st.Page(
     "EDA/eda.py",
     title="EDA",
-    icon=":material/chart-bar:",
+    icon=":material/magnify:",
 )
 
 clustering = st.Page(
     "Clustering/clustering.py",
     title="Clustering",
-    icon=":material/graph-outline:",
+    icon=":material/trending-up:",
 )
 
 sentiment_analysis = st.Page(
     "ml/ml_analysis.py",
     title="Análisis de sentimientos",
-    icon=":material/emoticon-happy-outline:",
+    icon=":material/emoticon-happy:",
 )
 
 conclusiones = st.Page(
     "Background/conclusions.py",
     title="Conclusiones",
-    icon=":material/check-circle-outline:",
+    icon=":material/check-circle:",
 )
 
 sobre_nosotros = st.Page(
     "Background/about.py",
     title="Sobre nosotros",
-    icon=":material/account-group-outline:",
+    icon=":material/account-group:",
 )
 
 # Organización de las páginas por subsección
