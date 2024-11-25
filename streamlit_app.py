@@ -23,7 +23,7 @@ introduccion = st.Page(
 datos_importantes = st.Page(
     "Background/facts.py",
     title="Datos importantes",
-    icon=":material/chart-bar:",
+    icon=":material/poll:",
 )
 
 eda = st.Page(
