@@ -56,17 +56,11 @@ sobre_nosotros = st.Page(
     icon=":material/person_add:",
 )
 
-derechos_autor = st.Page(
-    "Background\copyright.py",
-    title="Derechos de autor",
-    icon=":material/person_add:",
-)
-
 # Organización de las páginas por subsección
 introduccion_pages = [introduccion, datos_importantes]
 analisis_datos_pages = [eda, clustering, sentiment_analysis]
 conclusiones_pages = [conclusiones]
-quienes_somos_pages = [sobre_nosotros, derechos_autor]
+quienes_somos_pages = [sobre_nosotros]
 
 # Logotipo con tamaño personalizado
 st.logo("images/OMD2.png", icon_image="images/OMD2.png")
