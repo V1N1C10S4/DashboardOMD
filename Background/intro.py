@@ -24,7 +24,7 @@ st.markdown(
 st.markdown("<div style='margin-top: 30px;'></div>", unsafe_allow_html=True)
 
 # Diseño en columnas con espacio adicional entre ellas
-col1, _, col2 = st.columns([1.5, 0.5, 2])  # Añadimos un espacio vacío entre las dos columnas
+col1, _, col2 = st.columns([1.5, 0.3, 1.8])  # Añadimos un espacio vacío entre las dos columnas
 
 with col1:
     # Introducción con salto de línea entre párrafos
@@ -38,7 +38,6 @@ with col1:
             </p>
             <br>
             <p style='font-size: 1.1em; color: #FAFAFA; text-align: justify;'>
-
                 En su esencia, este dashboard no solo se centra en las elecciones como evento, sino en cómo las voces individuales y colectivas moldean 
                 la narrativa pública en un acontecimiento de tal magnitud. Al identificar anomalías y comportamientos inusuales, buscamos extraer insights 
                 clave que permitan comprender mejor a la sociedad en procesos históricos como este, con el potencial de transformar cómo entendemos la 
