@@ -17,7 +17,7 @@ st.markdown(
 st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
 
 # Configurar dos columnas con espacio entre ellas
-col1, _, col2 = st.columns([1, 0.2, 2])  # Añadir un espacio vacío entre las columnas
+col1, _, col2 = st.columns([1, 0.1, 2])  # Añadir un espacio vacío entre las columnas
 
 # Columna 1: Mostrar la imagen
 with col1:
