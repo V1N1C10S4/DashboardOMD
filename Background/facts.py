@@ -54,7 +54,7 @@ with col2:
         </p>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             <strong>Influence Factor:</strong> 
-            Métrica que mide el impacto o nivel de influencia de un usuario en redes sociales, calculada a partir de interacciones como likes, retweets y comentarios. Usuarios con mayor factor de influencia suelen moldear la narrativa pública.
+            Métricas clave que describe la contribución del usuario al número total de publicaciones, su contribución al total de interacciones y su tasa de compromiso (calculada la relación entre interacciones y publicaciones).
         </p>
         
         <h3 style='color: white;'>2. Descripción de candidatos y coaliciones</h3>
@@ -74,6 +74,9 @@ with col2:
         </p>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             Históricamente, la participación electoral ha oscilado entre el 55% y el 63%, pero las campañas digitales han demostrado ser una herramienta poderosa para movilizar votantes, especialmente entre jóvenes de 18 a 29 años.
+        </p>
+        <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
+            Es por esto que las elecciones presidenciales de 2024 son un parteaguas en la historia democrática de México, con un escenario digital como protagonista central, tanto para los candidatos como para los votantes. Estas elecciones no solo decidirán quién liderará al país, sino también cómo evolucionará la democracia en la era de la información.
         </p>
         """,
         unsafe_allow_html=True
