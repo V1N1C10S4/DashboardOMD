@@ -57,7 +57,7 @@ with col2:
             Métricas clave que describe la contribución del usuario al número total de publicaciones, su contribución al total de interacciones y su tasa de compromiso (calculada la relación entre interacciones y publicaciones).
         </p>
 
-        </p>
+
         <h3 style='color: white;'>2. Descripción de candidatos y coaliciones</h3>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             <strong>Claudia Sheinbaum (MORENA):</strong> Ex jefa de gobierno de la Ciudad de México, representa a la coalición de izquierda MORENA-PT-PVEM. Se enfoca en programas sociales y desarrollo sostenible.
@@ -68,8 +68,8 @@ with col2:
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             <strong>Jorge Álvarez Máynez (Movimiento Ciudadano):</strong> Representante del partido progresista, busca atraer votantes jóvenes y promover agendas de innovación y derechos civiles.
         </p>
-        
-        </p>
+
+
         <h3 style='color: white;'>3. Contexto político y social</h3>
         <p style='font-size: 1.1em; color: white; line-height: 1.8;'>
             México se encuentra en un momento crucial para su democracia. Las elecciones presidenciales de 2024 están marcadas por el impacto de las redes sociales, donde el 80% de los votantes activos interactúan con contenido político en plataformas como X, Facebook e Instagram. 
