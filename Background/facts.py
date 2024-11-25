@@ -1,9 +1,6 @@
 import streamlit as st
 from PIL import Image
 
-# Cargar imagen
-image = Image.open("images/mapa.webp")
-
 # Título principal fuera de las columnas
 st.markdown(
     """
@@ -19,9 +16,21 @@ st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
 # Configurar dos columnas con espacio entre ellas
 col1, _, col2 = st.columns([1, 0.1, 2])  # Añadir un espacio vacío entre las columnas
 
-# Columna 1: Mostrar la imagen
+# Columna 1: Insertar tres imágenes con espaciado entre ellas
 with col1:
-    st.image(image, use_column_width=True)
+    # Primera imagen
+    image1 = Image.open("images/Claudia_Sheinbaum.jpg")
+    st.image(image1, use_column_width=True)
+    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)  # Espacio vertical
+    
+    # Segunda imagen
+    image2 = Image.open("images/Xochitl_Galvez.jpg")
+    st.image(image2, use_column_width=True)
+    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)  # Espacio vertical
+    
+    # Tercera imagen
+    image3 = Image.open("images/Jorge_Alvarez_Maynez.jpg")
+    st.image(image3, use_column_width=True)
 
 # Columna 2: Mostrar el texto formateado
 with col2:
@@ -50,7 +59,7 @@ with col2:
             <strong>Claudia Sheinbaum (MORENA):</strong> Ex jefa de gobierno de la Ciudad de México, representa a la coalición de izquierda MORENA-PT-PVEM. Se enfoca en programas sociales y desarrollo sostenible.
         </p>
         <p style='font-size: 1.1em; color: white;'>
-            <strong>Xóchitl Gálvez (PAN-PRI-PRD):</strong> Ingeniera y empresaria, candidata de la coalición opositora de derecha-centro uerza y Corazón por México. Conocida por su discurso combativo y enfoque en infraestructura.
+            <strong>Xóchitl Gálvez (PAN-PRI-PRD):</strong> Ingeniera y empresaria, candidata de la coalición opositora de derecha-centro Fuerza y Corazón por México. Conocida por su discurso combativo y enfoque en infraestructura.
         </p>
         <p style='font-size: 1.1em; color: white;'>
             <strong>Jorge Álvarez Máynez (Movimiento Ciudadano):</strong> Representante del partido progresista, busca atraer votantes jóvenes y promover agendas de innovación y derechos civiles.
