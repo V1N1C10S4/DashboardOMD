@@ -17,43 +17,43 @@ st.markdown(
 introduccion = st.Page(
     "Background/intro.py",
     title="Introducción",
-    icon=":material/help:",
+    icon=":material/information-outline:",
 )
 
 datos_importantes = st.Page(
     "Background/facts.py",
     title="Datos importantes",
-    icon=":material/help:",
+    icon=":material/clipboard-text-outline:",
 )
 
 eda = st.Page(
     "EDA/eda.py",
     title="EDA",
-    icon=":material/person_add:",
+    icon=":material/chart-bar:",
 )
 
 clustering = st.Page(
     "Clustering/clustering.py",
     title="Clustering",
-    icon=":material/person_add:",
+    icon=":material/graph-outline:",
 )
 
 sentiment_analysis = st.Page(
     "ml/ml_analysis.py",
     title="Análisis de sentimientos",
-    icon=":material/healing:",
+    icon=":material/emoticon-happy-outline:",
 )
 
 conclusiones = st.Page(
     "Background/conclusions.py",
     title="Conclusiones",
-    icon=":material/help:",
+    icon=":material/check-circle-outline:",
 )
 
 sobre_nosotros = st.Page(
     "Background/about.py",
     title="Sobre nosotros",
-    icon=":material/person_add:",
+    icon=":material/account-group-outline:",
 )
 
 # Organización de las páginas por subsección
