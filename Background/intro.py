@@ -45,8 +45,8 @@ with col1:
         """, unsafe_allow_html=True
     )
     # Imagen del mapa dentro de la columna izquierda con tamaño dinámico
-    st.image(image_map, caption="Resultados electorales", width=int(map_width * 10), use_column_width=False)
+    st.image(image_map, caption="Resultados electorales", width=int(map_width * 70), use_column_width=False)
 
 with col2:
     # Imagen combinada en la columna derecha con tamaño dinámico
-    st.image(image_combined, caption="Candidatos y boletas electorales", width=int(combined_width * 10), use_column_width=False)
+    st.image(image_combined, caption="Candidatos y boletas electorales", width=int(combined_width * 100), use_column_width=False)
