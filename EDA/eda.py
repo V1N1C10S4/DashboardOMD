@@ -98,7 +98,9 @@ fig.update_layout(
     legend=dict(
         title="Elementos",  # Título de la leyenda
         orientation="h",  # Orientación horizontal
+        yanchor="bottom",
         y=1.02,
+        xanchor="center",
         x=5,
         bordercolor="gray",
         borderwidth=1
@@ -108,4 +110,3 @@ fig.update_layout(
 # Mostrar la gráfica actualizada
 st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
-
