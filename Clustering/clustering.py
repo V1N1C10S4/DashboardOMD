@@ -111,7 +111,6 @@ violin_fig.update_layout(
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
     yaxis_title="Longitud Promedio de Texto",
-    title=None,  # Eliminar el título
 )
 
 # Boxplot ajustado con colores manuales
@@ -138,14 +137,15 @@ boxplot_fig.update_layout(
     yaxis_title="Factor de Influencia",
     template="plotly_dark",  # Tema oscuro
     height=600,  # Altura del gráfico
-    title=None,  # Eliminar el título
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
 col1, col2 = st.columns([1.2, 1])  # Ajustar las proporciones de las columnas
 
 with col1:
+    st.subheader("Distribución de Longitud Promedio")
     st.plotly_chart(violin_fig, use_container_width=True)  # Visualización del violin plot
 
 with col2:
+    st.subheader("Distribución del Factor de Influencia")
     st.plotly_chart(boxplot_fig, use_container_width=True)  # Visualización del boxplot
