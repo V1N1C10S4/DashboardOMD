@@ -109,7 +109,7 @@ fig.add_trace(go.Scatter(
 ))
 
 # Mostrar en Streamlit
-st.subheader("Análisis del Factor de Influencia")
+st.header("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
@@ -211,5 +211,5 @@ fig2.update_layout(
 )
 
 # Mostrar la gráfica en Streamlit
-st.subheader("Comparación de Métricas por Grupo de Usuarios")
+st.header("Comparación de Métricas por Grupo de Usuarios")
 st.plotly_chart(fig2, use_container_width=True)
