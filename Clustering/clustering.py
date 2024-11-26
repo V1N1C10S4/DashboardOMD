@@ -93,7 +93,6 @@ violin_fig = px.violin(
     color=data['cluster'].astype(str),  # Convertir los clusters a string para categorías
     box=True,  # Mostrar boxplot dentro del violin plot
     points=False,  # No mostrar puntos individuales
-    title="Distribución de Longitud Promedio por Clúster",
     labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio"},
     color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
 )
@@ -131,12 +130,6 @@ for cluster in sorted(clusters):
 
 # Ajustar diseño del boxplot
 boxplot_fig.update_layout(
-    title={
-        'text': "Distribución del Factor de Influencia por Clúster",
-        'x': 0.5,
-        'xanchor': 'left',
-        'yanchor': 'top'
-    },
     xaxis_title="Clúster",
     yaxis_title="Factor de Influencia",
     template="plotly_dark",  # Tema oscuro
