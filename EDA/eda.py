@@ -20,8 +20,6 @@ posts_df = df.pivot_table(index='username', values='url', aggfunc='count').reset
 posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
 temp = df.pivot_table(index='username', values='num_interaction', aggfunc='sum').reset_index()
 posts_df = pd.merge(posts_df, temp, on='username', how='left')
-
-# Use established calculations
 posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts'].replace(0, np.nan)
 posts_df['%_posts'] = (posts_df['num_posts'] / posts_df['num_posts'].sum()).fillna(0) * 100
 posts_df['%_interaction'] = (posts_df['num_interaction'] / posts_df['num_interaction'].sum()).fillna(0) * 100
@@ -32,7 +30,7 @@ posts_df['influence_factor'] = np.log(
 # Calculate KDE for influence_factor
 influence_factor = posts_df['influence_factor'].dropna()
 density = gaussian_kde(influence_factor)
-x_vals = np.linspace(influence_factor.min(), influence_factor.max(), 500)  # Original range
+x_vals = np.linspace(influence_factor.min(), influence_factor.max(), 500)
 y_vals = density(x_vals)
 
 # Create the Plotly figure
@@ -47,14 +45,16 @@ fig.add_trace(go.Scatter(
     name="KDE"
 ))
 
-# Update layout to match the original style
+# Update layout
 fig.update_layout(
     title="Density of Influence Factor per User",
     xaxis_title="Influence Factor",
     yaxis_title="Density",
-    template="plotly_white",  # Use light theme to match the original
+    template="plotly_white",
     height=600,
-    showlegend=True
+    showlegend=False,  # No legend as per original Seaborn plot
+    xaxis=dict(range=[-20, 15]),  # Adjust range similar to the original
+    yaxis=dict(showgrid=True, zeroline=False),  # Match the grid style
 )
 
 # Display the chart in Streamlit
