@@ -42,7 +42,7 @@ fig.add_trace(go.Scatter(
     x=x_range,
     y=density,
     mode='lines',
-    line=dict(color='blue', width=2),
+    line=dict(color='blue', width=4),
     name='Density'
 ))
 
@@ -63,13 +63,13 @@ fig.update_layout(
     xaxis=dict(
         showgrid=True,
         gridcolor="Gray",  # Color tenue para las gridlines
-        gridwidth=0.2,
+        gridwidth=0.1,
         zeroline=False
     ),
     yaxis=dict(
         showgrid=True,
         gridcolor="Gray",  # Color tenue para las gridlines
-        gridwidth=0.2,
+        gridwidth=0.1,
         zeroline=False
     )
 )
