@@ -1,43 +1,37 @@
-# Import necessary libraries
+# Importar las bibliotecas necesarias
 import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import os
-import gdown
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 from scipy.stats import gaussian_kde
 
+# Configurar la sección del dashboard
 st.header("Análisis Exploratorio de Datos")
 
-def download_data():
+# Función para cargar los datos
+@st.cache_data
+def load_data():
     url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
     output = 'cleansed_infotracer.csv'
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
+    df = pd.read_csv(output)
+    df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
+    return df
 
-# Descargar datos
-download_data()
+# Cargar los datos
+df = load_data()
 
-# Load data
-df = pd.read_csv("cleansed_infotracer.csv")
-
-# Asegurarse de que la columna datetime sea del tipo correcto
-df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
-
-# Calcular métricas necesarias
+# Calcular las métricas necesarias para la gráfica
 posts_df = df.pivot_table(index='username', values='url', aggfunc='count').reset_index()
 posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
 temp = df.pivot_table(index='username', values='num_interaction', aggfunc='sum').reset_index()
 posts_df = pd.merge(posts_df, temp, on='username', how='left')
 
-# Evitar divisiones por cero y errores en logs
+# Evitar divisiones por cero
 posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts'].replace(0, np.nan)
 posts_df['%_posts'] = (posts_df['num_posts'] / posts_df['num_posts'].sum()).fillna(0) * 100
 posts_df['%_interaction'] = (posts_df['num_interaction'] / posts_df['num_interaction'].sum()).fillna(0) * 100
 
-# Influence Factor
+# Calcular el "Influence Factor"
 posts_df['influence_factor'] = np.log(
     (posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']).replace(0, np.nan) * 100
 ).fillna(0)
@@ -60,35 +54,31 @@ threshold = np.log(
     (expected_engagement_rate * 100)
 )
 
-# Crear el histograma y la curva de densidad
+# Calcular la curva KDE
+x = np.linspace(posts_df['influence_factor'].min(), posts_df['influence_factor'].max(), 1000)
+kde = gaussian_kde(posts_df['influence_factor'])
+y = kde(x)
+
+# Crear la visualización con Plotly
 fig = go.Figure()
 
-# Calcular la densidad con gaussian_kde
-kde = gaussian_kde(posts_df['influence_factor'].dropna())
-x_vals = np.linspace(posts_df['influence_factor'].min(), posts_df['influence_factor'].max(), 500)
-y_vals = kde(x_vals)
+# Curva KDE
+fig.add_trace(go.Scatter(
+    x=x,
+    y=y,
+    mode='lines',
+    line=dict(color='blue', width=2),
+    name="KDE"
+))
 
-# Agregar la curva de densidad
-fig.add_trace(
-    go.Scatter(
-        x=x_vals,
-        y=y_vals,
-        mode="lines",
-        name="Density",
-        line=dict(color="blue"),
-    )
-)
-
-# Agregar la línea de umbral
-fig.add_trace(
-    go.Scatter(
-        x=[threshold, threshold],
-        y=[0, y_vals.max()],
-        mode="lines",
-        line=dict(color="gray", dash="dash", width=2),
-        name="Threshold Influence Factor",
-    )
-)
+# Línea del umbral
+fig.add_trace(go.Scatter(
+    x=[threshold, threshold],
+    y=[0, max(y)],
+    mode='lines',
+    line=dict(color='gray', dash='dash', width=2),
+    name="Threshold Influence Factor"
+))
 
 # Configurar el diseño
 fig.update_layout(
@@ -97,7 +87,7 @@ fig.update_layout(
     yaxis_title="Density",
     template="plotly_dark",
     height=600,
-    showlegend=True,
+    showlegend=True
 )
 
 # Mostrar la gráfica en Streamlit
