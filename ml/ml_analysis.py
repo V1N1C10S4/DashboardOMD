@@ -89,36 +89,37 @@ fig = go.Figure()
 fig.add_trace(go.Bar(
     x=sentiment_comparison['User Type'],  # Eje X: Tipos de usuario
     y=sentiment_comparison['Average Sentiment'],  # Eje Y: Sentimiento promedio
-    marker_color=['#FF4500', '#1E90FF'],  # Paleta de colores Vivid (naranja y azul)
+    marker_color=['#FFB400', '#4CC3D9'],  # Colores Vivid (amarillo y azul claro)
     text=sentiment_comparison['Average Sentiment'],  # Etiquetas de valores
     textposition='auto',  # Mostrar etiquetas automáticamente
-    name='Average Sentiment'  # Nombre de la traza
+    name='Sentimiento Promedio'  # Nombre de la traza
 ))
 
 # Configuración del diseño
 fig.update_layout(
     title={
-        'text': 'Comparison of Average Sentiment Between Top Users and Non-Top Users',
+        'text': 'Comparación del Sentimiento Promedio entre Usuarios Top y No Top',
         'x': 0.5,  # Centrar título
         'xanchor': 'center',
-        'font': {'size': 18, 'color': 'black', 'family': 'Arial'}
+        'font': {'size': 18, 'color': 'white', 'family': 'Arial'}
     },
     xaxis=dict(
-        title='User Type',
-        titlefont=dict(size=14, color='black'),
-        tickfont=dict(size=12, color='black')
+        title='Tipo de Usuario',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white')
     ),
     yaxis=dict(
-        title='Average Sentiment',
-        titlefont=dict(size=14, color='black'),
-        tickfont=dict(size=12, color='black'),
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
         range=[min(sentiment_comparison['Average Sentiment']) - 0.1, 
                max(sentiment_comparison['Average Sentiment']) + 0.1],
         showgrid=True,  # Activar líneas de cuadrícula
         gridwidth=0.5,
-        gridcolor='lightgray'
+        gridcolor='gray'
     ),
-    plot_bgcolor='white',  # Fondo blanco para mayor legibilidad
+    plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Fondo de todo el gráfico transparente
     showlegend=False  # Ocultar la leyenda
 )
 
