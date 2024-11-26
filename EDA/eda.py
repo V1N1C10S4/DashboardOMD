@@ -127,11 +127,10 @@ results_df['%_interaction'] = (results_df['total_interactions'] / results_df['to
 results_df['%_posts'] = (results_df['total_posts'] / results_df['total_posts'].sum() * 100).round(2)
 results_df['%_users'] = (results_df['total_users'] / results_df['total_users'].sum() * 100).round(2)
 results_df.reset_index(inplace=True)
-results_df.rename(columns={'index': 'Grupo de Usuarios'}, inplace=True)
 
-# Actualizar los datos reorganizados para incluir el nuevo índice como columna
+# Reorganizar los datos para el gráfico
 melted_results = results_df.melt(
-    id_vars=['Grupo de Usuarios'],
+    id_vars=['results_df.index.name'],
     value_vars=['%_interaction', '%_posts', '%_users'],
     var_name='Métrica',
     value_name='Porcentaje'
@@ -147,7 +146,7 @@ vivid_colors = px.colors.qualitative.Vivid
 for i, metric in enumerate(melted_results['Métrica'].unique()):
     filtered_data = melted_results[melted_results['Métrica'] == metric]
     fig2.add_trace(go.Bar(
-        x=filtered_data['Grupo de Usuarios'],
+        x=filtered_data[results_df.index.name],
         y=filtered_data['Porcentaje'],
         name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
         text=filtered_data['Porcentaje'],  # Mostrar los valores
