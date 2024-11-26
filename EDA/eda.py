@@ -27,15 +27,18 @@ posts_df = pd.merge(posts_df, temp, on='username', how='left')
 posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts']
 posts_df['%_posts'] = posts_df['num_posts'] / posts_df['num_posts'].sum() * 100
 posts_df['%_interaction'] = posts_df['num_interaction'] / posts_df['num_interaction'].sum() * 100
-posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
 
-# Paso 5: Generar estimación de densidad usando KDE
-influence_factor = posts_df['influence_factor'].dropna()  # Elimina valores nulos
+# Paso 5: Calcular `influence_factor` y eliminar valores inválidos
+posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
+posts_df = posts_df.replace([np.inf, -np.inf], np.nan).dropna(subset=['influence_factor'])  # Eliminar valores problemáticos
+
+# Paso 6: Generar estimación de densidad usando KDE
+influence_factor = posts_df['influence_factor']
 kde = gaussian_kde(influence_factor)
 x_range = np.linspace(influence_factor.min() - 5, influence_factor.max() + 5, 500)
 density = kde(x_range)
 
-# Paso 6: Crear la gráfica de densidad con Plotly
+# Paso 7: Crear la gráfica de densidad con Plotly
 fig = go.Figure()
 
 fig.add_trace(go.Scatter(
