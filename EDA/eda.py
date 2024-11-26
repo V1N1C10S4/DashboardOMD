@@ -61,13 +61,13 @@ fig.update_layout(
     yaxis_title="Densidad",
     template="simple_white",
     xaxis=dict(
-        showgrid=True,
+        showgrid=False,
         gridcolor="gray",  # Color tenue para las gridlines
         gridwidth=0.1,
         zeroline=True
     ),
     yaxis=dict(
-        showgrid=True,
+        showgrid=False,
         gridcolor="gray",  # Color tenue para las gridlines
         gridwidth=0.1,
         zeroline=True
