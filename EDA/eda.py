@@ -113,13 +113,16 @@ st.header("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
-## Factor de influencia para segmentar usuarios:
+# Factor de influencia para segmentar usuarios:
 Considerando que la densidad cae significativamente después del umbral, se reconoce que sólo una pequeña parte de los usuarios cumplen los criterios para ser usuarios influyentes.
 """)
 
 st.write("""
 La larga cola de valores positivos sugiere que un segmento muy pequeño de usuarios es muy influyente, contribuyendo significativamente más a las publicaciones, interacciones y participación.
 """)
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
 # Crear una segunda gráfica en Plotly adaptada al dashboard de Streamlit
 
@@ -213,3 +216,24 @@ fig2.update_layout(
 # Mostrar la gráfica en Streamlit
 st.header("Comparación de Métricas por Grupo de Usuarios")
 st.plotly_chart(fig2, use_container_width=True)
+
+st.write("""
+# Impacto de los Usuarios Influyentes vs. Comunes:
+**Comunes:**
+         - % Interacción: 3.85% 
+                Los Usuarios Comunes generan una cantidad mínima de interacciones en comparación con el total. Esto demuestra que su impacto en la interacción global es casi insignificante.
+         - % Publicaciones: 45.54%
+                Generan menos de la mitad de las publicaciones. Esto indica que su actividad en la creación de contenido es moderada, en comparación con su alta representación total.
+         - % Usuarios: 93.87%
+                Los Usuarios Comunes constituyen la abrumadora mayoría de la base de usuarios (casi el 94%). Sin embargo, su aporte en interacciones es desproporcionadamente bajo en comparación con su número.      
+""")
+
+st.write("""
+**Influyentes:**
+         - % Interacción: 96.15% 
+                Los Usuarios Influyentes generan casi todas las interacciones. Este grupo domina claramente el engagement, a pesar de ser una fracción mínima del total de usuarios.
+         - % Publicaciones: 54.46%
+                Generan más de la mitad de las publicaciones. Esto indica que los Usuarios Influyentes son altamente activos en la creación de contenido.
+         - % Usuarios: 6.13%
+                Los Usuarios Influyentes representan una pequeña fracción del total, pero su contribución en publicaciones e interacciones es masiva, lo que subraya su importancia estratégica.
+""")
