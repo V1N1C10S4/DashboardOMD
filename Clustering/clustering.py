@@ -109,10 +109,10 @@ fig.update_layout(
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
 
-# Add the 'cluster' column to the DataFrame
+# Añadir la columna 'cluster' al DataFrame
 data['cluster'] = clusters
 
-# Group by clusters and calculate descriptive statistics
+# Agrupar por clústeres y calcular estadísticas descriptivas
 cluster_analysis = data.groupby('cluster').agg({
     'influence_factor': ['mean', 'std', 'min', 'max'],
     'avg_text_len': ['mean', 'std', 'min', 'max'],
@@ -123,61 +123,61 @@ cluster_analysis = data.groupby('cluster').agg({
     'top_mentioned_candidate_Xóchitl Gálvez': ['mean']
 }).reset_index()
 
-# Rename columns for clarity
+# Renombrar columnas para mayor claridad
 cluster_analysis.columns = [
-    'cluster',
-    'influence_factor_mean', 'influence_factor_std', 'influence_factor_min', 'influence_factor_max',
-    'avg_text_len_mean', 'avg_text_len_std', 'avg_text_len_min', 'avg_text_len_max',
-    'avg_time_elapsed_mean', 'avg_time_elapsed_std', 'avg_time_elapsed_min', 'avg_time_elapsed_max',
-    'preferred_time_mean', 'preferred_time_std', 'preferred_time_min', 'preferred_time_max',
-    'pct_claudia_sheinbaum', 'pct_jorge_alvarez_maynez', 'pct_xochitl_galvez'
+    'Clúster',
+    'Influencia Promedio', 'Desv. Estándar Influencia', 'Influencia Mínima', 'Influencia Máxima',
+    'Longitud Texto Promedio', 'Desv. Estándar Longitud Texto', 'Longitud Texto Mínima', 'Longitud Texto Máxima',
+    'Tiempo Promedio entre Posts', 'Desv. Estándar Tiempo entre Posts', 'Tiempo Mínimo entre Posts', 'Tiempo Máximo entre Posts',
+    'Hora Preferida Promedio', 'Desv. Estándar Hora Preferida', 'Hora Preferida Mínima', 'Hora Preferida Máxima',
+    '% Menciones Claudia Sheinbaum', '% Menciones Jorge Álvarez Máynez', '% Menciones Xóchitl Gálvez'
 ]
 
-# Create an organized summary DataFrame
-organized_cluster_data = []
+# Crear un DataFrame con los datos organizados por clúster
+datos_clúster_organizados = []
 
-for cluster_id in cluster_analysis['cluster']:
-    cluster_data = data[data['cluster'] == cluster_id]
-    total_users = len(cluster_data)
-    avg_influence = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['influence_factor_mean'].values[0]
-    avg_text_len = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['avg_text_len_mean'].values[0]
-    avg_time_elapsed = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['avg_time_elapsed_mean'].values[0]
+for cluster_id in cluster_analysis['Clúster']:
+    datos_clúster = data[data['cluster'] == cluster_id]
+    total_usuarios = len(datos_clúster)
+    influencia_promedio = cluster_analysis[cluster_analysis['Clúster'] == cluster_id]['Influencia Promedio'].values[0]
+    longitud_texto_promedio = cluster_analysis[cluster_analysis['Clúster'] == cluster_id]['Longitud Texto Promedio'].values[0]
+    tiempo_promedio = cluster_analysis[cluster_analysis['Clúster'] == cluster_id]['Tiempo Promedio entre Posts'].values[0]
 
-    mentioned_distribution = cluster_data[['top_mentioned_candidate_Claudia Sheinbaum',
-                                           'top_mentioned_candidate_Jorge Álvarez Máynez',
-                                           'top_mentioned_candidate_Xóchitl Gálvez']].mean()
+    distribucion_menciones = datos_clúster[['top_mentioned_candidate_Claudia Sheinbaum',
+                                            'top_mentioned_candidate_Jorge Álvarez Máynez',
+                                            'top_mentioned_candidate_Xóchitl Gálvez']].mean()
 
-    organized_cluster_data.append({
-        'Cluster ID': cluster_id,
-        'Total Users': total_users,
-        'Average Influence': round(avg_influence, 2),
-        'Average Text Length': round(avg_text_len, 2),
-        'Average Time Elapsed': round(avg_time_elapsed, 2),
-        'Pct Claudia Sheinbaum': round(mentioned_distribution['top_mentioned_candidate_Claudia Sheinbaum'], 4),
-        'Pct Jorge Álvarez Máynez': round(mentioned_distribution['top_mentioned_candidate_Jorge Álvarez Máynez'], 4),
-        'Pct Xóchitl Gálvez': round(mentioned_distribution['top_mentioned_candidate_Xóchitl Gálvez'], 4)
+    datos_clúster_organizados.append({
+        'ID Clúster': cluster_id,
+        'Total de Usuarios': total_usuarios,
+        'Influencia Promedio': round(influencia_promedio, 2),
+        'Longitud Texto Promedio': round(longitud_texto_promedio, 2),
+        'Tiempo Promedio entre Posts': round(tiempo_promedio, 2),
+        '% Menciones Claudia Sheinbaum': round(distribucion_menciones['top_mentioned_candidate_Claudia Sheinbaum'], 4),
+        '% Menciones Jorge Álvarez Máynez': round(distribucion_menciones['top_mentioned_candidate_Jorge Álvarez Máynez'], 4),
+        '% Menciones Xóchitl Gálvez': round(distribucion_menciones['top_mentioned_candidate_Xóchitl Gálvez'], 4)
     })
 
-organized_cluster_df = pd.DataFrame(organized_cluster_data)
+datos_clúster_df = pd.DataFrame(datos_clúster_organizados)
 
-# Add the summary DataFrame to Streamlit
-st.header("Cluster Analysis Summary")
-st.write("Below is a summary of key statistics for each cluster:")
-st.dataframe(organized_cluster_df, use_container_width=True)
+# Mostrar el DataFrame en Streamlit
+st.header("Resumen del Análisis por Clúster")
+st.write("A continuación se presenta un resumen de las métricas clave para cada clúster:")
+st.dataframe(datos_clúster_df, use_container_width=True)
 
-# Detailed analysis for each cluster
-st.subheader("Detailed Analysis by Cluster")
-for _, row in organized_cluster_df.iterrows():
-    cluster_id = row['Cluster ID']
-    st.markdown(f"### Cluster {cluster_id} Analysis")
-    st.markdown(f"- **Total Users**: {row['Total Users']}")
-    st.markdown(f"- **Average Influence**: {row['Average Influence']}")
-    st.markdown(f"- **Average Text Length**: {row['Average Text Length']}")
-    st.markdown(f"- **Average Time Elapsed Between Posts**: {row['Average Time Elapsed']} seconds")
-    st.markdown("#### Candidate Mention Distribution:")
-    st.markdown(f"- **Claudia Sheinbaum**: {row['Pct Claudia Sheinbaum']*100:.2f}%")
-    st.markdown(f"- **Jorge Álvarez Máynez**: {row['Pct Jorge Álvarez Máynez']*100:.2f}%")
-    st.markdown(f"- **Xóchitl Gálvez**: {row['Pct Xóchitl Gálvez']*100:.2f}%")
+# Análisis detallado para cada clúster
+st.subheader("Análisis Detallado por Clúster")
+for _, fila in datos_clúster_df.iterrows():
+    cluster_id = fila['ID Clúster']
+    st.markdown(f"### Análisis del Clúster {cluster_id}")
+    st.markdown(f"- **Total de Usuarios**: {fila['Total de Usuarios']}")
+    st.markdown(f"- **Influencia Promedio**: {fila['Influencia Promedio']}")
+    st.markdown(f"- **Longitud Promedio del Texto**: {fila['Longitud Texto Promedio']}")
+    st.markdown(f"- **Tiempo Promedio entre Posts**: {fila['Tiempo Promedio entre Posts']} segundos")
+    st.markdown("#### Distribución de Menciones por Candidato:")
+    st.markdown(f"- **Claudia Sheinbaum**: {fila['% Menciones Claudia Sheinbaum']*100:.2f}%")
+    st.markdown(f"- **Jorge Álvarez Máynez**: {fila['% Menciones Jorge Álvarez Máynez']*100:.2f}%")
+    st.markdown(f"- **Xóchitl Gálvez**: {fila['% Menciones Xóchitl Gálvez']*100:.2f}%")
 
 st.write("""
 ### Aspectos destacados de clústers por candidato:
