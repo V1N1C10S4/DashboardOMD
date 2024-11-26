@@ -127,35 +127,42 @@ results_df['%_interaction'] = (results_df['total_interactions'] / results_df['to
 results_df['%_posts'] = (results_df['total_posts'] / results_df['total_posts'].sum() * 100).round(2)
 results_df['%_users'] = (results_df['total_users'] / results_df['total_users'].sum() * 100).round(2)
 results_df.reset_index(inplace=True)
+results_df.rename(columns={'index': 'Grupo de Usuarios'}, inplace=True)
 
-# Reorganizar los datos para el gráfico
+# Actualizar los datos reorganizados para incluir el nuevo índice como columna
 melted_results = results_df.melt(
-    id_vars=['top_user_indicator'],
+    id_vars=['Grupo de Usuarios'],
     value_vars=['%_interaction', '%_posts', '%_users'],
-    var_name='metric',
-    value_name='value'
+    var_name='Métrica',
+    value_name='Porcentaje'
 )
 
-# Crear la gráfica en Plotly con barras agrupadas en lugar de apiladas
+# Crear la gráfica en Plotly con colores de la paleta "Vivid" y barras agrupadas
 fig2 = go.Figure()
 
-# Añadir barras agrupadas para cada métrica
-for metric in melted_results['metric'].unique():
-    filtered_data = melted_results[melted_results['metric'] == metric]
+# Asignar colores de la paleta "Vivid" a las métricas
+vivid_colors = px.colors.qualitative.Vivid
+
+# Añadir barras agrupadas para cada métrica con colores específicos
+for i, metric in enumerate(melted_results['Métrica'].unique()):
+    filtered_data = melted_results[melted_results['Métrica'] == metric]
     fig2.add_trace(go.Bar(
-        x=filtered_data['top_user_indicator'],
-        y=filtered_data['value'],
+        x=filtered_data['Grupo de Usuarios'],
+        y=filtered_data['Porcentaje'],
         name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
-        text=filtered_data['value'],  # Mostrar los valores
-        textposition='auto'
+        text=filtered_data['Porcentaje'],  # Mostrar los valores
+        textposition='auto',
+        marker_color=vivid_colors[i % len(vivid_colors)]  # Usar colores de la paleta "Vivid"
     ))
 
 # Configurar diseño de la gráfica
 fig2.update_layout(
+    title="Comparación de Métricas por Grupo de Usuarios",
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
     barmode='group',  # Barras agrupadas
     template="simple_white",
+    title_font=dict(size=18, color='#333333', family="Arial"),
     xaxis=dict(title_font=dict(size=14, weight='bold')),
     yaxis=dict(title_font=dict(size=14, weight='bold')),
     legend=dict(
