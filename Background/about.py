@@ -22,21 +22,21 @@ st.markdown("""
         </div>
         <div>
             <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
-            <p style="color: black; font-size: 14px; font-weight: bold;">Manuel Medina Juárez<br>ITD</p>
+            <p style="color: black; font-size: 14px; font-weight: bold;">Manuel Medina Juárez<br>LAF</p>
         </div>
         <div>
             <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
-            <p style="color: black; font-size: 14px; font-weight: bold;">Gabriel Josué Tabango Espinoza<br>ITD</p>
+            <p style="color: black; font-size: 14px; font-weight: bold;">Gabriel Josué Tabango Espinoza<br>LEM</p>
         </div>
     </div>
     <div style="display: flex; justify-content: space-evenly; margin-top: 0px;"> <!-- Espacio reducido entre filas -->
         <div>
             <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
-            <p style="color: black; font-size: 14px; font-weight: bold;">Andrés Emiliano Martínez Fuentes<br>ITD</p>
+            <p style="color: black; font-size: 14px; font-weight: bold;">Andrés Emiliano Martínez Fuentes<br>IIS</p>
         </div>
         <div>
             <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
-            <p style="color: black; font-size: 14px; font-weight: bold;">Luis Fernando González Cortés<br>ITD</p>
+            <p style="color: black; font-size: 14px; font-weight: bold;">Luis Fernando González Cortés<br>IMD</p>
         </div>
     </div>
 </div>
