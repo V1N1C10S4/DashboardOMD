@@ -93,20 +93,6 @@ fig.add_trace(go.Scatter(
     showlegend=False
 ))
 
-# Ajustar la ubicación y el estilo de la leyenda
-fig.update_layout(
-    legend=dict(
-        title="Elementos",  # Título de la leyenda
-        orientation="h",  # Orientación horizontal
-        yanchor="bottom",
-        y=1.02,
-        xanchor="center",
-        x=5,
-        bordercolor="gray",
-        borderwidth=1
-    )
-)
-
-# Mostrar la gráfica actualizada
+# Mostrar en Streamlit
 st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
