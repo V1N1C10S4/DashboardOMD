@@ -85,7 +85,11 @@ st.plotly_chart(fig, use_container_width=True)
 
 #Visualizaciones secundarias
 
-# Violin plot ajustado con colores Vivid
+# Definir una paleta de colores Vivid y asignarla manualmente a cada clúster
+vivid_colors = px.colors.qualitative.Vivid
+color_mapping = {0: vivid_colors[0], 1: vivid_colors[1], 2: vivid_colors[2]}  # Mapear clusters a colores
+
+# Violin plot ajustado con colores manuales
 violin_fig = px.violin(
     data,
     x="cluster",
@@ -94,7 +98,7 @@ violin_fig = px.violin(
     box=True,  # Mostrar boxplot dentro del violin plot
     points=False,  # No mostrar puntos individuales
     labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio"},
-    color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
+    color_discrete_map={str(key): value for key, value in color_mapping.items()}  # Usar colores asignados manualmente
 )
 
 # Ajustar diseño del violin plot
@@ -110,11 +114,10 @@ violin_fig.update_layout(
     title_x=0.5,  # Centrar el título
 )
 
-# Boxplot ajustado con colores Vivid
+# Boxplot ajustado con colores manuales
 boxplot_fig = go.Figure()
 
-# Crear un boxplot para cada cluster, asignando colores de la misma paleta
-vivid_colors = px.colors.qualitative.Vivid
+# Crear un boxplot para cada cluster, asignando colores manualmente
 clusters = sorted(data['cluster'].unique())  # Asegurar un orden consistente
 for cluster in clusters:
     cluster_data = data[data['cluster'] == cluster]
@@ -124,7 +127,7 @@ for cluster in clusters:
             name=f"Clúster {cluster}",
             boxpoints='outliers',  # Mostrar solo los outliers
             whiskerwidth=0.8,  # Ajustar ancho de los bigotes
-            marker=dict(size=5, color=vivid_colors[cluster]),  # Usar colores Vivid
+            marker=dict(size=5, color=color_mapping[cluster]),  # Usar colores asignados manualmente
             line=dict(width=1.5),  # Ancho de las líneas
         )
     )
