@@ -41,6 +41,14 @@ density = kde(x_range)
 # Paso 7: Crear la gráfica de densidad con Plotly
 fig = go.Figure()
 
+fig.add_trace(go.Scatter(
+    x=x_range,
+    y=density,
+    mode='lines',
+    line=dict(color='blue', width=2),
+    name='Density'
+))
+
 # Añadir la línea punteada para el threshold en -3.1165083206837174
 fig.add_trace(go.Scatter(
     x=[-3.1165083206837174, -3.1165083206837174],
