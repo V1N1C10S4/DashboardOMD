@@ -191,10 +191,11 @@ fig = px.bar(
 
 # Ajustar diseño del gráfico
 fig.update_layout(
+    title=None,  # Eliminar el título
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
     yaxis_title="Valor Promedio",
-    title_x=0.5  # Centrar el título
+    title_x=0.5  # Centrar el título (no aplicará si el título está vacío)
 )
 
 # Integrar el gráfico en Streamlit
