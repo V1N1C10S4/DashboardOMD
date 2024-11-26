@@ -76,7 +76,7 @@ fig.update_layout(
 
 # Añadir etiquetas descriptivas
 fig.add_trace(go.Scatter(
-    x=[-6],  # Posición izquierda de la línea
+    x=[-7],  # Posición izquierda de la línea
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Comunes"],  # Texto para usuarios comunes
     mode="text",
@@ -85,7 +85,7 @@ fig.add_trace(go.Scatter(
 ))
 
 fig.add_trace(go.Scatter(
-    x=[0],  # Posición derecha de la línea
+    x=[0.3],  # Posición derecha de la línea
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Influyentes"],  # Texto para usuarios influyentes
     mode="text",
@@ -96,3 +96,73 @@ fig.add_trace(go.Scatter(
 # Mostrar en Streamlit
 st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
+
+# Crear una segunda gráfica en Plotly adaptada al dashboard de Streamlit
+
+# Filtrar y transformar los datos según el código proporcionado
+treshold_influence_factor = -3.1165083206837174  # Umbral definido
+top_users_df = posts_df[posts_df['influence_factor'] > treshold_influence_factor]
+
+results_df = posts_df.pivot_table(index='top_user_indicator',
+                                  values=['num_posts', 'num_interaction'],
+                                  aggfunc='sum')
+temp = posts_df.pivot_table(index='top_user_indicator',
+                            values='username',
+                            aggfunc='count')
+results_df = pd.merge(results_df, temp, on='top_user_indicator', how='left')
+results_df.rename(columns={
+    'num_interaction': 'total_interactions',
+    'num_posts': 'total_posts',
+    'username': 'total_users'
+}, inplace=True)
+results_df.rename(index={0: 'casual_user', 1: 'top_user'}, inplace=True)
+results_df['%_interaction'] = (results_df['total_interactions'] / results_df['total_interactions'].sum() * 100).round(2)
+results_df['%_posts'] = (results_df['total_posts'] / results_df['total_posts'].sum() * 100).round(2)
+results_df['%_users'] = (results_df['total_users'] / results_df['total_users'].sum() * 100).round(2)
+results_df.reset_index(inplace=True)
+
+# Reorganizar los datos para el gráfico
+melted_results = results_df.melt(
+    id_vars=['top_user_indicator'],
+    value_vars=['%_interaction', '%_posts', '%_users'],
+    var_name='metric',
+    value_name='value'
+)
+
+# Crear la gráfica en Plotly
+fig2 = go.Figure()
+
+# Añadir barras apiladas
+for metric in melted_results['metric'].unique():
+    filtered_data = melted_results[melted_results['metric'] == metric]
+    fig2.add_trace(go.Bar(
+        x=filtered_data['top_user_indicator'],
+        y=filtered_data['value'],
+        name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
+        text=filtered_data['value'],  # Mostrar los valores
+        textposition='auto'
+    ))
+
+# Configurar diseño de la gráfica
+fig2.update_layout(
+    title="Comparación de Métricas por Grupo de Usuarios",
+    xaxis_title="Grupo de Usuarios",
+    yaxis_title="% del Total",
+    barmode='stack',  # Barras apiladas
+    template="simple_white",
+    title_font=dict(size=18, color='#333333', family="Arial"),
+    xaxis=dict(title_font=dict(size=14, weight='bold')),
+    yaxis=dict(title_font=dict(size=14, weight='bold')),
+    legend=dict(
+        title="Métricas",
+        orientation="h",
+        yanchor="bottom",
+        y=-0.2,
+        xanchor="center",
+        x=0.5
+    )
+)
+
+# Mostrar la gráfica en Streamlit
+st.subheader("Comparación de Métricas por Grupo de Usuarios")
+st.plotly_chart(fig2, use_container_width=True)
