@@ -19,9 +19,9 @@ st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
 # Cargar los datos
 url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F'
-df = pd.read_csv(url)
+df = pd.read_csv(url, nrows=5000)  # Carga las primeras 5000 filas
 
-# Mostrar los primeros 5 elementos del dataset
+# Mostrar los primeros elementos
 st.write("Primeros 5 elementos del dataset:")
 st.dataframe(df.head())
 
