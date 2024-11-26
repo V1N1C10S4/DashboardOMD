@@ -113,7 +113,7 @@ st.header("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
-# Factor de influencia para segmentar usuarios:
+### Factor de influencia para segmentar usuarios:
 Considerando que la densidad cae significativamente después del umbral, se reconoce que sólo una pequeña parte de los usuarios cumplen los criterios para ser usuarios influyentes.
 """)
 
@@ -218,7 +218,7 @@ st.header("Comparación de Métricas por Grupo de Usuarios")
 st.plotly_chart(fig2, use_container_width=True)
 
 st.write("""
-## Impacto de los Usuarios Influyentes vs. Comunes:
+### Impacto de los Usuarios Influyentes vs. Comunes:
          
 **Comunes:**
 - % Interacción 3.85%: Los Usuarios Comunes generan una cantidad mínima de interacciones en comparación con el total. Esto demuestra que su impacto en la interacción global es casi insignificante.
