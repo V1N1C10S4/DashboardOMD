@@ -1,51 +1,86 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-import sys
-import os
+import numpy as np
+from scipy.stats import gaussian_kde
+import plotly.graph_objects as go
+import plotly.express as px
 
-# Get the absolute path of the `module1` directory
-eda_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../EDA"))
-# Add it to sys.path
-sys.path.append(eda_path)
+st.title("Análisis de Sentimientos")
 
-# Now, you can import `eda.py`
-import eda
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
+st.write("""
+Se teorizó que un pequeño grupo de usuarios acapara la mayor parte de la influencia en la plataforma de redes sociales X (antes Twitter). Este fenómeno sugiere que estos usuarios pueden compartir características comunes, como rasgos demográficos, patrones de compromiso o afiliaciones políticas, que merece la pena explorar.
+""")
 
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
-st.header("🤖 Machine Learning")
+# Cargar los datos
+url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F'
+df = pd.read_csv(url)
 
+# Configuración de Streamlit
+st.title("Tendencia Promedio del Sentimiento por Semana")
 
-# Define features and target
-X = eda.filtered_data[['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']].dropna()
-y = eda.filtered_data['species'].dropna()
+# Calcular el sentimiento promedio por semana
+# Asegúrate de que df tiene una columna datetime y sentiment antes de calcular esto
+df['datetime'] = pd.to_datetime(df['datetime'])  # Asegurar formato datetime
+df.set_index('datetime', inplace=True)
+sentiment_by_week = df['sentiment'].resample('W').mean()  # Resample y cálculo
 
-# Train-Test Split
-if not X.empty and not y.empty:
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Crear gráfica en Plotly
+fig = go.Figure()
 
-    # Train the Random Forest Classifier
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
+# Línea de sentimiento promedio
+fig.add_trace(go.Scatter(
+    x=sentiment_by_week.index,
+    y=sentiment_by_week.values,
+    mode='lines+markers',
+    marker=dict(color='lightblue', size=6),
+    line=dict(color='lightblue', width=2),
+    name='Sentimiento Promedio'
+))
 
-    # Predictions
-    y_pred = model.predict(X_test)
+# Configuración de diseño
+fig.update_layout(
+    title=dict(
+        text="Tendencia Promedio del Sentimiento por Semana",
+        font=dict(size=16, color='black', family='Arial'),
+        x=0.5,  # Centrado
+        xanchor='center'
+    ),
+    xaxis=dict(
+        title='Mes',
+        titlefont=dict(size=14, color='black'),
+        tickformat='%b',  # Mes abreviado
+        tickangle=45,
+        tickfont=dict(size=10, color='gray')
+    ),
+    yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='black'),
+        tickfont=dict(size=10, color='gray'),
+        gridcolor='lightgray',
+        gridwidth=0.5
+    ),
+    legend=dict(
+        title='Leyenda',
+        orientation='h',
+        yanchor='bottom',
+        y=1.02,
+        xanchor='center',
+        x=0.5,
+        font=dict(size=10)
+    ),
+    plot_bgcolor='white',
+    margin=dict(l=20, r=20, t=50, b=20),
+)
 
-    # Display the classification report
-    st.write("### Classification Report")
-    st.text(classification_report(y_test, y_pred))
+# Configuración de líneas de la cuadrícula (horizontal únicamente)
+fig.update_xaxes(showgrid=False)
+fig.update_yaxes(showgrid=True, gridwidth=0.6, gridcolor='lightgray', zeroline=False)
 
-    # Confusion Matrix
-    st.write("### Confusion Matrix")
-    cm = confusion_matrix(y_test, y_pred)
-    plt.figure(figsize=(10, 5))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
-    plt.title("Confusion Matrix")
-    plt.xlabel("Predicted")
-    plt.ylabel("True")
-    st.pyplot(plt)
+# Mostrar gráfico en Streamlit
+st.plotly_chart(fig, use_container_width=True)
