@@ -4,6 +4,8 @@ import numpy as np
 from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 import plotly.express as px
+import os
+import gdown
 
 st.title("Análisis de Sentimientos")
 
@@ -17,10 +19,33 @@ Se teorizó que un pequeño grupo de usuarios acapara la mayor parte de la influ
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Sube tu archivo CSV")
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.dataframe(df.head())
+def download_data():
+    url = 'https://drive.google.com/uc?id=15xmlau62Th5Vl3MF9DpfY_9Xrl8-jU7L'
+    output = 'Sentiment_1.csv'
+    if not os.path.exists(output):
+        gdown.download(url, output, quiet=False)
+
+# Llama a la función antes de cargar los datos
+download_data()
+
+# Load data
+df1 = pd.read_csv("Sentiment_1.csv")
+
+def download_data():
+    url = 'https://drive.google.com/uc?id=1-7uTVd08Wh1a-YziQIeOGRxydbjZAwSb'
+    output = 'Sentiment_2.csv'
+    if not os.path.exists(output):
+        gdown.download(url, output, quiet=False)
+
+# Llama a la función antes de cargar los datos
+download_data()
+
+# Load data
+df2 = pd.read_csv("Sentiment_2.csv")
+
+# Combinar los dos DataFrames
+df = pd.concat([df1, df2], ignore_index=True)
+
 
 # Asegurar que la columna 'datetime' está en formato datetime
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
