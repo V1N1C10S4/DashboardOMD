@@ -136,10 +136,10 @@ melted_results = results_df.melt(
     value_name='value'
 )
 
-# Crear la gráfica en Plotly
+# Crear la gráfica en Plotly con barras agrupadas en lugar de apiladas
 fig2 = go.Figure()
 
-# Añadir barras apiladas
+# Añadir barras agrupadas para cada métrica
 for metric in melted_results['metric'].unique():
     filtered_data = melted_results[melted_results['metric'] == metric]
     fig2.add_trace(go.Bar(
@@ -154,7 +154,7 @@ for metric in melted_results['metric'].unique():
 fig2.update_layout(
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
-    barmode='stack',  # Barras apiladas
+    barmode='group',  # Barras agrupadas
     template="simple_white",
     xaxis=dict(title_font=dict(size=14, weight='bold')),
     yaxis=dict(title_font=dict(size=14, weight='bold')),
