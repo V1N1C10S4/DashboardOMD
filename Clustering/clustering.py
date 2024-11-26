@@ -105,6 +105,10 @@ fig.update_layout(
     yaxis_title="Componente principal 2 (PCA2)"
 )
 
+# Configuración para Streamlit
+st.title("Clustering de usuarios en X")
+st.plotly_chart(fig, use_container_width=True)
+
 # Add the 'cluster' column to the DataFrame
 data['cluster'] = clusters
 
@@ -174,10 +178,6 @@ for _, row in organized_cluster_df.iterrows():
     st.markdown(f"- **Claudia Sheinbaum**: {row['Pct Claudia Sheinbaum']*100:.2f}%")
     st.markdown(f"- **Jorge Álvarez Máynez**: {row['Pct Jorge Álvarez Máynez']*100:.2f}%")
     st.markdown(f"- **Xóchitl Gálvez**: {row['Pct Xóchitl Gálvez']*100:.2f}%")
-
-# Configuración para Streamlit
-st.title("Clustering de usuarios en X")
-st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
 ### Aspectos destacados de clústers por candidato:
