@@ -64,7 +64,7 @@ fig = px.scatter(
     x='PCA1',
     y='PCA2',
     color=pca_df['cluster'].astype(str),  # Convertir cluster a cadena para una leyenda categórica
-    title="Clustering basado en PCA y KMeans",
+    title="Basado en PCA y KMeans",
     labels={'cluster': 'Cluster'},
     color_discrete_sequence=px.colors.qualitative.Vivid  # Colores vibrantes
 )
