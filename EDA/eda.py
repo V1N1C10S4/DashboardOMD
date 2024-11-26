@@ -101,7 +101,7 @@ fig.update_layout(
         yanchor="bottom",
         y=1.02,
         xanchor="right",
-        x=15,
+        x=10,
         bordercolor="gray",
         borderwidth=1
     )
@@ -110,3 +110,4 @@ fig.update_layout(
 # Mostrar la gráfica actualizada
 st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
+
