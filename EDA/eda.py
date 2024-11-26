@@ -7,10 +7,9 @@ import os
 import gdown
 import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 from scipy.stats import gaussian_kde
 
-st.header("Análisis Exploratorio de datos")
+st.header("Análisis Exploratorio de Datos")
 
 def download_data():
     url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
@@ -18,7 +17,7 @@ def download_data():
     if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
 
-# Llama a la función antes de cargar los datos
+# Descargar datos
 download_data()
 
 # Load data
@@ -61,32 +60,45 @@ threshold = np.log(
     (expected_engagement_rate * 100)
 )
 
-# Crear gráfico de densidad interactivo
-fig = px.density_contour(
-    posts_df,
-    x='influence_factor',
-    title="Density of Influence Factor per User",
-    labels={'influence_factor': 'Influence Factor'},
-    template="plotly_dark"
-)
+# Crear el histograma y la curva de densidad
+fig = go.Figure()
 
+# Calcular la densidad con gaussian_kde
+kde = gaussian_kde(posts_df['influence_factor'].dropna())
+x_vals = np.linspace(posts_df['influence_factor'].min(), posts_df['influence_factor'].max(), 500)
+y_vals = kde(x_vals)
+
+# Agregar la curva de densidad
 fig.add_trace(
     go.Scatter(
-        x=[threshold, threshold],
-        y=[0, 1],
-        mode='lines',
-        line=dict(color='gray', dash='dash', width=2),
-        name='Threshold Influence Factor'
+        x=x_vals,
+        y=y_vals,
+        mode="lines",
+        name="Density",
+        line=dict(color="blue"),
     )
 )
 
-fig.update_layout(
-    xaxis_title="Influence Factor",
-    yaxis_title="Density",
-    title_x=0.5,
-    height=600,
-    showlegend=True
+# Agregar la línea de umbral
+fig.add_trace(
+    go.Scatter(
+        x=[threshold, threshold],
+        y=[0, y_vals.max()],
+        mode="lines",
+        line=dict(color="gray", dash="dash", width=2),
+        name="Threshold Influence Factor",
+    )
 )
 
-# Mostrar en Streamlit
+# Configurar el diseño
+fig.update_layout(
+    title="Density of Influence Factor per User",
+    xaxis_title="Influence Factor",
+    yaxis_title="Density",
+    template="plotly_dark",
+    height=600,
+    showlegend=True,
+)
+
+# Mostrar la gráfica en Streamlit
 st.plotly_chart(fig, use_container_width=True)
