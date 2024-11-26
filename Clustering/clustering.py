@@ -83,17 +83,19 @@ fig.update_layout(
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
 
-# Violin plot interactivo usando Plotly
+#Visualizaciones secundarias
+
+# Violin plot ajustado
 violin_fig = px.violin(
     data,
     x="cluster",
     y="avg_text_len",
     color=data['cluster'].astype(str),  # Convertir los clusters a string para categorías
     box=True,  # Mostrar boxplot dentro del violin plot
-    points="all",  # Mostrar todos los puntos individuales
+    points=False,  # No mostrar puntos individuales
     title="Distribución de Longitud Promedio por Clúster",
     labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio"},
-    color_discrete_sequence=px.colors.qualitative.Vivid,  # Paleta de colores Vivid
+    color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
 )
 
 # Ajustar diseño del violin plot
@@ -104,10 +106,10 @@ violin_fig.update_layout(
     title_x=0.5,  # Centrar el título
 )
 
-# Boxplot interactivo usando Plotly
+# Boxplot ajustado
 boxplot_fig = go.Figure()
 
-# Crear un boxplot para cada cluster
+# Crear un boxplot para cada cluster, mostrando solo los outliers
 clusters = data['cluster'].unique()
 for cluster in sorted(clusters):
     cluster_data = data[data['cluster'] == cluster]
@@ -115,8 +117,7 @@ for cluster in sorted(clusters):
         go.Box(
             y=cluster_data['influence_factor'],
             name=f"Clúster {cluster}",
-            boxpoints='all',  # Mostrar todos los puntos
-            jitter=0.3,  # Dispersión de los puntos
+            boxpoints='outliers',  # Mostrar solo los outliers
             whiskerwidth=0.8,  # Ajustar ancho de los bigotes
             marker=dict(size=5, color=px.colors.qualitative.Vivid[cluster]),  # Usar colores Vivid
             line=dict(width=1.5),  # Ancho de las líneas
