@@ -69,7 +69,7 @@ st.logo("images/OMD2.png", icon_image="images/OMD2.png")
 page_dict = {
     "Panorama General del Proyecto": introduccion_pages,
     "Análisis de datos": analisis_datos_pages,
-    "Hallazgos y Perspectivas Finales": conclusiones_pages,
+    "Perspectivas Finales": conclusiones_pages,
     "Quiénes somos": quienes_somos_pages,
 }
 
