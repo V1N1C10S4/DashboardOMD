@@ -154,7 +154,7 @@ for i, metric in enumerate(melted_results['metric'].unique()):
         marker_color=vivid_colors[i % len(vivid_colors)]  # Usar colores de la paleta "Vivid"
     ))
 
-# Configurar diseño de la gráfica
+# Configurar diseño de la gráfica y mover la leyenda
 fig2.update_layout(
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
@@ -164,11 +164,11 @@ fig2.update_layout(
     yaxis=dict(title_font=dict(size=14, weight='bold')),
     legend=dict(
         title="Métricas",
-        orientation="h",
-        yanchor="bottom",
-        y=-0.2,
-        xanchor="center",
-        x=0.5
+        orientation="v",  # Cambiar orientación a vertical
+        yanchor="top",    # Anclar en la parte superior
+        y=1,              # Ubicar en el borde superior
+        xanchor="right",  # Anclar a la derecha
+        x=1.2             # Ubicar ligeramente fuera de la gráfica
     )
 )
 
