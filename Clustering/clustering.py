@@ -55,9 +55,9 @@ clusters = kmeans.fit_predict(pca_data)
 data['cluster'] = clusters
 
 # Calcular el candidato más mencionado en cada clúster
-data['top_candidate'] = data[['Claudia Sheinbaum', 
-                               'Jorge Álvarez Máynez',
-                               'Xóchitl Gálvez']].idxmax(axis=1)
+data['top_candidate'] = data[['top_mentioned_candidate_Claudia Sheinbaum', 
+                               'top_mentioned_candidate_Jorge Álvarez Máynez',
+                               'top_mentioned_candidate_Xóchitl Gálvez']].idxmax(axis=1)
 
 cluster_summary = data.groupby('cluster').agg(
     Top_Candidate=('top_candidate', lambda x: x.value_counts().idxmax()),  # Candidato más mencionado
