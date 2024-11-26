@@ -215,18 +215,14 @@ fig.add_trace(go.Bar(
 
 # Configuración del diseño
 fig.update_layout(
-    title={
-        'text': 'Sentimiento Promedio por Cluster',
-        'x': 0.5,  # Centrar el título
-        'xanchor': 'center',
-        'font': {'size': 18, 'color': 'white'}
-    },
     xaxis=dict(
         title='Cluster',
         titlefont=dict(size=14, color='white'),
         tickfont=dict(size=12, color='white')
     ),
     yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='white'),
         tickfont=dict(size=12, color='white'),
         range=[min(sentiment_by_cluster['predicted_sentiment']) - 0.1, 
                max(sentiment_by_cluster['predicted_sentiment']) + 0.1],
