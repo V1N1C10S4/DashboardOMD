@@ -103,12 +103,19 @@ st.plotly_chart(fig, use_container_width=True)
 treshold_influence_factor = -3.1165083206837174  # Umbral definido
 top_users_df = posts_df[posts_df['influence_factor'] > treshold_influence_factor]
 
+# Definir la columna 'top_user_indicator' en posts_df
+posts_df['top_user_indicator'] = np.where(
+    posts_df['influence_factor'] > treshold_influence_factor, 1, 0
+)
+
 results_df = posts_df.pivot_table(index='top_user_indicator',
                                   values=['num_posts', 'num_interaction'],
                                   aggfunc='sum')
+
 temp = posts_df.pivot_table(index='top_user_indicator',
                             values='username',
                             aggfunc='count')
+
 results_df = pd.merge(results_df, temp, on='top_user_indicator', how='left')
 results_df.rename(columns={
     'num_interaction': 'total_interactions',
