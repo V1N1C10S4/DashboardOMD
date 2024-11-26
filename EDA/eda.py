@@ -44,11 +44,11 @@ posts_df['influence_factor'] = np.log(
 ).fillna(0)
 
 # Step 4: Filter out zero or invalid influence_factor values
-valid_influence_factors = posts_df[posts_df['influence_factor'] > -np.inf]['influence_factor']
+filtered_influence_factors = posts_df[posts_df['influence_factor'] > 0]['influence_factor']
 
-# Step 5: Generate KDE for influence_factor
-density = gaussian_kde(valid_influence_factors)
-x_vals = np.linspace(valid_influence_factors.min() - 5, valid_influence_factors.max() + 5, 500)
+# Step 5: Generate KDE for filtered influence_factor
+density = gaussian_kde(filtered_influence_factors)
+x_vals = np.linspace(filtered_influence_factors.min(), filtered_influence_factors.max(), 500)
 y_vals = density(x_vals)
 
 # Step 6: Create Plotly visualization
