@@ -38,11 +38,14 @@ density = kde(x_range)
 # Paso 7: Crear la gráfica de densidad con Plotly
 fig = go.Figure()
 
+# Usar colores de la paleta Vivid
+vivid_colors = px.colors.qualitative.Vivid
+
 fig.add_trace(go.Scatter(
     x=x_range,
     y=density,
     mode='lines',
-    line=dict(color='dodgerblue', width=4),
+    line=dict(color=vivid_colors[0], width=4),
     name='Density'
 ))
 
@@ -51,7 +54,7 @@ fig.add_trace(go.Scatter(
     x=[-3.1165083206837174, -3.1165083206837174],
     y=[0, max(density)],
     mode='lines',
-    line=dict(color='darkred', width=2, dash='dash'),
+    line=dict(color=vivid_colors[1], width=2, dash='dash'),
     name='Umbral'
 ))
 
@@ -138,8 +141,8 @@ melted_results = results_df.melt(
 
 # Actualizar labels en el DataFrame
 melted_results['top_user_indicator'] = melted_results['top_user_indicator'].replace({
-    'casual_user': 'Usuarios comunes',
-    'top_user': 'Usuario Influyente'
+    'casual_user': 'Usuarios Comunes',
+    'top_user': 'Usuarios Influyentes'
 })
 
 # Crear la gráfica en Plotly con barras agrupadas y colores Vivid
