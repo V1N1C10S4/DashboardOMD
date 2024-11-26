@@ -62,14 +62,14 @@ fig.update_layout(
     template="simple_white",
     xaxis=dict(
         showgrid=True,
-        gridcolor="LightGray",  # Color tenue para las gridlines
-        gridwidth=0.5,
+        gridcolor="Gray",  # Color tenue para las gridlines
+        gridwidth=0.2,
         zeroline=False
     ),
     yaxis=dict(
         showgrid=True,
-        gridcolor="LightGray",  # Color tenue para las gridlines
-        gridwidth=0.5,
+        gridcolor="Gray",  # Color tenue para las gridlines
+        gridwidth=0.2,
         zeroline=False
     )
 )
