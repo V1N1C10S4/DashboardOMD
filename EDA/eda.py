@@ -76,7 +76,7 @@ fig.update_layout(
 
 # Añadir etiquetas descriptivas
 fig.add_trace(go.Scatter(
-    x=[-10],  # Posición izquierda de la línea
+    x=[-6],  # Posición izquierda de la línea
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Comunes"],  # Texto para usuarios comunes
     mode="text",
