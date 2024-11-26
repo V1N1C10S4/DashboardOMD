@@ -136,28 +136,30 @@ melted_results = results_df.melt(
     value_name='value'
 )
 
-# Crear la gráfica en Plotly con barras agrupadas en lugar de apiladas
+# Crear la gráfica en Plotly con barras agrupadas y colores Vivid
 fig2 = go.Figure()
 
+# Asignar colores de la paleta "Vivid"
+vivid_colors = px.colors.qualitative.Vivid
+
 # Añadir barras agrupadas para cada métrica
-for metric in melted_results['metric'].unique():
+for i, metric in enumerate(melted_results['metric'].unique()):
     filtered_data = melted_results[melted_results['metric'] == metric]
     fig2.add_trace(go.Bar(
         x=filtered_data['top_user_indicator'],
         y=filtered_data['value'],
         name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
         text=filtered_data['value'],  # Mostrar los valores
-        textposition='auto'
+        textposition='auto',
+        marker_color=vivid_colors[i % len(vivid_colors)]  # Usar colores de la paleta "Vivid"
     ))
 
 # Configurar diseño de la gráfica
 fig2.update_layout(
-    title="Comparación de Métricas por Grupo de Usuarios",
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
     barmode='group',  # Barras agrupadas
     template="simple_white",
-    title_font=dict(size=18, color='#333333', family="Arial"),
     xaxis=dict(title_font=dict(size=14, weight='bold')),
     yaxis=dict(title_font=dict(size=14, weight='bold')),
     legend=dict(
