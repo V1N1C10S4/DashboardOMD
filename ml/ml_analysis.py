@@ -104,6 +104,7 @@ fig.update_layout(
         tickfont=dict(size=12, color='white'),
         tickvals=[0, 1, 2],  # Valores específicos en el eje Y
         ticktext=['Negativo', 'Neutral', 'Positivo'],  # Etiquetas personalizadas para 0, 1 y 2
+        range=[0, 2],
         showgrid=True,  # Mantener las líneas de cuadrícula
         gridwidth=0.5,
         gridcolor='gray'
