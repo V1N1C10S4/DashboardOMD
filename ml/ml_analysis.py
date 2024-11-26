@@ -97,12 +97,6 @@ fig.add_trace(go.Bar(
 
 # Configuración del diseño
 fig.update_layout(
-    title={
-        'text': 'Comparación del Sentimiento Promedio entre Usuarios Top y No Top',
-        'x': 0.5,  # Centrar título
-        'xanchor': 'center',
-        'font': {'size': 18, 'color': 'white', 'family': 'Arial'}
-    },
     xaxis=dict(
         title='Tipo de Usuario',
         titlefont=dict(size=14, color='white'),
@@ -124,4 +118,5 @@ fig.update_layout(
 )
 
 # Mostrar la gráfica en Streamlit
+st.title("Comparación de Sentimiento Promedio Usuarios Influyentes vs Usuarios Comunes")
 st.plotly_chart(fig, use_container_width=True)
