@@ -102,9 +102,8 @@ fig.update_layout(
         title='Sentimiento',
         titlefont=dict(size=14, color='white'),
         tickfont=dict(size=12, color='white'),
-        tickvals=[min(sentiment_comparison['Average Sentiment']), 
-                  max(sentiment_comparison['Average Sentiment'])],  # Etiquetas específicas para el eje Y
-        ticktext=['Negativo', 'Positivo'],  # Etiquetas personalizadas para los valores mínimo y máximo
+        tickvals=[0, 1, 2],  # Valores específicos en el eje Y
+        ticktext=['Negativo', 'Neutral', 'Positivo'],  # Etiquetas personalizadas para 0, 1 y 2
         showgrid=True,  # Mantener las líneas de cuadrícula
         gridwidth=0.5,
         gridcolor='gray'
