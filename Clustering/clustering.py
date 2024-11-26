@@ -85,7 +85,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 #Visualizaciones secundarias
 
-# Violin plot ajustado con ancho de violines modificado
+# Violin plot ajustado con colores Vivid
 violin_fig = px.violin(
     data,
     x="cluster",
@@ -97,7 +97,7 @@ violin_fig = px.violin(
     color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
 )
 
-# Ajustar diseño del violin plot para mejorar la estructura
+# Ajustar diseño del violin plot
 violin_fig.update_traces(
     scalegroup='one',  # Escalar los violines proporcionalmente
     width=0.6  # Aumentar el ancho de los violines
@@ -110,12 +110,13 @@ violin_fig.update_layout(
     title_x=0.5,  # Centrar el título
 )
 
-# Boxplot ajustado
+# Boxplot ajustado con colores Vivid
 boxplot_fig = go.Figure()
 
-# Crear un boxplot para cada cluster, mostrando solo los outliers
-clusters = data['cluster'].unique()
-for cluster in sorted(clusters):
+# Crear un boxplot para cada cluster, asignando colores de la misma paleta
+vivid_colors = px.colors.qualitative.Vivid
+clusters = sorted(data['cluster'].unique())  # Asegurar un orden consistente
+for cluster in clusters:
     cluster_data = data[data['cluster'] == cluster]
     boxplot_fig.add_trace(
         go.Box(
@@ -123,7 +124,7 @@ for cluster in sorted(clusters):
             name=f"Clúster {cluster}",
             boxpoints='outliers',  # Mostrar solo los outliers
             whiskerwidth=0.8,  # Ajustar ancho de los bigotes
-            marker=dict(size=5, color=px.colors.qualitative.Vivid[cluster]),  # Usar colores Vivid
+            marker=dict(size=5, color=vivid_colors[cluster]),  # Usar colores Vivid
             line=dict(width=1.5),  # Ancho de las líneas
         )
     )
@@ -137,7 +138,7 @@ boxplot_fig.update_layout(
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
-col1, col2 = st.columns([1.2, 1])  # Hacer que la primera columna sea ligeramente más ancha
+col1, col2 = st.columns([1.2, 1])  # Ajustar las proporciones de las columnas
 
 with col1:
     st.subheader("Distribución de Longitud Promedio")
