@@ -100,9 +100,8 @@ fig.update_layout(
         orientation="h",  # Orientación horizontal
         yanchor="bottom",
         y=1.02,
-        xanchor="center",
+        xanchor="right",
         x=0.5,
-        bgcolor="rgba(255, 255, 255, 0.8)",  # Fondo semitransparente
         bordercolor="LightGray",
         borderwidth=1
     )
