@@ -194,7 +194,6 @@ fig.update_layout(
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
     yaxis_title="Valor Promedio",
-    title_x=0.5  # Centrar el título (no aplicará si el título está vacío)
 )
 
 # Integrar el gráfico en Streamlit
