@@ -88,9 +88,13 @@ st.plotly_chart(fig, use_container_width=True)
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
+# 0 -> naranja <- 2
+# 1 -> azul <- 0
+# 2 -> verde <- 1
+
 # Definir una paleta de colores Vivid y asignarla manualmente a cada clúster
 vivid_colors = px.colors.qualitative.Vivid
-color_mapping = {0: vivid_colors[0], 1: vivid_colors[1], 2: vivid_colors[2]}  # Mapear clusters a colores
+color_mapping = {2: vivid_colors[0], 0: vivid_colors[1], 1: vivid_colors[2]}  # Mapear clusters a colores
 
 # Violin plot ajustado con colores manuales
 violin_fig = px.violin(
