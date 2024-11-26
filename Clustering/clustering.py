@@ -97,7 +97,7 @@ violin_fig = px.violin(
     color=data['cluster'].astype(str),  # Convertir los clusters a string para categorías
     box=True,  # Mostrar boxplot dentro del violin plot
     points=False,  # No mostrar puntos individuales
-    labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio"},
+    labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio", "color": "Clúster"},
     color_discrete_map={str(key): value for key, value in color_mapping.items()}  # Usar colores asignados manualmente
 )
 
@@ -111,7 +111,7 @@ violin_fig.update_layout(
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
     yaxis_title="Longitud Promedio de Texto",
-    title_x=0.5,  # Centrar el título
+    title=None,  # Eliminar el título
 )
 
 # Boxplot ajustado con colores manuales
@@ -138,15 +138,14 @@ boxplot_fig.update_layout(
     yaxis_title="Factor de Influencia",
     template="plotly_dark",  # Tema oscuro
     height=600,  # Altura del gráfico
+    title=None,  # Eliminar el título
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
 col1, col2 = st.columns([1.2, 1])  # Ajustar las proporciones de las columnas
 
 with col1:
-    st.subheader("Distribución de Longitud Promedio")
     st.plotly_chart(violin_fig, use_container_width=True)  # Visualización del violin plot
 
 with col2:
-    st.subheader("Distribución del Factor de Influencia")
     st.plotly_chart(boxplot_fig, use_container_width=True)  # Visualización del boxplot
