@@ -55,16 +55,16 @@ clusters = kmeans.fit_predict(pca_data)
 data['cluster'] = clusters
 
 # Calcular el candidato más mencionado en cada clúster
-data['top_candidate'] = data[['top_mentioned_candidate_Claudia Sheinbaum', 
-                               'top_mentioned_candidate_Jorge Álvarez Máynez',
-                               'top_mentioned_candidate_Xóchitl Gálvez']].idxmax(axis=1)
+data['top_candidate'] = data[['Claudia Sheinbaum', 
+                               'Jorge Álvarez Máynez',
+                               'Xóchitl Gálvez']].idxmax(axis=1)
 
 cluster_summary = data.groupby('cluster').agg(
-    top_candidate=('top_candidate', lambda x: x.value_counts().idxmax()),  # Candidato más mencionado
-    avg_influence=('influence_factor', 'mean'),
-    avg_text_length=('avg_text_len', 'mean'),
-    avg_time_elapsed=('avg_time_elapsed_between_posts', 'mean'),
-    count=('cluster', 'size')
+    Top_Candidate=('top_candidate', lambda x: x.value_counts().idxmax()),  # Candidato más mencionado
+    Avg_Influence=('influence_factor', 'mean'),
+    Avg_Text_Length=('avg_text_len', 'mean'),
+    Avg_Time_Elapsed=('avg_time_elapsed_between_posts', 'mean'),
+    Elements=('cluster', 'size')
 ).reset_index()
 
 # Crear un DataFrame para los datos PCA transformados y las asignaciones de cluster
