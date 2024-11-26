@@ -2,6 +2,31 @@ import streamlit as st
 from PIL import Image
 
 st.markdown("""
+### Recomendaciones Estratégicas Generales para Futuras Campañas Digitales
+
+### 1. Priorizar la Calidad sobre la Cantidad
+Las campañas deben enfocarse en publicaciones significativas y reflexivas, priorizando mensajes bien estructurados y con mayor relevancia, en lugar de saturar con contenido breve y frecuente.
+
+### 2. Fomentar la Participación de Usuarios Influyentes
+Identificar y colaborar con usuarios que tengan un alcance significativo y capacidad de influir en la narrativa pública, incentivando su participación en campañas estratégicas.
+
+### 3. Analizar el Sentimiento para Ajustar el Mensaje
+Monitorear constantemente el sentimiento del público hacia los mensajes emitidos para ajustar el enfoque en tiempo real, promoviendo contenido que resuene positivamente con la audiencia.
+
+### 4. Aprovechar Clusters Pequeños de Alta Influencia
+Utilizar clusters pequeños pero poderosos para maximizar el impacto del contenido en audiencias clave, permitiendo que los mensajes lleguen a los sectores más relevantes.
+
+### 5. Segmentación Estratégica del Contenido
+Adaptar el mensaje según los comportamientos de cada grupo identificado, ajustando el tono, frecuencia y formato para conectar mejor con diferentes segmentos de la audiencia.
+
+### 6. Enfocarse en la Narrativa
+Consolidar una narrativa fuerte y coherente que movilice a las audiencias hacia el objetivo deseado, aprovechando momentos clave para maximizar el impacto.
+
+### 7. Monitoreo Constante y Ajustes Dinámicos
+Implementar un sistema de monitoreo continuo para identificar cambios en el comportamiento de los usuarios y ajustar las estrategias rápidamente.
+""")
+
+st.markdown("""
 ### Conclusiones
 
 Este proyecto ha permitido explorar a profundidad cómo las interacciones digitales reflejan y amplifican los procesos democráticos en México. Al analizar el comportamiento de los usuarios en plataformas como X durante las elecciones presidenciales de 2024, se logró no solo identificar patrones clave de interacción, sino también destacar a los actores más influyentes y las anomalías que marcan la diferencia en el ecosistema digital.
