@@ -42,7 +42,7 @@ fig.add_trace(go.Scatter(
     x=x_range,
     y=density,
     mode='lines',
-    line=dict(color='blue', width=4),
+    line=dict(color='dodgerblue', width=4),
     name='Density'
 ))
 
@@ -51,7 +51,7 @@ fig.add_trace(go.Scatter(
     x=[-3.1165083206837174, -3.1165083206837174],
     y=[0, max(density)],
     mode='lines',
-    line=dict(color='red', width=2, dash='dash'),
+    line=dict(color='darkred', width=2, dash='dash'),
     name='Umbral'
 ))
 
@@ -80,7 +80,7 @@ fig.add_trace(go.Scatter(
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Comunes"],  # Texto para usuarios comunes
     mode="text",
-    textfont=dict(size=14, color="white"),  # Estilo de la etiqueta
+    textfont=dict(size=18, color="white"),  # Estilo de la etiqueta
     showlegend=False
 ))
 
@@ -89,10 +89,25 @@ fig.add_trace(go.Scatter(
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Influyentes"],  # Texto para usuarios influyentes
     mode="text",
-    textfont=dict(size=14, color="white"),  # Estilo de la etiqueta
+    textfont=dict(size=18, color="white"),  # Estilo de la etiqueta
     showlegend=False
 ))
 
-# Mostrar en Streamlit
+# Ajustar la ubicación y el estilo de la leyenda
+fig.update_layout(
+    legend=dict(
+        title="Elementos",  # Título de la leyenda
+        orientation="h",  # Orientación horizontal
+        yanchor="bottom",
+        y=1.02,
+        xanchor="center",
+        x=0.5,
+        bgcolor="rgba(255, 255, 255, 0.8)",  # Fondo semitransparente
+        bordercolor="LightGray",
+        borderwidth=1
+    )
+)
+
+# Mostrar la gráfica actualizada
 st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
