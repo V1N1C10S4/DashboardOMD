@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.graph_objects as go
-from scipy.stats import gaussian_kde
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Header
 st.header("Density of Influence Factor per User")
@@ -27,35 +27,25 @@ posts_df['influence_factor'] = np.log(
     (posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']).replace(0, np.nan) * 100
 ).fillna(0)
 
-# Calculate KDE for influence_factor
-influence_factor = posts_df['influence_factor'].dropna()
-density = gaussian_kde(influence_factor)
-x_vals = np.linspace(influence_factor.min(), influence_factor.max(), 500)
-y_vals = density(x_vals)
+# Plotting function
+def plot_density_seaborn(posts_df):
+    plt.figure(figsize=(10, 6))
+    
+    # Set seaborn style
+    sns.set(style="whitegrid")
+    
+    # Create KDE plot
+    sns.kdeplot(posts_df['influence_factor'], color='blue', linewidth=2)
+    
+    # Add labels and grid
+    plt.title("Density of Influence Factor per User", fontsize=18, weight='bold', color='#333333')
+    plt.xlabel("Influence Factor", fontsize=14, weight='bold')
+    plt.ylabel("Density", fontsize=14, weight='bold')
+    plt.grid(True, linestyle='--', alpha=0.7)
+    
+    # Adjust layout
+    plt.tight_layout()
+    st.pyplot(plt)
 
-# Create the Plotly figure
-fig = go.Figure()
-
-# Add the KDE line
-fig.add_trace(go.Scatter(
-    x=x_vals,
-    y=y_vals,
-    mode='lines',
-    line=dict(color='blue', width=2),
-    name="KDE"
-))
-
-# Update layout
-fig.update_layout(
-    title="Density of Influence Factor per User",
-    xaxis_title="Influence Factor",
-    yaxis_title="Density",
-    template="plotly_white",
-    height=600,
-    showlegend=False,  # No legend as per original Seaborn plot
-    xaxis=dict(range=[-20, 15]),  # Adjust range similar to the original
-    yaxis=dict(showgrid=True, zeroline=False),  # Match the grid style
-)
-
-# Display the chart in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+# Call the plotting function
+plot_density_seaborn(posts_df)
