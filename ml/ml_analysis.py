@@ -143,3 +143,85 @@ fig.add_layout_image(
 # Mostrar la gráfica en Streamlit
 import streamlit as st
 st.plotly_chart(fig, use_container_width=True)
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+# Crear el gráfico de violín con Plotly
+fig = px.violin(
+    df,
+    y='predicted_sentiment',
+    box=True,  # Incluir un boxplot dentro del gráfico de violín
+    points="all",  # Mostrar todos los puntos
+    color_discrete_sequence=['lightcoral']  # Color personalizado
+)
+
+# Configurar el diseño de la gráfica
+fig.update_layout(
+    title={
+        'text': 'Distribución General del Sentimiento (Violin Plot)',
+        'y': 0.95,
+        'x': 0.5,
+        'xanchor': 'center',
+        'yanchor': 'top',
+        'font': {'size': 18, 'color': 'black'}
+    },
+    yaxis=dict(
+        title='Valor de Sentimiento',
+        tickvals=[0, 1, 2],  # Mostrar solo los valores 0, 1, 2
+        ticktext=['0', '1', '2'],  # Etiquetas personalizadas
+        title_font=dict(size=14, color='black'),
+        tickfont=dict(size=12, color='gray')
+    ),
+    xaxis=dict(
+        showgrid=True,
+        gridcolor='lightgray',  # Color tenue para la cuadrícula
+        gridwidth=0.5,
+        zeroline=False  # Eliminar la línea cero del eje X
+    ),
+    template='simple_white',
+    plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+    height=500,  # Altura personalizada
+    showlegend=False  # Ocultar leyenda
+)
+
+# Agregar un logotipo en la esquina superior derecha
+fig.add_layout_image(
+    dict(
+        x=1.1,
+        y=1.1,
+        xref="paper",
+        yref="paper",
+        sizex=0.15,
+        sizey=0.15,
+        xanchor="right",
+        yanchor="top"
+    )
+)
+
+# Mostrar la gráfica en Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+# Remover duplicados y calcular el sentimiento promedio por usuario
+unique_users_df = df.groupby('username').agg({
+    'predicted_sentiment': 'mean',
+    'top_user_indicator': 'first'  # Mantener la etiqueta de top_user_indicator por usuario
+}).reset_index()
+
+# Dividir datos entre top users y non-top users
+top_users = unique_users_df[unique_users_df['top_user_indicator'] == 1]
+non_top_users = unique_users_df[unique_users_df['top_user_indicator'] == 0]
+
+# Calcular el sentimiento promedio de cada grupo
+avg_sentiment_top_users = top_users['predicted_sentiment'].mean()
+avg_sentiment_non_top_users = non_top_users['predicted_sentiment'].mean()
+
+# Preparar datos para la gráfica
+sentiment_comparison = pd.DataFrame({
+    'User Type': ['Top Users', 'Non-Top Users'],
+    'Average Sentiment': [avg_sentiment_top_users, avg_sentiment_non_top_users]
+})
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
