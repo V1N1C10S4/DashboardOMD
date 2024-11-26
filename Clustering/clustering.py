@@ -157,6 +157,16 @@ with col2:
     st.subheader("Distribución del Factor de Influencia")
     st.plotly_chart(boxplot_fig, use_container_width=True)  # Visualización del boxplot
 
+st.write("""
+## Frecuencia de publicación y longitud de texto como predictores de influencia:
+En todos los grupos, los textos largos y las publicaciones menos frecuentes están vinculados a mayor influencia, mientras que mensajes breves y frecuentes corresponden a menor impacto. Este patrón resalta la importancia de priorizar calidad sobre cantidad para lograr un compromiso significativo.
+""")
+
+st.write("""
+## Influencia concentrada en clusters pequeños y de alta calidad:
+El grupo 1, el más pequeño, reúne a los usuarios más influyentes, quienes publican textos largos con menor frecuencia. Esto confirma que la calidad y la comunicación reflexiva e impactante tienen mayor influencia, mientras que los clusters más grandes, como el grupo 2, diluyen el impacto individual debido a publicaciones frecuentes y breves.
+""")
+
 # Añadir un espacio entre las gráficas de análisis de clusters y la visualización final
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
@@ -203,3 +213,15 @@ fig.update_layout(
 # Integrar el gráfico en Streamlit
 st.title("Comparación de Promedios entre Clústeres")
 st.plotly_chart(fig, use_container_width=True)
+
+st.write("""
+## Patrones de comportamiento diferenciados entre clusters:
+- Clúster 0: Representa un equilibrio moderado en influencia, longitud de texto y frecuencia de publicación, posicionándose como un término medio en compromiso y alcance.
+- Clúster 1: Enfocado en mensajes deliberados y significativos, con la mayor longitud de texto y menor frecuencia.
+- Clúster 2: Caracterizado por publicaciones rápidas y frecuentes, con textos cortos que comprometen la calidad del impacto.
+""")
+
+st.write("""
+## Implicaciones estratégicas:
+Las estrategias de contenido deben priorizar publicaciones significativas y menos frecuentes para maximizar la influencia. Adaptar las tácticas según el comportamiento específico de cada cluster puede optimizar el alcance y resonancia del contenido en diferentes audiencias.
+""")
