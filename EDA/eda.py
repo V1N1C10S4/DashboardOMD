@@ -55,13 +55,32 @@ fig.add_trace(go.Scatter(
     name='Umbral'
 ))
 
+# Configurar diseño traducido al español y eliminar gridlines
+fig.update_layout(
+    xaxis_title="Factor de Influencia",
+    yaxis_title="Densidad",
+    template="simple_white",
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="gray",  # Color tenue para las gridlines
+        gridwidth=0.1,
+        zeroline=False
+    ),
+    yaxis=dict(
+        showgrid=True,
+        gridcolor="gray",  # Color tenue para las gridlines
+        gridwidth=0.1,
+        zeroline=False
+    )
+)
+
 # Añadir etiquetas descriptivas
 fig.add_trace(go.Scatter(
     x=[-10],  # Posición izquierda de la línea
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Comunes"],  # Texto para usuarios comunes
     mode="text",
-    textfont=dict(size=14, color="gray"),  # Estilo de la etiqueta
+    textfont=dict(size=14, color="white"),  # Estilo de la etiqueta
     showlegend=False
 ))
 
@@ -70,28 +89,9 @@ fig.add_trace(go.Scatter(
     y=[max(density) * 0.8],  # Altura relativa para la etiqueta
     text=["Usuarios Influyentes"],  # Texto para usuarios influyentes
     mode="text",
-    textfont=dict(size=14, color="gray"),  # Estilo de la etiqueta
+    textfont=dict(size=14, color="white"),  # Estilo de la etiqueta
     showlegend=False
 ))
-
-# Configurar diseño traducido al español y eliminar gridlines
-fig.update_layout(
-    xaxis_title="Factor de Influencia",
-    yaxis_title="Densidad",
-    template="simple_white",
-    xaxis=dict(
-        showgrid=True,
-        gridcolor="Gray",  # Color tenue para las gridlines
-        gridwidth=0.1,
-        zeroline=False
-    ),
-    yaxis=dict(
-        showgrid=True,
-        gridcolor="Gray",  # Color tenue para las gridlines
-        gridwidth=0.1,
-        zeroline=False
-    )
-)
 
 # Mostrar en Streamlit
 st.title("Análisis del Factor de Influencia")
