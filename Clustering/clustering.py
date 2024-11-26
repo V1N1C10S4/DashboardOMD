@@ -105,6 +105,76 @@ fig.update_layout(
     yaxis_title="Componente principal 2 (PCA2)"
 )
 
+# Add the 'cluster' column to the DataFrame
+data['cluster'] = clusters
+
+# Group by clusters and calculate descriptive statistics
+cluster_analysis = data.groupby('cluster').agg({
+    'influence_factor': ['mean', 'std', 'min', 'max'],
+    'avg_text_len': ['mean', 'std', 'min', 'max'],
+    'avg_time_elapsed_between_posts': ['mean', 'std', 'min', 'max'],
+    'preferred_time_of_day': ['mean', 'std', 'min', 'max'],
+    'top_mentioned_candidate_Claudia Sheinbaum': ['mean'],
+    'top_mentioned_candidate_Jorge Álvarez Máynez': ['mean'],
+    'top_mentioned_candidate_Xóchitl Gálvez': ['mean']
+}).reset_index()
+
+# Rename columns for clarity
+cluster_analysis.columns = [
+    'cluster',
+    'influence_factor_mean', 'influence_factor_std', 'influence_factor_min', 'influence_factor_max',
+    'avg_text_len_mean', 'avg_text_len_std', 'avg_text_len_min', 'avg_text_len_max',
+    'avg_time_elapsed_mean', 'avg_time_elapsed_std', 'avg_time_elapsed_min', 'avg_time_elapsed_max',
+    'preferred_time_mean', 'preferred_time_std', 'preferred_time_min', 'preferred_time_max',
+    'pct_claudia_sheinbaum', 'pct_jorge_alvarez_maynez', 'pct_xochitl_galvez'
+]
+
+# Create an organized summary DataFrame
+organized_cluster_data = []
+
+for cluster_id in cluster_analysis['cluster']:
+    cluster_data = data[data['cluster'] == cluster_id]
+    total_users = len(cluster_data)
+    avg_influence = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['influence_factor_mean'].values[0]
+    avg_text_len = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['avg_text_len_mean'].values[0]
+    avg_time_elapsed = cluster_analysis[cluster_analysis['cluster'] == cluster_id]['avg_time_elapsed_mean'].values[0]
+
+    mentioned_distribution = cluster_data[['top_mentioned_candidate_Claudia Sheinbaum',
+                                           'top_mentioned_candidate_Jorge Álvarez Máynez',
+                                           'top_mentioned_candidate_Xóchitl Gálvez']].mean()
+
+    organized_cluster_data.append({
+        'Cluster ID': cluster_id,
+        'Total Users': total_users,
+        'Average Influence': round(avg_influence, 2),
+        'Average Text Length': round(avg_text_len, 2),
+        'Average Time Elapsed': round(avg_time_elapsed, 2),
+        'Pct Claudia Sheinbaum': round(mentioned_distribution['top_mentioned_candidate_Claudia Sheinbaum'], 4),
+        'Pct Jorge Álvarez Máynez': round(mentioned_distribution['top_mentioned_candidate_Jorge Álvarez Máynez'], 4),
+        'Pct Xóchitl Gálvez': round(mentioned_distribution['top_mentioned_candidate_Xóchitl Gálvez'], 4)
+    })
+
+organized_cluster_df = pd.DataFrame(organized_cluster_data)
+
+# Add the summary DataFrame to Streamlit
+st.header("Cluster Analysis Summary")
+st.write("Below is a summary of key statistics for each cluster:")
+st.dataframe(organized_cluster_df, use_container_width=True)
+
+# Detailed analysis for each cluster
+st.subheader("Detailed Analysis by Cluster")
+for _, row in organized_cluster_df.iterrows():
+    cluster_id = row['Cluster ID']
+    st.markdown(f"### Cluster {cluster_id} Analysis")
+    st.markdown(f"- **Total Users**: {row['Total Users']}")
+    st.markdown(f"- **Average Influence**: {row['Average Influence']}")
+    st.markdown(f"- **Average Text Length**: {row['Average Text Length']}")
+    st.markdown(f"- **Average Time Elapsed Between Posts**: {row['Average Time Elapsed']} seconds")
+    st.markdown("#### Candidate Mention Distribution:")
+    st.markdown(f"- **Claudia Sheinbaum**: {row['Pct Claudia Sheinbaum']*100:.2f}%")
+    st.markdown(f"- **Jorge Álvarez Máynez**: {row['Pct Jorge Álvarez Máynez']*100:.2f}%")
+    st.markdown(f"- **Xóchitl Gálvez**: {row['Pct Xóchitl Gálvez']*100:.2f}%")
+
 # Configuración para Streamlit
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
