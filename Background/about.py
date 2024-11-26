@@ -39,9 +39,9 @@ st.markdown("""
     </div>
 </div>
 """.format(
-    get_base64_image("images\Claudia_Sheinbaum.jpg"),
-    get_base64_image("images\Claudia_Sheinbaum.jpg"),
-    get_base64_image("images\Claudia_Sheinbaum.jpg"),
-    get_base64_image("images\Claudia_Sheinbaum.jpg"),
-    get_base64_image("images\Claudia_Sheinbaum.jpg")
+    get_base64_image("images/Claudia_Sheinbaum.jpg"),
+    get_base64_image("images/Claudia_Sheinbaum.jpg"),
+    get_base64_image("images/Claudia_Sheinbaum.jpg"),
+    get_base64_image("images/Claudia_Sheinbaum.jpg"),
+    get_base64_image("images/Claudia_Sheinbaum.jpg")
 ), unsafe_allow_html=True)
