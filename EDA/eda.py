@@ -64,13 +64,13 @@ fig.update_layout(
         showgrid=False,
         gridcolor="gray",  # Color tenue para las gridlines
         gridwidth=0.1,
-        zeroline=True
+        zeroline=False
     ),
     yaxis=dict(
         showgrid=False,
         gridcolor="gray",  # Color tenue para las gridlines
         gridwidth=0.1,
-        zeroline=True
+        zeroline=False
     )
 )
 
