@@ -83,70 +83,47 @@ fig.update_layout(
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
 
-# Supongamos que 'data' es tu DataFrame principal
-
-# Crear el violin plot interactivo usando Plotly
-fig = go.Figure()
-
-# Añadir trazas de violines para cada cluster
-clusters = data['cluster'].unique()
-for cluster in sorted(clusters):
-    cluster_data = data[data['cluster'] == cluster]
-    fig.add_trace(
-        go.Violin(
-            y=cluster_data['avg_text_len'],
-            name=f"Cluster {cluster}",
-            box_visible=True,  # Mostrar caja con estadísticas
-            meanline_visible=True,  # Mostrar línea del promedio
-            points="all",  # Mostrar todos los puntos
-            line_color='black'
-        )
-    )
-
-# Personalizar el diseño del gráfico
-fig.update_layout(
-    title={
-        'text': "Distribución de la Longitud Promedio de Texto por Clúster",
-        'x': 0.5,
-        'xanchor': 'center',
-        'yanchor': 'top'
-    },
-    xaxis_title="Clusters",
-    yaxis_title="Longitud Promedio de Texto",
-    template="plotly_dark",  # Estilo oscuro para coincidir con tu tema
-    showlegend=True,  # Mostrar leyenda
-    height=600  # Ajustar altura del gráfico
+# Violin plot interactivo usando Plotly
+violin_fig = px.violin(
+    data,
+    x="cluster",
+    y="avg_text_len",
+    color=data['cluster'].astype(str),  # Convertir los clusters a string para categorías
+    box=True,  # Mostrar boxplot dentro del violin plot
+    points="all",  # Mostrar todos los puntos individuales
+    title="Distribución de Longitud Promedio por Clúster",
+    labels={"cluster": "Clúster", "avg_text_len": "Longitud Promedio"},
+    color_discrete_sequence=px.colors.qualitative.Vivid,  # Paleta de colores Vivid
 )
 
-# Añadir a Streamlit
-st.title("Análisis de Longitud de Texto")
-st.plotly_chart(fig, use_container_width=True)
+# Ajustar diseño del violin plot
+violin_fig.update_layout(
+    template="plotly_dark",  # Tema oscuro
+    xaxis_title="Clúster",
+    yaxis_title="Longitud Promedio de Texto",
+    title_x=0.5,  # Centrar el título
+)
 
-import plotly.express as px
-import plotly.graph_objects as go
-import streamlit as st
-
-# Crear el boxplot interactivo usando Plotly
+# Boxplot interactivo usando Plotly
 boxplot_fig = go.Figure()
 
-# Añadir trazas de boxplots para cada cluster
+# Crear un boxplot para cada cluster
 clusters = data['cluster'].unique()
 for cluster in sorted(clusters):
     cluster_data = data[data['cluster'] == cluster]
     boxplot_fig.add_trace(
         go.Box(
             y=cluster_data['influence_factor'],
-            name=f"Cluster {cluster}",
+            name=f"Clúster {cluster}",
             boxpoints='all',  # Mostrar todos los puntos
-            jitter=0.3,  # Añadir dispersión a los puntos
-            whiskerwidth=0.8,  # Ajustar el ancho de los bigotes
-            marker=dict(size=5),  # Tamaño de los puntos
+            jitter=0.3,  # Dispersión de los puntos
+            whiskerwidth=0.8,  # Ajustar ancho de los bigotes
+            marker=dict(size=5, color=px.colors.qualitative.Vivid[cluster]),  # Usar colores Vivid
             line=dict(width=1.5),  # Ancho de las líneas
-            fillcolor='rgba(255, 255, 255, 0)'  # Transparencia
         )
     )
 
-# Personalizar el diseño del gráfico
+# Ajustar diseño del boxplot
 boxplot_fig.update_layout(
     title={
         'text': "Distribución del Factor de Influencia por Clúster",
@@ -154,11 +131,10 @@ boxplot_fig.update_layout(
         'xanchor': 'center',
         'yanchor': 'top'
     },
-    xaxis_title="Clusters",
+    xaxis_title="Clúster",
     yaxis_title="Factor de Influencia",
-    template="plotly_dark",  # Estilo oscuro para coincidir con el tema
-    showlegend=False,  # Ocultar leyenda
-    height=600,  # Ajustar altura del gráfico
+    template="plotly_dark",  # Tema oscuro
+    height=600,  # Altura del gráfico
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
@@ -166,7 +142,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Distribución de Longitud Promedio")
-    st.plotly_chart(fig, use_container_width=True)  # Visualización del violin plot
+    st.plotly_chart(violin_fig, use_container_width=True)  # Visualización del violin plot
 
 with col2:
     st.subheader("Distribución del Factor de Influencia")
