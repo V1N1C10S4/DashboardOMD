@@ -24,8 +24,6 @@ download_data()
 # Load data
 df = pd.read_csv("cleansed_infotracer.csv")
 
-# Suponiendo que `df` ya está cargado con los datos originales.
-
 # Crear `posts_df` con conteo de posts únicos por usuario
 posts_df = df.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
 posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
@@ -37,11 +35,23 @@ temp.rename(columns={'num_interaction': 'num_interaction'}, inplace=True)
 # Combinar `posts_df` y `temp` en un solo DataFrame
 posts_df = pd.merge(posts_df, temp, on='username', how='left')
 
-# Calcular métricas adicionales
-posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts']
-posts_df['%_posts'] = posts_df['num_posts'] / posts_df['num_posts'].sum() * 100
-posts_df['%_interaction'] = posts_df['num_interaction'] / posts_df['num_interaction'].sum() * 100
-posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
+# Convertir la columna 'datetime' a tipo datetime
+df['datetime'] = pd.to_datetime(df['datetime'])
+
+# Calcular las fechas mínimas y máximas
+earliest_date = df['datetime'].min()
+latest_date = df['datetime'].max()
+time_difference = latest_date - earliest_date
+total_days = time_difference.days
+
+# Calcular métricas adicionales con condiciones para evitar divisiones por cero
+valid_mask = (posts_df['%_posts'] > 0) & (posts_df['%_interaction'] > 0) & (posts_df['engagement_rate'] > 0)
+posts_df.loc[~valid_mask, 'influence_factor'] = np.nan  # Evitar cálculos inválidos
+posts_df.loc[valid_mask, 'influence_factor'] = np.log(
+    (posts_df.loc[valid_mask, '%_posts'] *
+     posts_df.loc[valid_mask, '%_interaction'] *
+     posts_df.loc[valid_mask, 'engagement_rate']) * 100
+)
 
 # Calcular el umbral del factor de influencia
 earliest_date = df['datetime'].min()
