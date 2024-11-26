@@ -89,7 +89,9 @@ fig = px.scatter(
         'avg_influence': ':.2f',
         'avg_text_length': ':.2f',
         'avg_time_elapsed': ':.2f',
-        'count': True
+        'count': True,
+        'PCA1': False,  # Ocultar información a nivel individual
+        'PCA2': False,   # Ocultar información a nivel individual
     }
 )
 
