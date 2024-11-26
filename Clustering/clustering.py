@@ -84,7 +84,7 @@ fig = px.scatter(
     labels={'color': 'Clusters', 'PCA1': 'Componente principal 1', 'PCA2': 'Componente principal 2'},
     color_discrete_sequence=px.colors.qualitative.Vivid,
     hover_data={  # Incluir datos agrupados en las etiquetas
-        'cluster': True,
+        'cluster': False,
         'top_candidate': True,
         'avg_influence': ':.2f',
         'avg_text_length': ':.2f',
