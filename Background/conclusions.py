@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 
 st.markdown("""
-### Recomendaciones Estratégicas Generales para Futuras Campañas Digitales
+## Recomendaciones Estratégicas Generales para Futuras Campañas Digitales
 
 ### 1. Priorizar la Calidad sobre la Cantidad
 Las campañas deben enfocarse en publicaciones significativas y reflexivas, priorizando mensajes bien estructurados y con mayor relevancia, en lugar de saturar con contenido breve y frecuente.
@@ -27,7 +27,7 @@ Implementar un sistema de monitoreo continuo para identificar cambios en el comp
 """)
 
 st.markdown("""
-### Conclusiones
+## Conclusiones
 
 Este proyecto ha permitido explorar a profundidad cómo las interacciones digitales reflejan y amplifican los procesos democráticos en México. Al analizar el comportamiento de los usuarios en plataformas como X durante las elecciones presidenciales de 2024, se logró no solo identificar patrones clave de interacción, sino también destacar a los actores más influyentes y las anomalías que marcan la diferencia en el ecosistema digital.
 
