@@ -85,7 +85,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 #Visualizaciones secundarias
 
-# Violin plot ajustado
+# Violin plot ajustado con ancho de violines modificado
 violin_fig = px.violin(
     data,
     x="cluster",
@@ -98,7 +98,12 @@ violin_fig = px.violin(
     color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
 )
 
-# Ajustar diseño del violin plot
+# Ajustar diseño del violin plot para mejorar la estructura
+violin_fig.update_traces(
+    scalegroup='one',  # Escalar los violines proporcionalmente
+    width=0.6  # Aumentar el ancho de los violines
+)
+
 violin_fig.update_layout(
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
@@ -129,7 +134,7 @@ boxplot_fig.update_layout(
     title={
         'text': "Distribución del Factor de Influencia por Clúster",
         'x': 0.5,
-        'xanchor': 'center',
+        'xanchor': 'left',
         'yanchor': 'top'
     },
     xaxis_title="Clúster",
@@ -139,7 +144,7 @@ boxplot_fig.update_layout(
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1.2, 1])  # Hacer que la primera columna sea ligeramente más ancha
 
 with col1:
     st.subheader("Distribución de Longitud Promedio")
