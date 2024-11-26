@@ -8,10 +8,10 @@ def get_base64_image(image_path):
 
 # Configuración del cuadro negro con texto
 st.markdown("""
-<div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center; width: 90%; margin: auto;">
+<div style="background-color: Lavender; padding: 20px; border-radius: 10px; text-align: center; width: 90%; margin: auto;">
     <div style="background-color: black; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
         <h1 style='text-align: center; color: white;'>¿Quiénes somos?</h1>
-        <p style="color: DarkSlateBlue; font-size: 18px; margin: 20px;">
+        <p style="color: white; font-size: 18px; margin: 20px;">
             Somos un grupo de estudiantes interdisciplinario del Tecnológico de Monterrey trabajando juntos para aportar de nuestros conocimientos y descubrimientos al resto de la comunidad universitaria y principalmente a México.
         </p>
     </div>
