@@ -5,7 +5,14 @@ from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.header("Análisis Exploratorio de Datos")
+st.title("Análisis Exploratorio de Datos")
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+st.write("""
+Se teorizó que un pequeño grupo de usuarios acapara la mayor parte de la influencia en la plataforma de redes sociales X (antes Twitter). Este fenómeno sugiere que estos usuarios pueden compartir características comunes, como rasgos demográficos, patrones de compromiso o afiliaciones políticas, que merece la pena explorar.
+""")
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
@@ -104,6 +111,15 @@ fig.add_trace(go.Scatter(
 # Mostrar en Streamlit
 st.subheader("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
+
+st.write("""
+## Factor de influencia para segmentar usuarios:
+Considerando que la densidad cae significativamente después del umbral, se reconoce que sólo una pequeña parte de los usuarios cumplen los criterios para ser usuarios influyentes.
+""")
+
+st.write("""
+La larga cola de valores positivos sugiere que un segmento muy pequeño de usuarios es muy influyente, contribuyendo significativamente más a las publicaciones, interacciones y participación.
+""")
 
 # Crear una segunda gráfica en Plotly adaptada al dashboard de Streamlit
 
