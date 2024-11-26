@@ -89,10 +89,10 @@ fig = go.Figure()
 fig.add_trace(go.Bar(
     x=sentiment_comparison['User Type'],  # Eje X: Tipos de usuario
     y=sentiment_comparison['Average Sentiment'],  # Eje Y: Sentimiento promedio
-    marker_color=['#FF4500', '#1E90FF'],  # Paleta de colores Vivid (rojo y azul)
+    marker_color=['#FF4500', '#1E90FF'],  # Paleta de colores Vivid (naranja y azul)
     text=sentiment_comparison['Average Sentiment'],  # Etiquetas de valores
     textposition='auto',  # Mostrar etiquetas automáticamente
-    name='Sentiment Comparison'  # Nombre de la traza
+    name='Average Sentiment'  # Nombre de la traza
 ))
 
 # Configuración del diseño
@@ -113,15 +113,14 @@ fig.update_layout(
         titlefont=dict(size=14, color='black'),
         tickfont=dict(size=12, color='black'),
         range=[min(sentiment_comparison['Average Sentiment']) - 0.1, 
-               max(sentiment_comparison['Average Sentiment']) + 0.1]
+               max(sentiment_comparison['Average Sentiment']) + 0.1],
+        showgrid=True,  # Activar líneas de cuadrícula
+        gridwidth=0.5,
+        gridcolor='lightgray'
     ),
     plot_bgcolor='white',  # Fondo blanco para mayor legibilidad
-    grid_color='lightgray',
     showlegend=False  # Ocultar la leyenda
 )
-
-# Añadir líneas de cuadrícula en el eje Y
-fig.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='lightgray')
 
 # Mostrar la gráfica en Streamlit
 st.plotly_chart(fig, use_container_width=True)
