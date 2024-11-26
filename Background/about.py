@@ -41,9 +41,9 @@ st.markdown("""
     </div>
 </div>
 """.format(
-    get_base64_image("images/Claudia_Sheinbaum.jpg"),
-    get_base64_image("images/Claudia_Sheinbaum.jpg"),
-    get_base64_image("images/Claudia_Sheinbaum.jpg"),
-    get_base64_image("images/Claudia_Sheinbaum.jpg"),
-    get_base64_image("images/Claudia_Sheinbaum.jpg")
+    get_base64_image("images/Vinicio_Santoyo.jpg"),
+    get_base64_image("images/Manuel_Medina.jpg"),
+    get_base64_image("images/Gabriel_Tabango.jpg"),
+    get_base64_image("images/Andres_Martinez.jpg"),
+    get_base64_image("images/Luis_Fernando.png")
 ), unsafe_allow_html=True)
