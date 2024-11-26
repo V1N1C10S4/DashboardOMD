@@ -185,7 +185,6 @@ fig = px.bar(
     y='Value',              # Eje y: valores promedio
     color='Metric',         # Diferenciar barras por métrica
     barmode='group',        # Agrupar barras por clúster
-    title="Comparación de Promedios entre Clústeres",
     labels={'Cluster ID': 'Clúster', 'Value': 'Valor Promedio', 'Metric': 'Métrica'},  # Etiquetas personalizadas
     color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
 )
