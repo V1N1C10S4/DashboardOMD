@@ -19,45 +19,52 @@ st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
 # Cargar los datos
 url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F'
-sentiment_df = pd.read_csv(url)
+df = pd.read_csv(url)
 
-# Asegurarse de que la columna de sentimiento esté configurada
-sentiment_column = 'predicted_sentiment'  # Ajustar si el nombre es diferente
+# Asegurar que la columna 'datetime' está en formato datetime
+df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
 
-sentiment_df['datetime'] = pd.to_datetime(sentiment_df['datetime'], errors='coerce')
+# Agrupar por semana y calcular el promedio de sentimiento
+sentiment_by_week = df.groupby(df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean()
 
-# Agrupar por semanas en lugar de días
-sentiment_df['datetime'] = pd.to_datetime(sentiment_df['datetime'], errors='coerce')
-sentiment_by_week = sentiment_df.groupby(sentiment_df['datetime'].dt.to_period('W'))[sentiment_column].mean()
-#Graficar
-# Agrupar por semana y calcular el sentimiento promedio
-sentiment_by_week = sentiment_df.groupby(sentiment_df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean()
-
-# Convertir PeriodIndex a datetime para mejor formato
+# Convertir el PeriodIndex a datetime para una mejor visualización en el eje X
 sentiment_by_week.index = sentiment_by_week.index.to_timestamp()
 
-# Calcular sentimiento promedio por semana
-sentiment_df.set_index('datetime', inplace=True)
-sentiment_by_week = sentiment_df['sentiment'].resample('W').mean()
-
-# Crear la gráfica en Plotly
+# Crear la gráfica con Plotly
 fig = go.Figure()
 
 fig.add_trace(go.Scatter(
     x=sentiment_by_week.index,
-    y=sentiment_by_week.values,
+    y=sentiment_by_week,
     mode='lines+markers',
-    marker=dict(color='lightblue', size=6),
     line=dict(color='lightblue', width=2),
-    name='Sentimiento Promedio'
+    marker=dict(size=8),
+    name='Promedio de Sentimiento'
 ))
 
+# Configurar diseño de la gráfica
 fig.update_layout(
-    title="Tendencia Promedio del Sentimiento por Semana",
-    xaxis=dict(title="Mes", tickformat="%b"),
-    yaxis=dict(title="Sentimiento Promedio"),
-    template="simple_white",
-    margin=dict(l=20, r=20, t=50, b=20),
+    title='Tendencia del Sentimiento Promedio por Semana',
+    xaxis=dict(
+        title='Semana',
+        titlefont=dict(size=14, weight='bold'),
+        tickformat='%b %d',  # Mostrar el mes abreviado y el día
+        tickangle=45,
+        showgrid=True
+    ),
+    yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, weight='bold'),
+        showgrid=True
+    ),
+    template='plotly_dark',
+    legend=dict(
+        orientation='h',
+        yanchor='bottom',
+        y=1.02,
+        xanchor='center',
+        x=0.5
+    )
 )
 
 # Mostrar la gráfica en Streamlit
