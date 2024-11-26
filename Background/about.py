@@ -1,37 +1,35 @@
 import streamlit as st
-from PIL import Image
 
-# Title and description
-st.markdown(
-    """
-    <div style='text-align: center; padding: 2em; background-color: #f8f9fa;'>
-        <h2 style='font-size: 2em; color: #4a4a4a;'>About Us</h2>
-        <p style='font-size: 1.2em; color: #6c757d; line-height: 1.5;'>
-            We are a team of dedicated professionals passionate about creating innovative solutions that help people.
-            Our goal is to make the world a better place through technology.
-        </p>
+# Configurar la página "Sobre Nosotros"
+st.markdown("""
+<div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center; width: 90%; margin: auto;">
+    <h1 style='text-align: center; color: black;'>¿Quiénes somos?</h1>
+    <p style="color: black; font-size: 18px; margin: 20px;">
+        Somos un grupo de estudiantes interdisciplinario del Tecnológico de Monterrey trabajando juntos para aportar de nuestros conocimientos y descubrimientos al resto de la comunidad universitaria y principalmente a México.
+    </p>
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+        <div>
+            <img src="path_to_image/Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 150px;">
+            <p style="color: black; font-size: 14px; font-weight: bold;">Vinicio Santoyo Cuevas<br>ITD</p>
+        </div>
+        <div>
+            <img src="path_to_image/Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 150px;">
+            <p style="color: black; font-size: 14px; font-weight: bold;">Manuel Medina Juárez<br>ITD</p>
+        </div>
+        <div>
+            <img src="path_to_image/Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 150px;">
+            <p style="color: black; font-size: 14px; font-weight: bold;">Gabriel Josué Tabango Espinoza<br>ITD</p>
+        </div>
     </div>
-    """, unsafe_allow_html=True
-)
-
-# Define images and team member details
-team_members = [
-    {"name": "Jane Smith", "role": "Project Manager", "image": "images/rosa.jpeg"},
-    {"name": "John Doe", "role": "Lead Developer", "image": "images/blue.webp"},
-    {"name": "Emma Brown", "role": "UI/UX Designer", "image": "images/gray.jpg"},
-]
-
-# Create columns for each team member
-cols = st.columns(len(team_members))
-for col, member in zip(cols, team_members):
-    with col:
-        # Display each member's image
-        image = Image.open(member["image"])
-        st.image(image, use_column_width=True, caption=member["name"])
-        # Display member name and role
-        st.markdown(
-            f"<h3 style='text-align: center; color: #4a4a4a;'>{member['name']}</h3>", unsafe_allow_html=True
-        )
-        st.markdown(
-            f"<p style='text-align: center; color: #6c757d;'>{member['role']}</p>", unsafe_allow_html=True
-        )
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+        <div>
+            <img src="path_to_image/Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 150px;">
+            <p style="color: black; font-size: 14px; font-weight: bold;">Andrés Emiliano Martínez Fuentes<br>ITD</p>
+        </div>
+        <div>
+            <img src="path_to_image/Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 150px;">
+            <p style="color: black; font-size: 14px; font-weight: bold;">Luis Fernando González Cortés<br>ITD</p>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
