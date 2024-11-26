@@ -54,19 +54,43 @@ clusters = kmeans.fit_predict(pca_data)
 # Añadir etiquetas de clusters al DataFrame original
 data['cluster'] = clusters
 
+# Calcular el candidato más mencionado en cada clúster
+data['top_candidate'] = data[['top_mentioned_candidate_Claudia Sheinbaum', 
+                               'top_mentioned_candidate_Jorge Álvarez Máynez',
+                               'top_mentioned_candidate_Xóchitl Gálvez']].idxmax(axis=1)
+
+cluster_summary = data.groupby('cluster').agg(
+    top_candidate=('top_candidate', lambda x: x.value_counts().idxmax()),  # Candidato más mencionado
+    avg_influence=('influence_factor', 'mean'),
+    avg_text_length=('avg_text_len', 'mean'),
+    avg_time_elapsed=('avg_time_elapsed_between_posts', 'mean'),
+    count=('cluster', 'size')
+).reset_index()
+
 # Crear un DataFrame para los datos PCA transformados y las asignaciones de cluster
 pca_df = pd.DataFrame(pca_data, columns=['PCA1', 'PCA2'])
 pca_df['cluster'] = clusters
 
-# Visualización interactiva con Plotly
+# Asociar los datos agregados con cada clúster para las etiquetas
+pca_df = pca_df.merge(cluster_summary, on='cluster')
+
+# Crear visualización interactiva con etiquetas por clúster
 fig = px.scatter(
     pca_df,
     x='PCA1',
     y='PCA2',
     color=pca_df['cluster'].astype(str),  # Convertir cluster a cadena para una leyenda categórica
-    title="Basado en PCA y KMeans",
-    labels={'color': 'Clusters', 'PCA1': 'Componente principal 1', 'PCA2': 'Componente principal 2'},  # Cambiar el título del filtro de color
-    color_discrete_sequence=px.colors.qualitative.Vivid  # Colores vibrantes
+    title="Clustering de usuarios basado en PCA y KMeans",
+    labels={'color': 'Clusters', 'PCA1': 'Componente principal 1', 'PCA2': 'Componente principal 2'},
+    color_discrete_sequence=px.colors.qualitative.Vivid,
+    hover_data={  # Incluir datos agrupados en las etiquetas
+        'cluster': True,
+        'top_candidate': True,
+        'avg_influence': ':.2f',
+        'avg_text_length': ':.2f',
+        'avg_time_elapsed': ':.2f',
+        'count': True
+    }
 )
 
 # Agregar líneas de referencia en los ejes
