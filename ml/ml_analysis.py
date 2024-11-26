@@ -53,9 +53,6 @@ df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
 # Agrupar por semana y calcular el promedio de sentimiento
 sentiment_by_week = df.groupby(df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean()
 
-# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
-st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
-
 top_users_df = df[df['top_user_indicator'] == 1]
 
 # Agrupar por sentimiento y sumar el número de interacciones
@@ -118,5 +115,5 @@ fig.update_layout(
 )
 
 # Mostrar la gráfica en Streamlit
-st.title("Comparación de Sentimiento Promedio Usuarios Influyentes vs Usuarios Comunes")
+st.header("Comparación de Sentimiento Promedio Usuarios Influyentes vs Usuarios Comunes")
 st.plotly_chart(fig, use_container_width=True)
