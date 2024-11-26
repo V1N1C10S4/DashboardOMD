@@ -147,7 +147,7 @@ boxplot_fig.update_layout(
 )
 
 # Mostrar ambas visualizaciones en el mismo renglón en Streamlit
-col1, col2 = st.columns([1.2, 1])  # Ajustar las proporciones de las columnas
+col1, col2 = st.columns([1, 1])  # Ajustar las proporciones de las columnas
 
 with col1:
     st.subheader("Distribución de Longitud Promedio")
