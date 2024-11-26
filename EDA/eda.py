@@ -101,8 +101,8 @@ fig.update_layout(
         yanchor="bottom",
         y=1.02,
         xanchor="right",
-        x=0.5,
-        bordercolor="LightGray",
+        x=15,
+        bordercolor="gray",
         borderwidth=1
     )
 )
