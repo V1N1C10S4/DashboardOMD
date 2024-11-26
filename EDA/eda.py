@@ -45,7 +45,7 @@ fig.add_trace(go.Scatter(
     x=x_range,
     y=density,
     mode='lines',
-    line=dict(color=vivid_colors[0], width=4),
+    line=dict(color=vivid_colors[1], width=4),
     name='Density'
 ))
 
@@ -54,7 +54,7 @@ fig.add_trace(go.Scatter(
     x=[-3.1165083206837174, -3.1165083206837174],
     y=[0, max(density)],
     mode='lines',
-    line=dict(color=vivid_colors[1], width=2, dash='dash'),
+    line=dict(color=vivid_colors[0], width=2, dash='dash'),
     name='Umbral'
 ))
 
