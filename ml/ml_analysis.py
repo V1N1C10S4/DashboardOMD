@@ -209,7 +209,7 @@ fig.add_trace(go.Bar(
     y=sentiment_by_cluster['predicted_sentiment'],  # Sentimiento promedio
     marker_color=['#FFB400', '#4CC3D9', '#7E57C2'],  # Colores Vivid (amarillo, azul claro, púrpura)
     text=sentiment_by_cluster['predicted_sentiment'],  # Etiquetas de valores
-    textposition='auto',  # Mostrar etiquetas automáticamente
+    textposition='none',  # Mostrar etiquetas automáticamente
     name='Sentimiento Promedio'  # Nombre de la traza
 ))
 
