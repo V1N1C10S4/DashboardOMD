@@ -83,6 +83,19 @@ fig.update_layout(
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
 
+st.write("""
+## Aspectos destacados de clústers por candidato:
+Jorge Álvarez Maynez es el candidato más mencionado por un gran número de usuarios únicos, lo que significa que aunque sus menciones en general son pocas, al filtrar usuarios únicos es el que lidera la conversación, no genera una gran cantidad de influencia pero podemos concluir que es muy mencionado entre los usuarios más casuales de la red social X.
+""")
+
+st.write("""
+El cluster relacionado con Claudia Sheinbaum tiene mucha más influencia, a pesar de que el tiempo entre el post de cada publicación es el mayor entre los clusters así como la longitud media de las publicaciones.
+""")
+
+st.write("""
+El cluster uno relacionado con Xóchitl Gálvez presenta un comportamiento intermedio en comparación con los otros dos clusters.
+""")
+
 #Visualizaciones secundarias
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
