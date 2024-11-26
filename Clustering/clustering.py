@@ -64,7 +64,7 @@ fig = px.scatter(
     color=pca_df['cluster'].astype(str),  # Convertir cluster a cadena para una leyenda categórica
     title="Basado en PCA y KMeans",
     labels={'color': 'Clusters', 'PCA1': 'Componente principal 1', 'PCA2': 'Componente principal 2'},  # Cambiar el título del filtro de color
-    color_discrete_sequence=px.colors.diverging.Spectral  # Colores vibrantes
+    color_discrete_sequence=px.colors.qualitative.Vivid  # Colores vibrantes
 )
 
 # Agregar líneas de referencia en los ejes
