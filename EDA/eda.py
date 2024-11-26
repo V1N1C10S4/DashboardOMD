@@ -152,12 +152,10 @@ for metric in melted_results['metric'].unique():
 
 # Configurar diseño de la gráfica
 fig2.update_layout(
-    title="Comparación de Métricas por Grupo de Usuarios",
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
     barmode='stack',  # Barras apiladas
     template="simple_white",
-    title_font=dict(size=18, color='#333333', family="Arial"),
     xaxis=dict(title_font=dict(size=14, weight='bold')),
     yaxis=dict(title_font=dict(size=14, weight='bold')),
     legend=dict(
