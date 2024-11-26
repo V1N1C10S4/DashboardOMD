@@ -1,9 +1,13 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
 from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 
-# Simulated data for influence_factor based on statistical description provided earlier
+# Encabezado para la aplicación
+st.title("Density of Influence Factor per User")
+
+# Simulación de datos de ejemplo basada en las descripciones anteriores
 np.random.seed(42)
 influence_factor = np.concatenate([
     np.random.normal(loc=-10, scale=3, size=30000),
@@ -11,18 +15,18 @@ influence_factor = np.concatenate([
     np.random.normal(loc=5, scale=1, size=5000)
 ])
 
-# Clean up extreme or unwanted values for the KDE calculation
+# Limpiar valores extremos o no deseados
 influence_factor = influence_factor[~np.isinf(influence_factor)]
 
-# Calculate KDE
-density = gaussian_kde(influence_factor, bw_method='silverman')  # Matching seaborn default bandwidth
+# Calcular KDE
+density = gaussian_kde(influence_factor, bw_method='silverman')  # Simula el comportamiento de Seaborn
 x_vals = np.linspace(influence_factor.min() - 2, influence_factor.max() + 2, 500)
 y_vals = density(x_vals)
 
-# Create Plotly figure
+# Crear la figura en Plotly
 fig = go.Figure()
 
-# Add KDE line
+# Añadir la línea KDE
 fig.add_trace(go.Scatter(
     x=x_vals,
     y=y_vals,
@@ -31,17 +35,17 @@ fig.add_trace(go.Scatter(
     name="KDE"
 ))
 
-# Update layout to replicate the original Seaborn style
+# Ajustar el diseño para replicar el estilo original
 fig.update_layout(
     title="Density of Influence Factor per User",
     xaxis_title="Influence Factor",
     yaxis_title="Density",
-    template="plotly_white",
+    template="plotly_white",  # Fondo blanco para emular la visualización original
     height=600,
     xaxis=dict(range=[-20, 15], gridcolor="lightgrey"),
     yaxis=dict(gridcolor="lightgrey"),
     showlegend=True
 )
 
-# Display the figure
-fig.show()
+# Mostrar la figura en Streamlit
+st.plotly_chart(fig, use_container_width=True)
