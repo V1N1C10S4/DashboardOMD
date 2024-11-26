@@ -17,10 +17,9 @@ Se teorizó que un pequeño grupo de usuarios acapara la mayor parte de la influ
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Sentiment_df\Sentiment.csv")
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.dataframe(df.head())
+url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F&export=download&confirm=t'
+df = pd.read_csv(url)
+st.dataframe(df.head())
 
 # Mostrar los primeros elementos
 st.write("Primeros 5 elementos del dataset:")
