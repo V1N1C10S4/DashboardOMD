@@ -15,4 +15,4 @@ El conocimiento generado no solo nos invita a reflexionar sobre el presente, sin
 
 # Mostrar la imagen al final de la página
 st.markdown("---")  # Línea divisoria opcional para separar el contenido de la imagen
-st.image("images/Mexico.jpg", caption="Reflexión final: México y su evolución digital", use_column_width=True)
+st.image("images/Mexico.jpg", caption="México y su evolución digital", use_column_width=True)
