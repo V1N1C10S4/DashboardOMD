@@ -25,13 +25,6 @@ download_data()
 # Load data
 data = pd.read_csv("encoded_cleansed_infotracer_by_user_for_clustering.csv")
 
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-import plotly.express as px
-import streamlit as st
-
 # Seleccionar columnas relevantes para clustering
 columns_for_clustering = [
     'influence_factor',
@@ -85,10 +78,5 @@ fig.update_layout(
 )
 
 # Configuración para Streamlit
-st.title("Visualización Interactiva de Clustering")
+st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
-
-# Mostrar la varianza explicada por los componentes principales
-explained_variance = pca.explained_variance_ratio_
-st.write("Varianza explicada por cada componente principal:")
-st.write(f"PCA1: {explained_variance[0]:.2%}, PCA2: {explained_variance[1]:.2%}")
