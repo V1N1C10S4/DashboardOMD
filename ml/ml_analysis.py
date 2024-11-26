@@ -19,21 +19,30 @@ st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
 # Cargar los datos
 url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F'
-df = pd.read_csv(url)
+sentiment_df = pd.read_csv(url)
 
-# Configuración de Streamlit
-st.title("Tendencia Promedio del Sentimiento por Semana")
+# Asegurarse de que la columna de sentimiento esté configurada
+sentiment_column = 'predicted_sentiment'  # Ajustar si el nombre es diferente
 
-# Calcular el sentimiento promedio por semana
-# Asegúrate de que df tiene una columna datetime y sentiment antes de calcular esto
-df['datetime'] = pd.to_datetime(df['datetime'])  # Asegurar formato datetime
-df.set_index('datetime', inplace=True)
-sentiment_by_week = df['sentiment'].resample('W').mean()  # Resample y cálculo
+sentiment_df['datetime'] = pd.to_datetime(sentiment_df['datetime'], errors='coerce')
 
-# Crear gráfica en Plotly
+# Agrupar por semanas en lugar de días
+sentiment_df['datetime'] = pd.to_datetime(sentiment_df['datetime'], errors='coerce')
+sentiment_by_week = sentiment_df.groupby(sentiment_df['datetime'].dt.to_period('W'))[sentiment_column].mean()
+#Graficar
+# Agrupar por semana y calcular el sentimiento promedio
+sentiment_by_week = sentiment_df.groupby(sentiment_df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean()
+
+# Convertir PeriodIndex a datetime para mejor formato
+sentiment_by_week.index = sentiment_by_week.index.to_timestamp()
+
+# Calcular sentimiento promedio por semana
+sentiment_df.set_index('datetime', inplace=True)
+sentiment_by_week = sentiment_df['sentiment'].resample('W').mean()
+
+# Crear la gráfica en Plotly
 fig = go.Figure()
 
-# Línea de sentimiento promedio
 fig.add_trace(go.Scatter(
     x=sentiment_by_week.index,
     y=sentiment_by_week.values,
@@ -43,44 +52,13 @@ fig.add_trace(go.Scatter(
     name='Sentimiento Promedio'
 ))
 
-# Configuración de diseño
 fig.update_layout(
-    title=dict(
-        text="Tendencia Promedio del Sentimiento por Semana",
-        font=dict(size=16, color='black', family='Arial'),
-        x=0.5,  # Centrado
-        xanchor='center'
-    ),
-    xaxis=dict(
-        title='Mes',
-        titlefont=dict(size=14, color='black'),
-        tickformat='%b',  # Mes abreviado
-        tickangle=45,
-        tickfont=dict(size=10, color='gray')
-    ),
-    yaxis=dict(
-        title='Sentimiento Promedio',
-        titlefont=dict(size=14, color='black'),
-        tickfont=dict(size=10, color='gray'),
-        gridcolor='lightgray',
-        gridwidth=0.5
-    ),
-    legend=dict(
-        title='Leyenda',
-        orientation='h',
-        yanchor='bottom',
-        y=1.02,
-        xanchor='center',
-        x=0.5,
-        font=dict(size=10)
-    ),
-    plot_bgcolor='white',
+    title="Tendencia Promedio del Sentimiento por Semana",
+    xaxis=dict(title="Mes", tickformat="%b"),
+    yaxis=dict(title="Sentimiento Promedio"),
+    template="simple_white",
     margin=dict(l=20, r=20, t=50, b=20),
 )
 
-# Configuración de líneas de la cuadrícula (horizontal únicamente)
-fig.update_xaxes(showgrid=False)
-fig.update_yaxes(showgrid=True, gridwidth=0.6, gridcolor='lightgray', zeroline=False)
-
-# Mostrar gráfico en Streamlit
+# Mostrar la gráfica en Streamlit
 st.plotly_chart(fig, use_container_width=True)
