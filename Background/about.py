@@ -15,27 +15,33 @@ st.markdown("""
     </p>
     <div style="display: flex; justify-content: space-around; margin-top: 20px;">
         <div>
-            <img src="images\Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 200px;">
+            <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
             <p style="color: black; font-size: 14px; font-weight: bold;">Vinicio Santoyo Cuevas<br>ITD</p>
         </div>
         <div>
-            <img src="images\Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 200px;">
+            <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
             <p style="color: black; font-size: 14px; font-weight: bold;">Manuel Medina Juárez<br>ITD</p>
         </div>
         <div>
-            <img src="images\Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 200px;">
+            <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
             <p style="color: black; font-size: 14px; font-weight: bold;">Gabriel Josué Tabango Espinoza<br>ITD</p>
         </div>
     </div>
     <div style="display: flex; justify-content: space-around; margin-top: 20px;">
         <div>
-            <img src="images\Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 200px;">
+            <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
             <p style="color: black; font-size: 14px; font-weight: bold;">Andrés Emiliano Martínez Fuentes<br>ITD</p>
         </div>
         <div>
-            <img src="images\Claudia_Sheinbaum.jpg" style="border-radius: 50%; width: 200px;">
+            <img src="data:image/png;base64,{}" style="border-radius: 50%; width: 150px;">
             <p style="color: black; font-size: 14px; font-weight: bold;">Luis Fernando González Cortés<br>ITD</p>
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""".format(
+    get_base64_image("images\Claudia_Sheinbaum.jpg"),
+    get_base64_image("images\Claudia_Sheinbaum.jpg"),
+    get_base64_image("images\Claudia_Sheinbaum.jpg"),
+    get_base64_image("images\Claudia_Sheinbaum.jpg"),
+    get_base64_image("images\Claudia_Sheinbaum.jpg")
+), unsafe_allow_html=True)
