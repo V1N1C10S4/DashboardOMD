@@ -13,7 +13,7 @@ st.title("Análisis de Sentimientos")
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 
 st.write("""
-Se teorizó que un pequeño grupo de usuarios acapara la mayor parte de la influencia en la plataforma de redes sociales X (antes Twitter). Este fenómeno sugiere que estos usuarios pueden compartir características comunes, como rasgos demográficos, patrones de compromiso o afiliaciones políticas, que merece la pena explorar.
+Para este análisis se teorizó que los usuarios clasificados como 'top users' tienen una mayor proporción de sentimientos extremos (positivo y negativo) en comparación con los usuarios casuales, lo que refleja su rol en polarizar y dirigir la conversación pública
 """)
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
@@ -117,6 +117,18 @@ fig.update_layout(
 # Mostrar la gráfica en Streamlit
 st.header("Comparación de Sentimiento Promedio Usuarios Influyentes vs Usuarios Comunes")
 st.plotly_chart(fig, use_container_width=True)
+
+st.write("""
+### Sentimiento General de Usuarios Influyentes:
+- Los usuarios influyentes tienden hacia un promedio de sentimiento más neutral. Esto refleja un enfoque estratégico en su contenido, buscando resonar con un público amplio y evitar polarizaciones extremas.
+- Su posición más neutral puede estar relacionada con su intención de mantener relevancia y credibilidad, evitando generar divisiones significativas.
+""")
+
+st.write("""
+### Sentimiento General de Usuarios Comunes:
+- Los usuarios comunes muestran una mayor inclinación hacia sentimientos negativos, reflejando un tono más crítico o emocional en sus interacciones.
+- Este comportamiento puede deberse a una menor exposición o alineación estratégica en sus publicaciones, generando contenido más reactivo.
+""")
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
@@ -241,6 +253,13 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+st.write("""
+### Sentimiento Promedio de Clústers Relacionado por Candidato:
+- **Claudia Sheinbaum (Clúster 1):** Sobresale como la candidata con el apoyo más positivo e influyente, impulsado por un grupo de usuarios que priorizan calidad sobre cantidad.
+- **Xóchitl Gálvez (Clúster 0):** Logra un balance entre neutralidad y positividad, posicionándose como una opción menos polarizadora pero aún relevante.
+- **Jorge Álvarez Máynez (Clúster 2):** Aunque mencionado por una amplia base de usuarios, su influencia se diluye debido a un tono neutral o ligeramente negativo.
+""")
 
 # Group data by week and cluster, calculating average sentiment for unique users
 cluster_sentiment_unique = df.groupby([
