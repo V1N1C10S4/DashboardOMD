@@ -84,11 +84,10 @@ fig = go.Figure()
 
 # Añadir las barras
 fig.add_trace(go.Bar(
-    x=sentiment_comparison['User Type'],  # Eje X: Tipos de usuario
+    x=["Usuarios Influyentes", "Usuarios Comunes"],  # Etiquetas de eje X actualizadas
     y=sentiment_comparison['Average Sentiment'],  # Eje Y: Sentimiento promedio
     marker_color=['#FFB400', '#4CC3D9'],  # Colores Vivid (amarillo y azul claro)
-    text=sentiment_comparison['Average Sentiment'],  # Etiquetas de valores
-    textposition='auto',  # Mostrar etiquetas automáticamente
+    textposition='none',  # Ocultar los valores dentro de las barras
     name='Sentimiento Promedio'  # Nombre de la traza
 ))
 
@@ -100,12 +99,13 @@ fig.update_layout(
         tickfont=dict(size=12, color='white')
     ),
     yaxis=dict(
-        title='Sentimiento Promedio',
+        title='Sentimiento',
         titlefont=dict(size=14, color='white'),
         tickfont=dict(size=12, color='white'),
-        range=[min(sentiment_comparison['Average Sentiment']) - 0.1, 
-               max(sentiment_comparison['Average Sentiment']) + 0.1],
-        showgrid=True,  # Activar líneas de cuadrícula
+        tickvals=[min(sentiment_comparison['Average Sentiment']), 
+                  max(sentiment_comparison['Average Sentiment'])],  # Etiquetas específicas para el eje Y
+        ticktext=['Negativo', 'Positivo'],  # Etiquetas personalizadas para los valores mínimo y máximo
+        showgrid=True,  # Mantener las líneas de cuadrícula
         gridwidth=0.5,
         gridcolor='gray'
     ),
