@@ -29,24 +29,22 @@ posts_df['%_posts'] = posts_df['num_posts'] / posts_df['num_posts'].sum() * 100
 posts_df['%_interaction'] = posts_df['num_interaction'] / posts_df['num_interaction'].sum() * 100
 posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
 
-# Paso 5: Crear la gráfica de densidad usando Plotly
-fig = px.density_contour(
-    posts_df, 
-    x='influence_factor',
-    title="Density of Influence Factor per User",
-    labels={'influence_factor': 'Influence Factor'}
-)
+# Paso 5: Generar estimación de densidad usando KDE
+influence_factor = posts_df['influence_factor'].dropna()  # Elimina valores nulos
+kde = gaussian_kde(influence_factor)
+x_range = np.linspace(influence_factor.min() - 5, influence_factor.max() + 5, 500)
+density = kde(x_range)
 
-# Añadir la línea de densidad
-fig.add_trace(
-    go.Scatter(
-        x=posts_df['influence_factor'],
-        y=np.exp(-posts_df['influence_factor']),  # Simulación del kernel
-        mode='lines',
-        line=dict(color='blue', width=2),
-        name='Density'
-    )
-)
+# Paso 6: Crear la gráfica de densidad con Plotly
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x_range,
+    y=density,
+    mode='lines',
+    line=dict(color='blue', width=2),
+    name='Density'
+))
 
 # Configurar diseño
 fig.update_layout(
