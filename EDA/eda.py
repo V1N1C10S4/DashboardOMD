@@ -130,28 +130,24 @@ results_df.reset_index(inplace=True)
 
 # Reorganizar los datos para el gráfico
 melted_results = results_df.melt(
-    id_vars=['results_df.index.name'],
+    id_vars=['top_user_indicator'],
     value_vars=['%_interaction', '%_posts', '%_users'],
-    var_name='Métrica',
-    value_name='Porcentaje'
+    var_name='metric',
+    value_name='value'
 )
 
-# Crear la gráfica en Plotly con colores de la paleta "Vivid" y barras agrupadas
+# Crear la gráfica en Plotly con barras agrupadas en lugar de apiladas
 fig2 = go.Figure()
 
-# Asignar colores de la paleta "Vivid" a las métricas
-vivid_colors = px.colors.qualitative.Vivid
-
-# Añadir barras agrupadas para cada métrica con colores específicos
-for i, metric in enumerate(melted_results['Métrica'].unique()):
-    filtered_data = melted_results[melted_results['Métrica'] == metric]
+# Añadir barras agrupadas para cada métrica
+for metric in melted_results['metric'].unique():
+    filtered_data = melted_results[melted_results['metric'] == metric]
     fig2.add_trace(go.Bar(
-        x=filtered_data[results_df.index.name],
-        y=filtered_data['Porcentaje'],
+        x=filtered_data['top_user_indicator'],
+        y=filtered_data['value'],
         name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
-        text=filtered_data['Porcentaje'],  # Mostrar los valores
-        textposition='auto',
-        marker_color=vivid_colors[i % len(vivid_colors)]  # Usar colores de la paleta "Vivid"
+        text=filtered_data['value'],  # Mostrar los valores
+        textposition='auto'
     ))
 
 # Configurar diseño de la gráfica
