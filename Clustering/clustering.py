@@ -63,7 +63,7 @@ fig = px.scatter(
     y='PCA2',
     color=pca_df['cluster'].astype(str),  # Convertir cluster a cadena para una leyenda categórica
     title="Basado en PCA y KMeans",
-    labels={'cluster': 'Cluster'},
+    labels={'color': 'Clusters', 'PCA1': 'Componente principal 1', 'PCA2': 'Componente principal 2'},  # Cambiar el título del filtro de color
     color_discrete_sequence=px.colors.qualitative.Vivid  # Colores vibrantes
 )
 
@@ -72,11 +72,11 @@ fig.update_layout(
     shapes=[
         dict(type="line", x0=0, x1=0, y0=pca_df['PCA2'].min(), y1=pca_df['PCA2'].max(), line=dict(color="gray", width=1, dash="dash")),
         dict(type="line", y0=0, y1=0, x0=pca_df['PCA1'].min(), x1=pca_df['PCA1'].max(), line=dict(color="gray", width=1, dash="dash"))
-    ]
+    ],
+    xaxis_title="Componente principal 1 (PCA1)",
+    yaxis_title="Componente principal 2 (PCA2)"
 )
 
 # Configuración para Streamlit
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
-
-
