@@ -95,17 +95,17 @@ fig.add_trace(go.Bar(
 fig.update_layout(
     xaxis=dict(
         title='Tipo de Usuario',
-        titlefont=dict(size=14, color='white'),
-        tickfont=dict(size=12, color='white')
+        titlefont=dict(size=16, color='white'),
+        tickfont=dict(size=14, color='white')
     ),
     yaxis=dict(
         title='Sentimiento',
-        titlefont=dict(size=14, color='white'),
-        tickfont=dict(size=12, color='white'),
+        titlefont=dict(size=16, color='white'),
+        tickfont=dict(size=14, color='white'),
         tickvals=[0, 1, 2],  # Valores específicos en el eje Y
         ticktext=['Negativo', 'Neutral', 'Positivo'],  # Etiquetas personalizadas para 0, 1 y 2
         range=[0, 2],
-        showgrid=True,  # Mantener las líneas de cuadrícula
+        showgrid=False,  # Mantener las líneas de cuadrícula
         gridwidth=0.5,
         gridcolor='gray'
     ),
@@ -116,4 +116,225 @@ fig.update_layout(
 
 # Mostrar la gráfica en Streamlit
 st.header("Comparación de Sentimiento Promedio Usuarios Influyentes vs Usuarios Comunes")
+st.plotly_chart(fig, use_container_width=True)
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+# Separate data into top users and non-top users
+top_users_df = df[df['top_user_indicator'] == 1]
+non_top_users_df = df[df['top_user_indicator'] == 0]
+
+# Group data by week for both groups and calculate average sentiment
+top_users_sentiment = top_users_df.groupby(top_users_df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean().reset_index()
+non_top_users_sentiment = non_top_users_df.groupby(non_top_users_df['datetime'].dt.to_period('W'))['predicted_sentiment'].mean().reset_index()
+
+# Convert PeriodIndex to datetime for better plotting
+top_users_sentiment['datetime'] = top_users_sentiment['datetime'].dt.to_timestamp()
+non_top_users_sentiment['datetime'] = non_top_users_sentiment['datetime'].dt.to_timestamp()
+
+# Crear la gráfica de líneas con Plotly
+fig = go.Figure()
+
+# Añadir la línea para usuarios influyentes (top users)
+fig.add_trace(go.Scatter(
+    x=top_users_sentiment['datetime'],
+    y=top_users_sentiment['predicted_sentiment'],
+    mode='lines+markers',
+    line=dict(color='#FFB400', width=2),  # Color Vivid (amarillo)
+    marker=dict(size=6),
+    name='Usuarios Influyentes'
+))
+
+# Añadir la línea para usuarios comunes (non-top users)
+fig.add_trace(go.Scatter(
+    x=non_top_users_sentiment['datetime'],
+    y=non_top_users_sentiment['predicted_sentiment'],
+    mode='lines+markers',
+    line=dict(color='#4CC3D9', width=2, dash='dash'),  # Color Vivid (azul claro) con línea discontinua
+    marker=dict(size=6),
+    name='Usuarios Comunes'
+))
+
+# Configuración del diseño
+fig.update_layout(
+    title={
+        'text': 'Tendencia del Sentimiento a lo Largo del Tiempo: Usuarios Influyentes vs Usuarios Comunes',
+        'x': 0.5,  # Centrar el título
+        'xanchor': 'center',
+        'font': {'size': 18, 'color': 'white'}
+    },
+    xaxis=dict(
+        title='Mes',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
+        tickformat='%b',  # Mostrar los meses abreviados
+        showgrid=False
+    ),
+    yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
+        showgrid=True,
+        gridcolor='gray',
+        gridwidth=0.5
+    ),
+    plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Fondo de toda la gráfica transparente
+    legend=dict(
+        title='Tipo de Usuario',
+        font=dict(size=12, color='white'),
+        bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente para la leyenda
+        bordercolor='gray',
+        borderwidth=0.5
+    )
+)
+
+# Mostrar la gráfica en Streamlit
+st.header("Tendencia del Sentimiento por Usuarios Influyentes y Comunes")
+st.plotly_chart(fig, use_container_width=True)
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+# Remover duplicados y calcular el sentimiento promedio por usuario
+unique_users_df = df.groupby('username').agg({
+    'predicted_sentiment': 'mean',
+    'cluster': 'first'  # Mantener el cluster asignado por usuario
+}).reset_index()
+
+# Calcular el sentimiento promedio por cluster
+sentiment_by_cluster = unique_users_df.groupby('cluster')['predicted_sentiment'].mean().reset_index()
+
+# Crear la gráfica de barras con Plotly
+fig = go.Figure()
+
+# Añadir las barras para cada cluster
+fig.add_trace(go.Bar(
+    x=sentiment_by_cluster['cluster'].astype(str),  # Clusters tratados como categorías
+    y=sentiment_by_cluster['predicted_sentiment'],  # Sentimiento promedio
+    marker_color=['#FFB400', '#4CC3D9', '#7E57C2'],  # Colores Vivid (amarillo, azul claro, púrpura)
+    text=sentiment_by_cluster['predicted_sentiment'],  # Etiquetas de valores
+    textposition='auto',  # Mostrar etiquetas automáticamente
+    name='Sentimiento Promedio'  # Nombre de la traza
+))
+
+# Configuración del diseño
+fig.update_layout(
+    title={
+        'text': 'Sentimiento Promedio por Cluster',
+        'x': 0.5,  # Centrar el título
+        'xanchor': 'center',
+        'font': {'size': 18, 'color': 'white'}
+    },
+    xaxis=dict(
+        title='Cluster',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white')
+    ),
+    yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
+        range=[min(sentiment_by_cluster['predicted_sentiment']) - 0.1, 
+               max(sentiment_by_cluster['predicted_sentiment']) + 0.1],
+        showgrid=True,
+        gridcolor='gray',
+        gridwidth=0.5
+    ),
+    plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente para toda la gráfica
+    showlegend=False  # Ocultar la leyenda
+)
+
+# Mostrar la gráfica en Streamlit
+st.header("Sentimiento Promedio por Cluster")
+st.plotly_chart(fig, use_container_width=True)
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+# Group data by week and cluster, calculating average sentiment for unique users
+cluster_sentiment_unique = df.groupby([
+    df['datetime'].dt.to_period('W'),
+    df['cluster']
+])['predicted_sentiment'].mean().reset_index()
+
+# Convert PeriodIndex to datetime for better plotting
+cluster_sentiment_unique['datetime'] = cluster_sentiment_unique['datetime'].dt.to_timestamp()
+
+# Separate data for each cluster
+cluster_0_unique = cluster_sentiment_unique[cluster_sentiment_unique['cluster'] == 0]
+cluster_1_unique = cluster_sentiment_unique[cluster_sentiment_unique['cluster'] == 1]
+cluster_2_unique = cluster_sentiment_unique[cluster_sentiment_unique['cluster'] == 2]
+
+# Crear la gráfica de líneas con Plotly
+fig = go.Figure()
+
+# Añadir la línea para el Cluster 0
+fig.add_trace(go.Scatter(
+    x=cluster_0_unique['datetime'],
+    y=cluster_0_unique['predicted_sentiment'],
+    mode='lines+markers',
+    line=dict(color='#7E57C2', width=2),  # Color Vivid (púrpura)
+    marker=dict(size=6),
+    name='Cluster 0'
+))
+
+# Añadir la línea para el Cluster 1
+fig.add_trace(go.Scatter(
+    x=cluster_1_unique['datetime'],
+    y=cluster_1_unique['predicted_sentiment'],
+    mode='lines+markers',
+    line=dict(color='#00BFFF', width=2, dash='dash'),  # Color Vivid (azul cielo) con línea discontinua
+    marker=dict(size=6),
+    name='Cluster 1'
+))
+
+# Añadir la línea para el Cluster 2
+fig.add_trace(go.Scatter(
+    x=cluster_2_unique['datetime'],
+    y=cluster_2_unique['predicted_sentiment'],
+    mode='lines+markers',
+    line=dict(color='#FFB400', width=2, dash='dot'),  # Color Vivid (amarillo) con línea de puntos
+    marker=dict(size=6),
+    name='Cluster 2'
+))
+
+# Configuración del diseño
+fig.update_layout(
+    title={
+        'text': 'Tendencia del Sentimiento por Tiempo y Cluster (Usuarios Únicos)',
+        'x': 0.5,  # Centrar el título
+        'xanchor': 'center',
+        'font': {'size': 18, 'color': 'white'}
+    },
+    xaxis=dict(
+        title='Mes',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
+        tickformat='%b',  # Mostrar los meses abreviados
+        showgrid=False
+    ),
+    yaxis=dict(
+        title='Sentimiento Promedio',
+        titlefont=dict(size=14, color='white'),
+        tickfont=dict(size=12, color='white'),
+        showgrid=True,
+        gridcolor='gray',
+        gridwidth=0.5
+    ),
+    plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Fondo de toda la gráfica transparente
+    legend=dict(
+        title='Clusters',
+        font=dict(size=12, color='white'),
+        bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente para la leyenda
+        bordercolor='gray',
+        borderwidth=0.5
+    )
+)
+
+# Mostrar la gráfica en Streamlit
+st.header("Tendencia del Sentimiento por Cluster y Tiempo (Usuarios Únicos)")
 st.plotly_chart(fig, use_container_width=True)
