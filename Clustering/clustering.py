@@ -85,6 +85,9 @@ st.plotly_chart(fig, use_container_width=True)
 
 #Visualizaciones secundarias
 
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
 # Definir una paleta de colores Vivid y asignarla manualmente a cada clúster
 vivid_colors = px.colors.qualitative.Vivid
 color_mapping = {0: vivid_colors[0], 1: vivid_colors[1], 2: vivid_colors[2]}  # Mapear clusters a colores
