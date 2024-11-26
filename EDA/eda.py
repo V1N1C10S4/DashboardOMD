@@ -4,48 +4,53 @@ import numpy as np
 from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 
-# Encabezado para la aplicación
-st.title("Density of Influence Factor per User")
+# Streamlit header
+st.header("Density of Influence Factor per User")
 
-# Simulación de datos de ejemplo basada en las descripciones anteriores
-np.random.seed(42)
-influence_factor = np.concatenate([
-    np.random.normal(loc=-10, scale=3, size=30000),
-    np.random.normal(loc=0, scale=2, size=20000),
-    np.random.normal(loc=5, scale=1, size=5000)
-])
+# Cargar los datos
+url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
+df = pd.read_csv(url)
 
-# Limpiar valores extremos o no deseados
-influence_factor = influence_factor[~np.isinf(influence_factor)]
+# Step 1: Calculate the number of posts per user
+posts_df = df.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
+posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
 
-# Calcular KDE
-density = gaussian_kde(influence_factor, bw_method='silverman')  # Simula el comportamiento de Seaborn
-x_vals = np.linspace(influence_factor.min() - 2, influence_factor.max() + 2, 500)
-y_vals = density(x_vals)
+# Step 2: Calculate the total interactions per user
+temp = df.pivot_table(index='username', values='num_interaction', aggfunc='sum').sort_values(by='num_interaction', ascending=False).reset_index()
+temp.rename(columns={'num_interaction': 'num_interaction'}, inplace=True)
 
-# Crear la figura en Plotly
+# Step 3: Merge the post counts and interaction sums for each user
+posts_df = pd.merge(posts_df, temp, on='username', how='left')
+
+# Step 4: Calculate derived metrics
+posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts']
+posts_df['%_posts'] = posts_df['num_posts'] / posts_df['num_posts'].sum() * 100
+posts_df['%_interaction'] = posts_df['num_interaction'] / posts_df['num_interaction'].sum() * 100
+posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
+
+# Step 5: Create the KDE density plot using Plotly
 fig = go.Figure()
 
-# Añadir la línea KDE
-fig.add_trace(go.Scatter(
-    x=x_vals,
-    y=y_vals,
-    mode='lines',
-    line=dict(color='blue', width=2),
-    name="KDE"
+# Add the KDE line for influence_factor
+fig.add_trace(go.Histogram(
+    x=posts_df['influence_factor'],
+    histnorm='density',
+    name='Density',
+    marker=dict(color='blue', line=dict(width=1)),
+    opacity=0.7
 ))
 
-# Ajustar el diseño para replicar el estilo original
+# Configure the layout
 fig.update_layout(
     title="Density of Influence Factor per User",
     xaxis_title="Influence Factor",
     yaxis_title="Density",
-    template="plotly_white",  # Fondo blanco para emular la visualización original
-    height=600,
-    xaxis=dict(range=[-20, 15], gridcolor="lightgrey"),
-    yaxis=dict(gridcolor="lightgrey"),
-    showlegend=True
+    template="simple_white",
+    title_font=dict(size=18, color='#333333', family="Arial"),
+    xaxis=dict(showgrid=True, gridcolor="LightGray", gridwidth=0.5, zeroline=False),
+    yaxis=dict(showgrid=True, gridcolor="LightGray", gridwidth=0.5, zeroline=False)
 )
 
-# Mostrar la figura en Streamlit
+# Streamlit visualization
+st.title("Influence Factor Analysis")
 st.plotly_chart(fig, use_container_width=True)
