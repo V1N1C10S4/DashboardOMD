@@ -158,12 +158,6 @@ fig.add_trace(go.Scatter(
 
 # Configuración del diseño
 fig.update_layout(
-    title={
-        'text': 'Tendencia del Sentimiento a lo Largo del Tiempo: Usuarios Influyentes vs Usuarios Comunes',
-        'x': 0.5,  # Centrar el título
-        'xanchor': 'center',
-        'font': {'size': 18, 'color': 'white'}
-    },
     xaxis=dict(
         title='Mes',
         titlefont=dict(size=14, color='white'),
@@ -191,7 +185,7 @@ fig.update_layout(
 )
 
 # Mostrar la gráfica en Streamlit
-st.header("Tendencia del Sentimiento por Usuarios Influyentes y Comunes")
+st.header("Tendencia del Sentimiento a lo Largo del Tiempo: Usuarios Influyentes vs Usuarios Comunes")
 st.plotly_chart(fig, use_container_width=True)
 
 # Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
@@ -233,8 +227,6 @@ fig.update_layout(
         tickfont=dict(size=12, color='white')
     ),
     yaxis=dict(
-        title='Sentimiento Promedio',
-        titlefont=dict(size=14, color='white'),
         tickfont=dict(size=12, color='white'),
         range=[min(sentiment_by_cluster['predicted_sentiment']) - 0.1, 
                max(sentiment_by_cluster['predicted_sentiment']) + 0.1],
@@ -303,12 +295,6 @@ fig.add_trace(go.Scatter(
 
 # Configuración del diseño
 fig.update_layout(
-    title={
-        'text': 'Tendencia del Sentimiento por Tiempo y Cluster (Usuarios Únicos)',
-        'x': 0.5,  # Centrar el título
-        'xanchor': 'center',
-        'font': {'size': 18, 'color': 'white'}
-    },
     xaxis=dict(
         title='Mes',
         titlefont=dict(size=14, color='white'),
