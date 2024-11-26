@@ -5,6 +5,11 @@ from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 import plotly.express as px
 
+st.header("Análisis Exploratorio de Datos")
+
+# Añadir un espacio entre la gráfica de clustering y las gráficas de análisis de clusters
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
 # Cargar los datos
 url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
 df = pd.read_csv(url)
@@ -97,7 +102,7 @@ fig.add_trace(go.Scatter(
 ))
 
 # Mostrar en Streamlit
-st.title("Análisis del Factor de Influencia")
+st.subheader("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
 
 # Crear una segunda gráfica en Plotly adaptada al dashboard de Streamlit
