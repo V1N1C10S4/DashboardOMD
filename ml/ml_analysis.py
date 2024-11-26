@@ -21,6 +21,10 @@ st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 url = 'https://drive.google.com/uc?id=1VVkIC0Us3_llEEOyK_sJebCk0b_MZQ9F'
 df = pd.read_csv(url)
 
+# Mostrar los primeros 5 elementos del dataset
+st.write("Primeros 5 elementos del dataset:")
+st.dataframe(df.head())
+
 # Asegurar que la columna 'datetime' está en formato datetime
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
 
