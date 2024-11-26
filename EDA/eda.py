@@ -1,60 +1,28 @@
 import pandas as pd
 import numpy as np
-import plotly.graph_objects as go
 from scipy.stats import gaussian_kde
-import streamlit as st
+import plotly.graph_objects as go
 
-# Streamlit header
-st.header("Density of Influence Factor per User")
+# Simulated data for influence_factor based on statistical description provided earlier
+np.random.seed(42)
+influence_factor = np.concatenate([
+    np.random.normal(loc=-10, scale=3, size=30000),
+    np.random.normal(loc=0, scale=2, size=20000),
+    np.random.normal(loc=5, scale=1, size=5000)
+])
 
-# Cargar los datos
-url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
-df = pd.read_csv(url)
+# Clean up extreme or unwanted values for the KDE calculation
+influence_factor = influence_factor[~np.isinf(influence_factor)]
 
-# Convertir datetime
-df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
-
-# Limpieza inicial
-df_unique_url = df.drop_duplicates(subset=['url'], keep='first').dropna(subset=['url', 'candidate_name'])
-temp = df.drop_duplicates(subset=['url', 'candidate_name'], keep='first')
-temp = temp.groupby(['url'], as_index=False).agg({'candidate_name': lambda x: ', '.join(set(x))})
-temp = temp.dropna(subset=['url', 'candidate_name'])
-df = pd.merge(df_unique_url, temp, on='url', how='left')
-df.drop(columns=['candidate_name_x'], inplace=True)
-df.rename(columns={'candidate_name_y': 'candidate_name'}, inplace=True)
-
-# Crear posts_df
-posts_df = df.pivot_table(index='username', values='url', aggfunc='count').reset_index()
-posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
-temp = df.pivot_table(index='username', values='num_interaction', aggfunc='sum').reset_index()
-posts_df = pd.merge(posts_df, temp, on='username', how='left')
-
-# Calcular métricas
-posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts'].replace(0, np.nan)
-posts_df['%_posts'] = (posts_df['num_posts'] / posts_df['num_posts'].sum()).replace(0, np.nan) * 100
-posts_df['%_interaction'] = (posts_df['num_interaction'] / posts_df['num_interaction'].sum()).replace(0, np.nan) * 100
-posts_df['influence_factor'] = np.log(
-    (posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']).replace(0, np.nan) * 100
-).fillna(0)
-
-# Verificar distribución
-st.write("Statistics of influence_factor:")
-st.write(posts_df['influence_factor'].describe())
-
-# Ajustar los datos (remover outliers)
-filtered_influence_factors = posts_df[
-    (posts_df['influence_factor'] > -20) & (posts_df['influence_factor'] < 15)  # Ajusta al rango esperado
-]['influence_factor']
-
-# KDE
-density = gaussian_kde(filtered_influence_factors)
-x_vals = np.linspace(filtered_influence_factors.min(), filtered_influence_factors.max(), 500)
+# Calculate KDE
+density = gaussian_kde(influence_factor, bw_method='silverman')  # Matching seaborn default bandwidth
+x_vals = np.linspace(influence_factor.min() - 2, influence_factor.max() + 2, 500)
 y_vals = density(x_vals)
 
-# Crear gráfica
+# Create Plotly figure
 fig = go.Figure()
 
-# Línea KDE
+# Add KDE line
 fig.add_trace(go.Scatter(
     x=x_vals,
     y=y_vals,
@@ -63,16 +31,17 @@ fig.add_trace(go.Scatter(
     name="KDE"
 ))
 
-# Configuración de layout
+# Update layout to replicate the original Seaborn style
 fig.update_layout(
     title="Density of Influence Factor per User",
     xaxis_title="Influence Factor",
     yaxis_title="Density",
     template="plotly_white",
     height=600,
-    showlegend=True,
-    xaxis=dict(range=[-20, 15])
+    xaxis=dict(range=[-20, 15], gridcolor="lightgrey"),
+    yaxis=dict(gridcolor="lightgrey"),
+    showlegend=True
 )
 
-# Mostrar gráfica
-st.plotly_chart(fig, use_container_width=True)
+# Display the figure
+fig.show()
