@@ -136,11 +136,24 @@ melted_results = results_df.melt(
     value_name='value'
 )
 
+# Actualizar labels en el DataFrame
+melted_results['top_user_indicator'] = melted_results['top_user_indicator'].replace({
+    'casual_user': 'Usuarios comunes',
+    'top_user': 'Usuario Influyente'
+})
+
 # Crear la gráfica en Plotly con barras agrupadas y colores Vivid
 fig2 = go.Figure()
 
 # Asignar colores de la paleta "Vivid"
 vivid_colors = px.colors.qualitative.Vivid
+
+# Traducir métricas de la leyenda
+metric_translation = {
+    '%_interaction': '% Interacción',
+    '%_posts': '% Publicaciones',
+    '%_users': '% Usuarios'
+}
 
 # Añadir barras agrupadas para cada métrica
 for i, metric in enumerate(melted_results['metric'].unique()):
@@ -148,13 +161,14 @@ for i, metric in enumerate(melted_results['metric'].unique()):
     fig2.add_trace(go.Bar(
         x=filtered_data['top_user_indicator'],
         y=filtered_data['value'],
-        name=metric.replace('_', ' ').capitalize(),  # Formato de nombres
+        name=metric_translation.get(metric, metric),  # Traducir métrica
         text=filtered_data['value'],  # Mostrar los valores
         textposition='auto',
-        marker_color=vivid_colors[i % len(vivid_colors)]  # Usar colores de la paleta "Vivid"
+        marker_color=vivid_colors[i % len(vivid_colors)],  # Usar colores de la paleta "Vivid"
+        textfont=dict(color='white')  # Asegurar que los porcentajes sean siempre blancos
     ))
 
-# Configurar diseño de la gráfica y mover la leyenda
+# Configurar diseño de la gráfica
 fig2.update_layout(
     xaxis_title="Grupo de Usuarios",
     yaxis_title="% del Total",
@@ -164,7 +178,7 @@ fig2.update_layout(
     yaxis=dict(title_font=dict(size=14, weight='bold')),
     legend=dict(
         title="Métricas",
-        orientation="v",  # Cambiar orientación a vertical
+        orientation="v",  # Leyenda en vertical
         yanchor="top",    # Anclar en la parte superior
         y=1,              # Ubicar en el borde superior
         xanchor="right",  # Anclar a la derecha
