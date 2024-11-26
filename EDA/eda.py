@@ -98,9 +98,7 @@ fig.update_layout(
     legend=dict(
         title="Elementos",  # Título de la leyenda
         orientation="h",  # Orientación horizontal
-        yanchor="bottom",
         y=1.02,
-        xanchor="right",
         x=5,
         bordercolor="gray",
         borderwidth=1
