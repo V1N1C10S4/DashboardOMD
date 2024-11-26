@@ -152,3 +152,52 @@ with col1:
 with col2:
     st.subheader("Distribución del Factor de Influencia")
     st.plotly_chart(boxplot_fig, use_container_width=True)  # Visualización del boxplot
+
+# Añadir un espacio entre las gráficas de análisis de clusters y la visualización final
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
+
+# Calcular el DataFrame organizado (organized_cluster_df)
+cluster_analysis = data.groupby('cluster').agg({
+    'influence_factor': 'mean',
+    'avg_text_len': 'mean',
+    'avg_time_elapsed_between_posts': 'mean'
+}).reset_index()
+
+# Renombrar columnas
+cluster_analysis.columns = [
+    'Cluster ID', 'Average Influence', 'Average Text Length', 'Average Time Elapsed'
+]
+
+# Seleccionar las columnas relevantes para la comparación de promedios
+cluster_means = cluster_analysis[['Cluster ID', 'Average Influence', 'Average Text Length', 'Average Time Elapsed']]
+
+# Convertir el DataFrame a formato largo para graficar
+cluster_means_melted = cluster_means.melt(
+    id_vars='Cluster ID',  # Identificador único por clúster
+    var_name='Metric',     # Nombre de la columna que indica la métrica
+    value_name='Value'     # Nombre de la columna que almacena los valores
+)
+
+# Crear el gráfico de barras interactivo con Plotly
+fig = px.bar(
+    cluster_means_melted,
+    x='Cluster ID',         # Eje x: ID del clúster
+    y='Value',              # Eje y: valores promedio
+    color='Metric',         # Diferenciar barras por métrica
+    barmode='group',        # Agrupar barras por clúster
+    title="Comparación de Promedios entre Clústeres",
+    labels={'Cluster ID': 'Clúster', 'Value': 'Valor Promedio', 'Metric': 'Métrica'},  # Etiquetas personalizadas
+    color_discrete_sequence=px.colors.qualitative.Vivid  # Paleta de colores Vivid
+)
+
+# Ajustar diseño del gráfico
+fig.update_layout(
+    template="plotly_dark",  # Tema oscuro
+    xaxis_title="Clúster",
+    yaxis_title="Valor Promedio",
+    title_x=0.5  # Centrar el título
+)
+
+# Integrar el gráfico en Streamlit
+st.title("Comparación de Promedios entre Clústeres")
+st.plotly_chart(fig, use_container_width=True)
