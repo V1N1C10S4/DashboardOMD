@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import os
 import gdown
 import numpy as np
+import plotly.graph_objects as go
+import plotly.express as px
+from scipy.stats import gaussian_kde
 
 st.header("Análisis Exploratorio de datos")
 
@@ -19,84 +22,94 @@ def download_data():
 download_data()
 
 # Load data
-data = pd.read_csv("cleansed_infotracer.csv")
+df = pd.read_csv("cleansed_infotracer.csv")
 
-# Description of the dataset
-st.write("""
-#### El conjunto de datos:
-El conjunto de datos infotracer comprende una muestra de publicaciones relacionadas con las elecciones presidenciales mexicanas desde el 1 de enero de 2024 hasta el 31 de julio de 2024, a través de X (antes Twitter).
-""")
+# Suponiendo que `df` ya está cargado con los datos originales.
 
-# Description of the hypotesis
-st.write("""
-#### Hipotesis:
-Se anticipa que una pequeña parte de los usuarios genere la mayoría de las publicaciones y concentre la mayor cantidad de interacciones dentro de nuestro conjunto de datos. Este fenómeno podría deberse a la influencia o popularidad de ciertos usuarios que capturan la atención de una gran audiencia, así como al alto nivel de actividad al publicar constantemente. Esta dinámica sugiere una distribución desigual de la actividad, en la que los usuarios no poseen un rol proporcionado en la generación de contenido y en la atracción de interacciones.
-         
-Este análisis exploratorio de datos (AED) sirve como etapa preliminar para un análisis más profundo (por ejemplo, modelado de temas, análisis de sentimientos). Su objetivo es identificar a los usuarios más activos (por ejemplo, por publicaciones, interacciones) en las redes sociales, segmentados por plataforma y candidato. Esta identificación de los principales usuarios guiará el proceso de segmentación de los datos, creando subconjuntos más pequeños y específicos para su posterior análisis.
-""")
-
-# Distribution of Number of Posts
-st.write("### Distribución del número de publicaciones")
-
-# Create a DataFrame `posts_df` with the count of unique posts (URLs) per user.
-posts_df = data.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
+# Crear `posts_df` con conteo de posts únicos por usuario
+posts_df = df.pivot_table(index='username', values='url', aggfunc='count').sort_values(by='url', ascending=False).reset_index()
 posts_df.rename(columns={'url': 'num_posts'}, inplace=True)
 
-# Create a temporary DataFrame `temp` with the total interactions per user.
-temp = data.pivot_table(index='username', values='num_interaction', aggfunc='sum').sort_values(by='num_interaction', ascending=False).reset_index()
+# Crear DataFrame temporal `temp` con el total de interacciones por usuario
+temp = df.pivot_table(index='username', values='num_interaction', aggfunc='sum').sort_values(by='num_interaction', ascending=False).reset_index()
 temp.rename(columns={'num_interaction': 'num_interaction'}, inplace=True)
 
-# Merge the `posts_df` and `temp` DataFrames on `username`
+# Combinar `posts_df` y `temp` en un solo DataFrame
 posts_df = pd.merge(posts_df, temp, on='username', how='left')
 
-# Display description for visualization
-st.write("""
-Analizar la distribución del número de posts en el recién creado `posts_df` para identificar criterios de segmentación de los principales usuarios.
+# Calcular métricas adicionales
+posts_df['engagement_rate'] = posts_df['num_interaction'] / posts_df['num_posts']
+posts_df['%_posts'] = posts_df['num_posts'] / posts_df['num_posts'].sum() * 100
+posts_df['%_interaction'] = posts_df['num_interaction'] / posts_df['num_interaction'].sum() * 100
+posts_df['influence_factor'] = np.log((posts_df['%_posts'] * posts_df['%_interaction'] * posts_df['engagement_rate']) * 100)
 
-#### Observaciones:
-- La mayoría de los usuarios, probablemente usuarios ocasionales, tienen entre 0 y ~250 publicaciones totales, del 1 de enero al 31 de julio.
-- En el eje de abscisas hay un grupo de entre 1.250 y 1.500 publicaciones totales de un número reducido de usuarios que tienen entre 4 y 5 veces más publicaciones que los usuarios ocasionales.
-""")
+# Calcular el umbral del factor de influencia
+earliest_date = df['datetime'].min()
+latest_date = df['datetime'].max()
+time_difference = latest_date - earliest_date
+total_days = time_difference.days
 
-# Visualization: Kernel Density Estimate (KDE) plot for the distribution of number of posts per user
-plt.figure(figsize=(10, 6))
-sns.kdeplot(posts_df, x='num_posts', weights='num_interaction')
-plt.xlabel('Número de publicaciones')
-plt.ylabel('Densidad')
-plt.title('Densidad del número de publicaciones por usuario')
-st.pyplot(plt)
+expected_posts_per_day = 1
+expected_interactions_per_post = 5
+expected_total_posts = expected_posts_per_day * total_days
+expected_total_interactions = expected_total_posts * expected_interactions_per_post
+expected_engagement_rate = expected_interactions_per_post / expected_posts_per_day
 
-# Display description for visualization
-st.write("""
-#### Observaciones:
-- La pendiente más pronunciada se produce de 0 a ~750 publicaciones totales, que probablemente correspondan a usuarios ocasionales.
-- Hay una pendiente menos pronunciada de ~750 a ~1700 publicaciones totales, que probablemente corresponda a usuarios no ocasionales, y después una pendiente casi horizontal.
-""")
+treshold_influence_factor = np.log(
+    expected_total_posts / posts_df['num_posts'].sum() * 100 *
+    expected_total_interactions / posts_df['num_interaction'].sum() * 100 *
+    expected_engagement_rate * 100
+)
 
-# Visualization: Commulative Density of number of posts per user
-plt.figure(figsize=(10, 6))
-sns.kdeplot(posts_df, x='num_posts', weights='num_interaction', cumulative=True)
-plt.xlabel('Número de publicaciones')
-plt.ylabel('Densidad')
-plt.title('Densidad acumulada del número de publicaciones por usuario')
-st.pyplot(plt)
+# Crear valores para la gráfica de densidad (KDE)
+x_values = np.linspace(posts_df['influence_factor'].min(), posts_df['influence_factor'].max(), 1000)
+kde = gaussian_kde(posts_df['influence_factor'])
+density_values = kde(x_values)
 
-# Logarithmic distribution of Number of Posts
-st.write("### Logarítmico:")
+# Crear la gráfica interactiva con Plotly
+fig = go.Figure()
 
-posts_df['num_interaction'] = posts_df['num_interaction'].replace(0, 1)
-posts_df['log_num_posts'] = np.log(posts_df['num_posts'])
-posts_df['log_num_interaction'] = np.log(posts_df['num_interaction'])
-plt.figure(figsize=(10, 6))
-sns.kdeplot(posts_df, x='log_num_posts')
-plt.xlabel('Log Número de publicaciones')
-plt.ylabel('Densidad')
-plt.title('Densidad del Log del número de publicaciones por usuario')
-st.pyplot(plt)
+# Añadir la curva de densidad
+fig.add_trace(go.Scatter(
+    x=x_values,
+    y=density_values,
+    mode='lines',
+    line=dict(color='blue', width=2),
+    name='Densidad'
+))
 
-# Display description for visualization
-st.write("""
-#### Observaciones:
-- Entre los valores 0 y 1 en el logaritmo del número de publicaciones en el eje de abscisas, hay un intervalo en el que la pendiente se aproxima a 0, y después sigue creciendo hasta el valor de ~2 en el eje de abscisas.
-- Este cambio abrupto en la pendiente podría ser un indicador de dónde cortar los datos.
-""")
+# Añadir la línea vertical del umbral
+fig.add_trace(go.Scatter(
+    x=[treshold_influence_factor, treshold_influence_factor],
+    y=[0, max(density_values)],
+    mode='lines',
+    line=dict(color='darkgray', width=2, dash='dash'),
+    name='Umbral del Factor de Influencia'
+))
+
+# Configuración de diseño
+fig.update_layout(
+    title={
+        'text': "Densidad del Factor de Influencia por Usuario",
+        'x': 0.5,
+        'xanchor': 'center'
+    },
+    xaxis_title="Factor de Influencia",
+    yaxis_title="Densidad",
+    template="plotly_dark",
+    showlegend=True,
+    legend=dict(
+        title="Leyenda",
+        font=dict(size=12),
+        bordercolor="Gray",
+        borderwidth=1
+    )
+)
+
+# Agregar líneas de referencia en el grid
+fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='gray')
+fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='gray')
+
+# Mostrar en Streamlit
+st.title("Exploratory Data Analysis: Densidad del Factor de Influencia")
+st.plotly_chart(fig, use_container_width=True)
