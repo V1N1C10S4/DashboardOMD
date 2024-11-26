@@ -5,9 +5,6 @@ from scipy.stats import gaussian_kde
 import plotly.graph_objects as go
 import plotly.express as px
 
-# Streamlit header
-st.header("Density of Influence Factor per User")
-
 # Cargar los datos
 url = 'https://drive.google.com/uc?id=1BlXm5AwbroZKPYPxtXeBw3RzRyNiJEtd'
 df = pd.read_csv(url)
@@ -60,13 +57,21 @@ fig.add_trace(go.Scatter(
 
 # Configurar diseño traducido al español y eliminar gridlines
 fig.update_layout(
-    title="Densidad del Factor de Influencia por Usuario",
     xaxis_title="Factor de Influencia",
     yaxis_title="Densidad",
     template="simple_white",
-    title_font=dict(size=18, color='#333333', family="Arial"),
-    xaxis=dict(showgrid=False, zeroline=False),  # Sin gridlines en eje x
-    yaxis=dict(showgrid=False, zeroline=False)   # Sin gridlines en eje y
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="LightGray",  # Color tenue para las gridlines
+        gridwidth=0.5,
+        zeroline=False
+    ),
+    yaxis=dict(
+        showgrid=True,
+        gridcolor="LightGray",  # Color tenue para las gridlines
+        gridwidth=0.5,
+        zeroline=False
+    )
 )
 
 # Mostrar en Streamlit
