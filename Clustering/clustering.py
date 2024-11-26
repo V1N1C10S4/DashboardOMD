@@ -130,7 +130,7 @@ for cluster in clusters:
     boxplot_fig.add_trace(
         go.Box(
             y=cluster_data['influence_factor'],
-            name=f"Clúster {cluster}",
+            name=f"{cluster}",
             boxpoints='outliers',  # Mostrar solo los outliers
             whiskerwidth=0.8,  # Ajustar ancho de los bigotes
             marker=dict(size=5, color=color_mapping[cluster]),  # Usar colores asignados manualmente
