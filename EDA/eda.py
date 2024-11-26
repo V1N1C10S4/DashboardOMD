@@ -41,25 +41,26 @@ density = kde(x_range)
 # Paso 7: Crear la gráfica de densidad con Plotly
 fig = go.Figure()
 
+# Añadir la línea punteada para el threshold en -3.1165083206837174
 fig.add_trace(go.Scatter(
-    x=x_range,
-    y=density,
+    x=[-3.1165083206837174, -3.1165083206837174],
+    y=[0, max(density)],
     mode='lines',
-    line=dict(color='blue', width=2),
-    name='Density'
+    line=dict(color='red', width=2, dash='dash'),
+    name='Umbral'
 ))
 
-# Configurar diseño
+# Configurar diseño traducido al español y eliminar gridlines
 fig.update_layout(
-    title="Density of Influence Factor per User",
-    xaxis_title="Influence Factor",
-    yaxis_title="Density",
+    title="Densidad del Factor de Influencia por Usuario",
+    xaxis_title="Factor de Influencia",
+    yaxis_title="Densidad",
     template="simple_white",
     title_font=dict(size=18, color='#333333', family="Arial"),
-    xaxis=dict(showgrid=True, gridcolor="LightGray", gridwidth=0.5, zeroline=False),
-    yaxis=dict(showgrid=True, gridcolor="LightGray", gridwidth=0.5, zeroline=False)
+    xaxis=dict(showgrid=False, zeroline=False),  # Sin gridlines en eje x
+    yaxis=dict(showgrid=False, zeroline=False)   # Sin gridlines en eje y
 )
 
 # Mostrar en Streamlit
-st.title("Influence Factor Analysis")
+st.title("Análisis del Factor de Influencia")
 st.plotly_chart(fig, use_container_width=True)
