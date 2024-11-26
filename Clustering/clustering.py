@@ -11,8 +11,6 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import plotly.express as px
 
-st.header("Clustering de datos")
-
 def download_data():
     url = 'https://drive.google.com/uc?id=1b5glYHJkkH_cjw1yzLRDtLwMPRNdwu6x'
     output = 'encoded_cleansed_infotracer_by_user_for_clustering.csv'
@@ -80,3 +78,5 @@ fig.update_layout(
 # Configuración para Streamlit
 st.title("Clustering de usuarios en X")
 st.plotly_chart(fig, use_container_width=True)
+
+
