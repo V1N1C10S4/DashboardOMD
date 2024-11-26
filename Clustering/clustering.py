@@ -191,7 +191,6 @@ fig = px.bar(
 
 # Ajustar diseño del gráfico
 fig.update_layout(
-    title=None,  # Eliminar el título
     template="plotly_dark",  # Tema oscuro
     xaxis_title="Clúster",
     yaxis_title="Valor Promedio",
